@@ -1,0 +1,87 @@
+global:
+  externalUrl: http://minikube.knowledgenet.co:30100
+  rollingUpdate:
+    maxUnavailable: 1
+  exposeNodePorts: true
+  image:
+    repository: "localhost:5000/data61"
+    tag: "latest"
+    pullPolicy: Always
+  noDbAuth: true
+  useCloudSql: false
+  useCombinedDb: true
+
+## Tags allow for services to be turned on and off on the fly... e.g. if you don't need
+## to send emails, turn the correspondence-api off
+tags:
+  ## "all" is a shortcut which turns on all services except minions.
+  all: false
+
+  ## General services. Note that if you are using combined-db, you need to set both
+  ## combined-db and the databases that you are using (e.g. authorization-db) to true.
+  ## You can find explanations of what each of these are below
+
+  apidocs-server: true
+  authorization-api: true
+  authorization-db: true
+  # cloud-sql-proxy: true
+  combined-db: true
+  content-db: true
+  content-api: true
+  correspondence-api: false
+  elasticsearch: true
+  gateway: true
+  indexer: true
+  preview-map: true
+  registry-api: true
+  registry-db: true
+  search-api: true
+  session-db: true
+  web-server: true
+  connectors: true
+
+  ## Whether to use an ingress, which is necessary for HTTPS and using the Google CDN with
+  ## Google Kubernetes Engine. By default this is off, and access is provided to the cluster
+  ## through a Kubernetes LoadBalancer service
+  # ingress: false
+
+  ## Minions, which listen to changes in the registry and add extra metadata
+  minion-broken-link: false
+  minion-linked-data-rating: false
+  minion-visualization: false
+  minion-format: true
+
+gateway:
+  image:
+    repository: "gcr.io/knowledge-network-192205/data61"
+    tag: "latest"
+  enableAuthEndpoint: true
+  cors:
+    credentials: true
+    origin: true
+  auth:
+    facebookClientId: ""
+    googleClientId: "667942079301-49aomsf5l1i8tc5amdot6ck96e1d84c6.apps.googleusercontent.com"
+    aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/IeiWdzrJ47-eSowf3rfLTQ"
+
+registry-api:
+  skipAuthorization: true
+  
+web-server:
+  image:
+    repository: "gcr.io/knowledge-network-192205/data61"
+    tag: "latest"
+  fallbackUrl: "https://data.gov.au"
+
+
+connectors:
+  includeCronJobs: false
+  config:
+    - image:
+        name: magda-ckan-connector
+      id: dap
+      name: CSIRO
+      sourceUrl: https://data.csiro.au/dap/ws/v2/
+      pageSize: 100
+      schedule: 30 3 */3 * *
+      ignoreHarvestSources: []
