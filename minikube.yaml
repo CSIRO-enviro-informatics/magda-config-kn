@@ -3,10 +3,12 @@ global:
   rollingUpdate:
     maxUnavailable: 1
   exposeNodePorts: true
-  image:
-    repository: "localhost:5000/data61"
-    tag: "latest"
-    pullPolicy: Always
+ # All modules except web-server & gateway should use magda offical image
+ # Here, if unspecified, the following default value will be used:
+ # image:
+ #   repository: data61 # magda docker hub repo
+ #   tag: 0.0.50-RC2  # This version will be increased when magda releases a new version
+ #   pullPolicy: IfNotPresent
   noDbAuth: true
   useCloudSql: false
   useCombinedDb: true
@@ -53,7 +55,7 @@ tags:
 
 gateway:
   image:
-    repository: "gcr.io/knowledge-network-192205/data61"
+    repository: "localhost:5000/data61"
     tag: "latest"
   enableAuthEndpoint: true
   cors:
@@ -69,7 +71,7 @@ registry-api:
   
 web-server:
   image:
-    repository: "gcr.io/knowledge-network-192205/data61"
+    repository: "localhost:5000/data61"
     tag: "latest"
   fallbackUrl: "https://data.gov.au"
 
