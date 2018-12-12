@@ -74,7 +74,7 @@ web-server:
     repository: "localhost:5000/data61"
     tag: "latest"
   fallbackUrl: "https://data.gov.au"
-
+  useLocalStyleSheet: true
 
 connectors:
   includeCronJobs: false
