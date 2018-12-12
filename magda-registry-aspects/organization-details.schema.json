@@ -1,0 +1,60 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "title": "Aspect for capturing basic details of an organization",
+    "type": "object",
+    "properties": {
+        "name": {
+            "title": "A short name given to the organization.",
+            "type": "string"
+        },
+        "title": {
+            "title": "A name given to the organization.",
+            "type": "string"
+        },
+        "jurisdiction": {
+            "title": "the organization jurisdiction.",
+            "type": "string"
+        },
+        "description": {
+            "title": "Free-text account of the organization.",
+            "type": "string"
+        },
+        "imageUrl": {
+            "title":
+                "The URL of an image representing the organization, such as its logo.",
+            "type": "string"
+        },
+        "phone": {
+            "title": "The organization contact phone number",
+            "type": "string"
+        },
+        "email": {
+            "title": "The organization contact email address",
+            "type": "string"
+        },
+        "addrStreet": {
+            "title": "The organization address: street",
+            "type": "string"
+        },
+        "addrSuburb": {
+            "title": "The organization address: suburb",
+            "type": "string"
+        },
+        "addrState": {
+            "title": "The organization address: state",
+            "type": "string"
+        },
+        "addrPostCode": {
+            "title": "The organization address: post code",
+            "type": "string"
+        },
+        "addrCountry": {
+            "title": "The organization address: Country",
+            "type": "string"
+        },
+        "website": {
+            "title": "The organization website",
+            "type": "string"
+        }
+    }
+}
