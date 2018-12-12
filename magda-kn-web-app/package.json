@@ -1,0 +1,39 @@
+{
+  "name": "@magda/kn-web-app",
+  "description": "The MAGDA in-browser KN web app.",
+  "license": "Apache-2.0",
+  "version": "0.0.41-0",
+  "devDependencies": {
+    "d3": "^4.13.0",
+    "immutable": "^3.8.2",
+    "prop-types": "^15.6.0",
+    "query-string": "^5.1.1",
+    "rc-slider": "^8.6.0",
+    "rc-tooltip": "^3.7.0",
+    "react": "^16.2.0",
+    "react-bootstrap": "^0.32.0",
+    "react-dom": "^16.2.0",
+    "react-ga": "^2.5.3",
+    "react-router": "^4.3.1",
+    "react-router-bootstrap": "^0.24.4",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.0"
+  },
+  "scripts": {
+    "dev": "react-scripts start",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": {
+    "/server-config.js": {
+      "target": "http://localhost:6107/"
+    }
+  },
+  "config": {
+    "docker": {
+      "include": "node_modules build"
+    }
+  }
+}

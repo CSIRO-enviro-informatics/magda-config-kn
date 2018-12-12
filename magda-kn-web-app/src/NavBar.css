@@ -1,0 +1,101 @@
+.navbar-brand {
+    font-weight: 700;
+    line-height: 50px;
+    height: 50px;
+    padding: 0 0 0 0;
+}
+.navbar-brand img {
+    height: 40px;
+    padding-right: 10px;
+    margin-top: 5px;
+    vertical-align: top;
+}
+
+.navbar-default {
+  color: black;
+  background-color: white !important;
+  font-size: 14px;
+  -webkit-box-shadow: none;
+  background-image: none;
+  border-bottom-color: black;
+}
+.navbar:focus,
+.navbar:active {
+  outline: none;
+}
+
+.navbar .navbar-brand:focus {
+  outline: none;
+}
+
+.navbar a {
+  color: #9d9d9d;
+  text-decoration: none !important;
+}
+
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{
+  background-color: #c3c3c3;
+  background-image: linear-gradient(to bottom,#c3c3c3 0,#c3c3c3 100%);
+}
+.dropdown-menu > .active > a {
+  background-color: #c3c3c3
+}
+#profile-dropdown{
+  padding: 5px;
+}
+#profile-dropdown img{
+  width: 40px;
+  height: 40px;
+}
+@media (min-width: 350px) {
+   .navbar-brand-title {
+      font-family: 'Nunito', sans-serif;
+      font-size: 18px;
+      line-height: 50px;
+      font-weight: 700;
+      vertical-align: middle ;
+   }
+   .navbar .navbar-brand img{
+      height: 35px;
+      padding-right: 10px;
+      vertical-align: top;
+   }
+
+}
+
+@media (min-width: 450px) {
+   .navbar-brand-title {
+      font-family: 'Nunito', sans-serif;
+      font-size: 25px;
+      line-height: 50px;
+      font-weight: 700;
+      vertical-align: middle ;
+   }
+   .navbar .navbar-brand img{
+      height: 40px;
+      padding-right: 10px;
+      vertical-align: top;
+   }
+}
+
+@media (min-width: 700px) {
+   .navbar-brand-title {
+      font-family: 'Nunito', sans-serif;
+      font-size: 26px;
+      line-height: 50px;
+      font-weight: 400;
+      vertical-align: middle ;
+   }
+}
+
+
+@media (min-width: 768px) {
+
+   .navbar-brand-title {
+      font-family: 'Nunito', sans-serif;
+      font-size: 28px;
+      line-height: 50px;
+      font-weight: 400;
+      vertical-align: middle ;
+   }
+}

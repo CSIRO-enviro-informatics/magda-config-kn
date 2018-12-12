@@ -1,0 +1,41 @@
+span.glyphicon {
+    margin-top: -5px;
+}
+a:hover {
+    cursor: pointer;
+}
+
+.thumbnail img {
+    object-fit: contain;
+}
+.caption {
+    text-align: center;
+}
+
+.text {
+    color: white;
+    font-size: 18px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: 0.1s ease;
+    background-color: rgba(54, 119, 180, 0.95);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.thumbnail:hover .overlay {
+    opacity: 1;
+}

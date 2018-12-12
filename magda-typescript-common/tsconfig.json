@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig-build.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@magda/registry-aspects/dist/*": [
+                "../node_modules/@magda/registry-aspects/src/*"
+            ]
+        }
+    }
+}

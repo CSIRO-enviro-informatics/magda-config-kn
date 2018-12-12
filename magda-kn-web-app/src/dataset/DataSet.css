@@ -1,0 +1,101 @@
+.org-name {
+    padding-bottom: 10px;
+}
+.thumbnail {
+    min-height: 180px;
+}
+.thumbnail > img {
+    height: 160px;
+}
+.thumbnail .btn-toolbar {
+    position: absolute;
+    bottom: 40px;
+}
+.padding-top {
+    padding-top: 85px;
+}
+
+.kn-stats {
+    padding-left: 20px;
+}
+ul {
+    padding-left: 5px;
+}
+li {
+    list-style: none;
+    text-decoration-style: none;
+}
+
+.label a {
+    text-decoration: none;
+    text-decoration-line: none;
+    text-decoration-color: none;
+    color: white;
+}
+
+.label a:link {
+    text-decoration: none;
+    text-decoration-line: none;
+    text-decoration-color: none;
+    color: white;
+}
+
+.img {
+    padding: 20px 0px 20px 0px;
+}
+.org-name {
+    color: #333;
+    /* font-weight: bold; */
+}
+.label {
+    margin-left: 5px;
+}
+.small-img {
+    height: 150px;
+    padding: 10px;
+}
+.media {
+    border-bottom: gray 1px solid;
+}
+.media-body {
+    padding: 10px 5px 5px 10px;
+}
+.display-padding {
+    padding: 20px 10px 10px 20px;
+}
+.btn-custome {
+    border: 1px solid #42dca3;
+    color: #42dca3;
+    background-color: transparent;
+}
+pre {
+    white-space: pre-wrap;
+}
+
+/* table 
+{
+    table-layout: fixed;
+    
+} */
+.label-wrap {
+    margin: 5px;
+}
+.cust-label {
+    background-color: #5bc0de;
+    float: left;
+    border-radius: 3px;
+    padding: 3px 0px 0px 3px;
+    margin: 5px 5px 5px 5px;
+    font-size: 12px;
+}
+.cust-label a {
+    color: white;
+}
+
+h3.org-name {
+    font-size: 20px;
+}
+
+g g:hover {
+    cursor: pointer;
+}
