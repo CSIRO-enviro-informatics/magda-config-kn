@@ -1,0 +1,13 @@
+dependencies:
+  - name: magda
+    version: 0.0.50-RC2
+    repository: https://charts.magda.io 
+    tags:
+      - all
+      - magda
+  - name: test-chart
+    version: 0.0.50
+    repository: file://../test-chart
+    tags:
+      - all
+      - test-chart
