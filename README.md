@@ -113,6 +113,29 @@ This will take a while for it to get everything set up. If you want to watch pro
 
 If you want to turn on / off a component, just edit the `tags` section in [deploy/minikube.yaml](deploy/minikube.yaml) and re-deploy using the `helm upgrade` command above again.
 
+
+3. Access Knowledge Network instance
+
+- Access Knowledge Network instance:
+
+By default, the gateway service is exposed via `NodePort` for local deployed instance. You can access via:
+
+`http://192.168.99.100:30100`
+
+You should see `Knowledge Network` web UI once access the URL above.
+
+- Access `test-chart` demo `nginx` service:
+
+By default, the `test-chart` demo `nginx` service is exposed via `NodePort` for local deployed instance. You can access via:
+
+`http://192.168.99.100:30888`
+
+You should see the followings on the page:
+
+```html
+This is a KN test-chart!
+```
+
 ## Deploy to Staging Site / Google Cloud
 
 To be continue...
