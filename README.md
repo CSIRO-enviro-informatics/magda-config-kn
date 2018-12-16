@@ -98,8 +98,14 @@ helm install --name kube-registry-proxy -f deploy/docker-registry/kube-registry-
 Go to project root, and then:
 
 ```bash
+# install all dependencies
+yarn install
+# build all modules
 yarn build
+# Set docker ENV variables for your current terminal
 eval $(minikube docker-env)
+# build docker images (using minikube docker daemon) 
+# & push into the local docker registry in minikube cluster
 yarn docker-build-local
 ```
 
