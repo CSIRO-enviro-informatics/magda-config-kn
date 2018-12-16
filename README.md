@@ -1,6 +1,13 @@
 # Magda Knowledge Network Config
 
-This is a simple guide that allows you to quickly set up a Knowledge Network version Magda instance.
+This is a simple guide that allows you to quickly set up a Knowledge Network instance. 
+
+# Overview
+
+Knowledge Network application has been packaged as [Helm Charts](https://docs.helm.sh/developing_charts/) and its structure is:
+- `kn` Chart ([deploy/charts/kn](deploy/charts/kn)): Knowledge Network Application top level helm chart. You can deploy a Knowledge Network instance using this chart and config it via a `values` file. (e.g. [deploy/minikube.yaml](deploy/minikube.yaml))
+  - [magda](https://github.com/magda-io/magda): `kn` chart's dependency. We use `magda`'s published version helm chart at: https://charts.magda.io
+  - `test-chart` Chart ([deploy/charts/test-chart](deploy/charts/test-chart)): `kn` chart's dependency. A demo nginx to show-case how you include extra component / chart with `magda`.
 
 # Getting Started
 
@@ -61,6 +68,7 @@ All required secrets have been successfully created!
 
 ```bash
 helm repo add magda-io https://charts.magda.io
+helm repo update
 ```
 
 4.  For `minikube` or any local dev cluster only
@@ -93,13 +101,15 @@ eval $(minikube docker-env)
 yarn docker-build-local
 ```
 
-2.  Install magda KN version
+2.  Install Knowledge Network instance
 
 ```bash
-helm upgrade magda-kn magda-io/magda --wait --namespace kn --timeout 30000 --install -f deploy/minikube.yaml --devel
+helm upgrade magda-kn deploy/charts/kn --wait --namespace kn --timeout 30000 --install -f deploy/minikube.yaml --devel
 ```
 
 This will take a while for it to get everything set up. If you want to watch progress, run `kubectl get pods -w` in another terminal.
+
+If you want to turn on / off a component, just edit the `tags` section in [deploy/minikube.yaml](deploy/minikube.yaml) and re-deploy using the `helm upgrade` command above again.
 
 ## Deploy to Staging Site / Google Cloud
 
