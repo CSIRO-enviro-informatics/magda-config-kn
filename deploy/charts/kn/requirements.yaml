@@ -1,13 +1,15 @@
 dependencies:
   - name: magda
     version: 0.0.50-RC2
-    repository: https://charts.magda.io 
-    tags:
-      - all
-      - magda
+    repository: https://charts.magda.io/
+  # Magda chart is always enabled.
+  # Thus, no tags or condition are reuqired.
+  # You should set its sub-chart to enabled or not.
+    
   - name: test-chart
-    version: 0.0.50
+    version: 0.0.50-RC2
     repository: file://../test-chart
+    condition: test-chart.enabled,global.test-chart.enabled
     tags:
       - all
       - test-chart

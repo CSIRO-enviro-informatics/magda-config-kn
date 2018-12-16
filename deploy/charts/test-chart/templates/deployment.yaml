@@ -1,25 +1,48 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: test-chart
+  name: {{ template "fullname" . }}
   labels:
-    name: test-chart
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
 spec:
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}
+      release: "{{ .Release.Name }}"
   replicas: 1
   template:
     metadata:
       labels:
-        service: test-chart
+        app: {{ template "fullname" . }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        release: "{{ .Release.Name }}"
+        heritage: "{{ .Release.Service }}"
+{{- if or .Values.podAnnotations .Values.metrics.enabled }}
+      annotations:
+  {{- if .Values.podAnnotations }}
+{{ toYaml .Values.podAnnotations | indent 8 }}
+  {{- end }}
+  {{- if .Values.metrics.podAnnotations }}
+{{ toYaml .Values.metrics.podAnnotations | indent 8 }}
+  {{- end }}
+{{- end }}
     spec:
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end}}
+      {{- end }}
       containers:
-      - name: test-chart
-        image: bitnami/apache:2.4.37
-        imagePullPolicy: Always
+      - name: {{ template "fullname" . }}
+        image: "{{ template "nginx.image" . }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         ports:
         - name: http
-          containerPort: 80
-        - name: https
-          containerPort: 443
+          containerPort: 8080
         livenessProbe:
           httpGet:
             path: /
@@ -35,8 +58,36 @@ spec:
           timeoutSeconds: 3
           periodSeconds: 5
         volumeMounts:
-        - name: apache-data
-          mountPath: /bitnami/apache
+        {{- if .Values.vhost }}
+        - name: nginx-vhost
+          mountPath: /opt/bitnami/nginx/conf/vhosts
+        {{- end }}
+{{- if .Values.metrics.enabled }}
+      - name: metrics
+        image: {{ template "metrics.image" . }}
+        imagePullPolicy: {{ .Values.metrics.image.pullPolicy | quote }}
+        command: [ '/usr/bin/exporter', '-nginx.scrape-uri', 'http://127.0.0.1:8080/status']
+        ports:
+        - name: metrics
+          containerPort: 9113
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: metrics
+          initialDelaySeconds: 15
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: metrics
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+        resources:
+{{ toYaml .Values.metrics.resources | indent 12 }}
+{{- end }}
       volumes:
-      - name: apache-data
-        emptyDir: {}
+      {{- if .Values.vhost }}
+      - name: nginx-vhost
+        configMap:
+          name: {{ template "fullname" . }}
+      {{- end }}

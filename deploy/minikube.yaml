@@ -5,10 +5,10 @@ global:
   exposeNodePorts: true
  # All modules except web-server & gateway should use magda offical image
  # Here, if unspecified, the following default value will be used:
- # image:
- #   repository: data61 # magda docker hub repo
- #   tag: 0.0.50-RC2  # This version will be increased when magda releases a new version
- #   pullPolicy: IfNotPresent
+  image:
+    repository: data61 # magda docker hub repo
+    tag: 0.0.50-RC2  # This version will be increased when magda releases a new version
+    pullPolicy: IfNotPresent
   noDbAuth: true
   useCloudSql: false
   useCombinedDb: true
@@ -53,37 +53,56 @@ tags:
   minion-visualization: false
   minion-format: true
 
-gateway:
-  image:
-    repository: "localhost:5000/data61"
-    tag: "latest"
-  enableAuthEndpoint: true
-  cors:
-    credentials: true
-    origin: true
-  auth:
-    facebookClientId: ""
-    googleClientId: "667942079301-49aomsf5l1i8tc5amdot6ck96e1d84c6.apps.googleusercontent.com"
-    aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/IeiWdzrJ47-eSowf3rfLTQ"
+  ## A extra test chart that is maintained outside magda project
+  test-chart: true
 
-registry-api:
-  skipAuthorization: true
+magda:
+  gateway:
+    image:
+      repository: "localhost:5000/data61"
+      tag: "latest"
+    enableAuthEndpoint: true
+    cors:
+      credentials: true
+      origin: true
+    auth:
+      facebookClientId: ""
+      googleClientId: "667942079301-49aomsf5l1i8tc5amdot6ck96e1d84c6.apps.googleusercontent.com"
+      aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/IeiWdzrJ47-eSowf3rfLTQ"
+
+  registry-api:
+    skipAuthorization: true
+    
+  web-server:
+    image:
+      repository: "localhost:5000/data61"
+      tag: "latest"
+    fallbackUrl: "https://data.gov.au"
+    useLocalStyleSheet: true
+
+  connectors:
+    includeCronJobs: false
+    config:
+      - image:
+          name: magda-dap-connector
+        id: dap
+        name: CSIRO
+        sourceUrl: https://data.csiro.au/dap/ws/v2/
+        pageSize: 100
+        schedule: 30 3 */3 * *
+        ignoreHarvestSources: []
+
+test-chart:
+  service:
+    type: NodePort
+  nodePorts:
+    http: 30888
+  vhost: |-
+    server {
+      listen 0.0.0.0:8080;
+      default_type text/plain;
+      location / {
+        return 200 "This is a KN test-chart!";
+      }
+    }
   
-web-server:
-  image:
-    repository: "localhost:5000/data61"
-    tag: "latest"
-  fallbackUrl: "https://data.gov.au"
-  useLocalStyleSheet: true
-
-connectors:
-  includeCronJobs: false
-  config:
-    - image:
-        name: magda-ckan-connector
-      id: dap
-      name: CSIRO
-      sourceUrl: https://data.csiro.au/dap/ws/v2/
-      pageSize: 100
-      schedule: 30 3 */3 * *
-      ignoreHarvestSources: []
