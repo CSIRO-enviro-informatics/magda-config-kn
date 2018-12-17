@@ -342,8 +342,14 @@ function getPackageList(
     rootPackages,
     packageName,
     basePath,
-    result
+    result,
+    packageResolveStack = []
 ) {
+    packageResolveStack.push({
+        name: packageName,
+        path: basePath.replace(/node_modules$/, "")
+    });
+
     // If the package that we're finding subpackages for doesn't have its own local children, find it in the root and see if that version of it has any children.
     const childrenToUse =
         localChildren ||
@@ -352,7 +358,7 @@ function getPackageList(
             .find(tree => getNameFromPackageListing(tree.name) === packageName))
             .children;
 
-    if (!childrenToUse) {
+    if (!childrenToUse || !isRuntimeDependencyChain(packageResolveStack)) {
         return result;
     }
 
@@ -370,7 +376,7 @@ function getPackageList(
         // up the directory tree.
         while (!fse.existsSync(dependencyDir)) {
             let upOne;
-            if (dependencyName.indexOf(path.sep) === -1) {
+            if (dependencyName.indexOf("/") === -1) {
                 upOne = path.resolve(
                     dependencyDir,
                     "..",
@@ -415,11 +421,59 @@ function getPackageList(
             rootPackages,
             dependencyName,
             path.resolve(dependencyDir, "node_modules"),
-            result
+            result,
+            [...packageResolveStack]
         );
     });
 
     return result;
+}
+
+/**
+ * Whether all packages on the `packageResolveStack` is `dependencies`
+ * (rather than `optionalDependencies`, `devDependencies` or `peerDependencies`)
+ * @param {object} packageResolveStack
+ * {
+ *   name,
+ *   path
+ * }
+ */
+function isRuntimeDependencyChain(packageResolveStack) {
+    if (!packageResolveStack || !packageResolveStack.length) {
+        return false;
+    }
+    for (let i = 0; i < packageResolveStack.length - 1; i++) {
+        if (
+            !isRuntimeDependencyOf(
+                packageResolveStack[packageResolveStack.length - i - 1],
+                packageResolveStack[packageResolveStack.length - i - 2]
+            )
+        ) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function isRuntimeDependencyOf(pkg1, pkg2) {
+    try {
+        const pkg2Data = fse.readJSONSync(
+            path.join(pkg2["path"], "package.json")
+        );
+        if (!pkg2Data || !pkg2Data.dependencies) {
+            return false;
+        }
+        if (
+            Object.keys(pkg2Data.dependencies).findIndex(
+                pkgName => pkgName.toLowerCase() === pkg1.name.toLowerCase()
+            ) === -1
+        ) {
+            return false;
+        }
+        return true;
+    } catch (e) {
+        throw new Error("Error @ isRuntimeDependencyOf: " + e);
+    }
 }
 
 function wrapConsoleOutput(process) {
