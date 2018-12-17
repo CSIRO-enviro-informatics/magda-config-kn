@@ -367,10 +367,9 @@ function getPackageList(
             dependencyDetails.name
         );
 
-        let dependencyDir = path.join(
-            basePath,
-            dependencyName.replace(/\//g, path.sep)
-        );
+        const dependencyNamePath = dependencyName.replace(/\//g, path.sep);
+
+        let dependencyDir = path.join(basePath, dependencyNamePath);
 
         // Does this directory exist?  If not, imitate node's module resolution by walking
         // up the directory tree.
@@ -383,7 +382,7 @@ function getPackageList(
                     "..",
                     "..",
                     "node_modules",
-                    dependencyName
+                    dependencyNamePath
                 );
             } else {
                 upOne = path.resolve(
@@ -393,7 +392,7 @@ function getPackageList(
                     "..",
                     "..",
                     "node_modules",
-                    dependencyName
+                    dependencyNamePath
                 );
             }
 
@@ -405,12 +404,14 @@ function getPackageList(
         }
 
         if (!fse.existsSync(dependencyDir)) {
-            if (dependencyName === "fsevents") {
-                // --- ignore `fsevents` module
-                // --- as it's not availble on linux
+            const msg =
+                "Could not find path for " + dependencyName + " @ " + basePath;
+            if (dependencyName.indexOf("@magda") !== 0) {
+                // --- ignore non magda modules only report at console
+                console.log(msg);
                 return;
             }
-            throw new Error("Could not find path for " + dependencyName);
+            throw new Error(msg);
         }
 
         result.push({ name: dependencyName, path: dependencyDir });
