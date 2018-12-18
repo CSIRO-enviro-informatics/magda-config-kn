@@ -36,11 +36,11 @@ helm init --service-account tiller
 2.  Run the create secrets script in a command line and follow the prompts
 
 ```bash
-    ./create-secrets/index-linux
+    ./deploy/create-secrets/index-linux
     # OR
-    ./create-secrets/index-macos
+    ./deploy/create-secrets/index-macos
     # OR
-    create-secrets\index.win.exe
+    deploy/create-secrets\index.win.exe
 ```
 
 Output should look something like so:
