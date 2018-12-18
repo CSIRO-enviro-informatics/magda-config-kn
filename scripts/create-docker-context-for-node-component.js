@@ -400,7 +400,7 @@ function getPackageList(
             if (
                 !isRuntimeDependencyOf(
                     dependencyName,
-                    basePath.replace(/\/node_modules$/, "")
+                    basePath.replace(/node_modules$/, "")
                 )
             ) {
                 console.log(
