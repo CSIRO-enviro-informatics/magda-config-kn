@@ -342,14 +342,8 @@ function getPackageList(
     rootPackages,
     packageName,
     basePath,
-    result,
-    packageResolveStack = []
+    result
 ) {
-    packageResolveStack.push({
-        name: packageName,
-        path: basePath.replace(/node_modules$/, "")
-    });
-
     // If the package that we're finding subpackages for doesn't have its own local children, find it in the root and see if that version of it has any children.
     const childrenToUse =
         localChildren ||
@@ -358,7 +352,7 @@ function getPackageList(
             .find(tree => getNameFromPackageListing(tree.name) === packageName))
             .children;
 
-    if (!childrenToUse || !isRuntimeDependencyChain(packageResolveStack)) {
+    if (!childrenToUse) {
         return result;
     }
 
@@ -366,7 +360,6 @@ function getPackageList(
         const dependencyName = getNameFromPackageListing(
             dependencyDetails.name
         );
-
         const dependencyNamePath = dependencyName.replace(/\//g, path.sep);
 
         let dependencyDir = path.join(basePath, dependencyNamePath);
@@ -404,14 +397,20 @@ function getPackageList(
         }
 
         if (!fse.existsSync(dependencyDir)) {
-            const msg =
-                "Could not find path for " + dependencyName + " @ " + basePath;
-            if (dependencyName.indexOf("@magda") !== 0) {
-                // --- ignore non magda modules only report at console
-                console.log(msg);
+            if (
+                !isRuntimeDependencyOf(
+                    dependencyName,
+                    basePath.replace(/\/node_modules$/, "")
+                )
+            ) {
+                console.log(
+                    `Ignore non-dependency package \`${dependencyName}\` @ \`${basePath}\``
+                );
                 return;
             }
-            throw new Error(msg);
+            throw new Error(
+                "Could not find path for " + dependencyName + " @ " + basePath
+            );
         }
 
         result.push({ name: dependencyName, path: dependencyDir });
@@ -422,59 +421,11 @@ function getPackageList(
             rootPackages,
             dependencyName,
             path.resolve(dependencyDir, "node_modules"),
-            result,
-            [...packageResolveStack]
+            result
         );
     });
 
     return result;
-}
-
-/**
- * Whether all packages on the `packageResolveStack` is `dependencies`
- * (rather than `optionalDependencies`, `devDependencies` or `peerDependencies`)
- * @param {object} packageResolveStack
- * {
- *   name,
- *   path
- * }
- */
-function isRuntimeDependencyChain(packageResolveStack) {
-    if (!packageResolveStack || !packageResolveStack.length) {
-        return false;
-    }
-    for (let i = 0; i < packageResolveStack.length - 1; i++) {
-        if (
-            !isRuntimeDependencyOf(
-                packageResolveStack[packageResolveStack.length - i - 1],
-                packageResolveStack[packageResolveStack.length - i - 2]
-            )
-        ) {
-            return false;
-        }
-    }
-    return true;
-}
-
-function isRuntimeDependencyOf(pkg1, pkg2) {
-    try {
-        const pkg2Data = fse.readJSONSync(
-            path.join(pkg2["path"], "package.json")
-        );
-        if (!pkg2Data || !pkg2Data.dependencies) {
-            return false;
-        }
-        if (
-            Object.keys(pkg2Data.dependencies).findIndex(
-                pkgName => pkgName.toLowerCase() === pkg1.name.toLowerCase()
-            ) === -1
-        ) {
-            return false;
-        }
-        return true;
-    } catch (e) {
-        throw new Error("Error @ isRuntimeDependencyOf: " + e);
-    }
 }
 
 function wrapConsoleOutput(process) {
@@ -487,5 +438,24 @@ function wrapConsoleOutput(process) {
         process.stderr.on("data", data => {
             console.error(data.toString());
         });
+    }
+}
+
+function isRuntimeDependencyOf(pkg1Name, pkg2Path) {
+    try {
+        const pkg2Data = fse.readJSONSync(path.join(pkg2Path, "package.json"));
+        if (!pkg2Data || !pkg2Data.dependencies) {
+            return false;
+        }
+        if (
+            Object.keys(pkg2Data.dependencies).findIndex(
+                pkgName => pkgName.toLowerCase() === pkg1Name.toLowerCase()
+            ) === -1
+        ) {
+            return false;
+        }
+        return true;
+    } catch (e) {
+        throw new Error("Error @ isRuntimeDependencyOf: " + e);
     }
 }
