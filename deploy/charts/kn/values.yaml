@@ -1,7 +1,7 @@
 tags:
   all: false
   apidocs-server: true
-  admin-api: true
+  admin-api: false
   authorization-api: true
   authorization-db: true
   combined-db: true
@@ -24,6 +24,8 @@ tags:
   ingress: false
   connectors: true
   test-chart: true
+  kn-es-ingress: false
+  kn-ingress: false
 
 magda:
   gateway:

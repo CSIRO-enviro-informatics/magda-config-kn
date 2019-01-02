@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kn-es-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/server-snippet: |
+        add_header Allow "GET, POST, HEAD" always;
+        if ( $request_method !~ ^(GET|POST|HEAD|OPTIONS)$ ) {
+            return 405;
+        }
+        location ~ ^/(?!(datasets30|regions17|datasets32|regions21)) {
+           return 405;
+        }
+        location ~ ^/(datasets30|regions17|datasets32|regions21)/(?!(_search|_mapping)) {
+           return 405;
+        }
+        location ~ ^/_cat/(?!indices) {
+           return 405;
+        }
+spec:
+  rules:
+    - host: {{ .Values.global.externalUrlEs }}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: elasticsearch
+            servicePort: 9200
+  tls:
+   - secretName: {{ .Values.global.tlssecret }}
+     hosts:
+     - {{ .Values.global.externalUrlEs }}
