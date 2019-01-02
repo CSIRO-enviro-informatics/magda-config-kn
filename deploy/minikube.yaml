@@ -97,12 +97,4 @@ test-chart:
     type: NodePort
     nodePorts:
       http: 30888
-  vhost: |-
-    server {
-      listen 0.0.0.0:8080;
-      default_type text/plain;
-      location / {
-        return 200 "This is a KN test-chart!";
-      }
-    }
   

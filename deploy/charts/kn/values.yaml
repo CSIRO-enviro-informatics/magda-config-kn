@@ -24,3 +24,42 @@ tags:
   ingress: false
   connectors: true
   test-chart: true
+
+magda:
+  gateway:
+    routes:
+      search:
+        to: http://search-api/v0
+      registry:
+        to: http://registry-api-read-only/v0
+      registry-auth:
+        to: http://registry-api/v0
+        auth: true
+      auth:
+        to: http://authorization-api/v0/public
+        auth: true
+      admin:
+        to: http://admin-api/v0
+        auth: true
+      content:
+        to: http://content-api/v0
+      correspondence:
+        to: http://correspondence-api/v0/public
+      apidocs:
+        to: http://apidocs-server/
+        redirectTrailingSlash: true
+      test-chart:
+        to: http://test-chart
+
+test-chart:
+  vhost: |-
+    server {
+      listen 0.0.0.0:8080;
+      default_type text/plain;
+      location / {
+        return 200 "This is a KN test-chart!";
+      }
+      location /test-api {
+        return 200 "test api2 : This is a KN test-chart test api!";
+      }
+    }
