@@ -65,7 +65,7 @@ tags:
 magda:
   gateway:
     image:
-      repository: "gcr.io/knowledge-network-192205/data61"
+      repository: "gcr.io/knowledge-network-192205/staging/magda"
       tag: "0.0.50-RC2"
     enableAuthEndpoint: true
     service:
@@ -136,7 +136,7 @@ magda:
     
   web-server:
     image:
-      repository: "gcr.io/knowledge-network-192205/data61"
+      repository: "gcr.io/knowledge-network-192205/staging/magda"
       tag: "0.0.50-RC2"
     fallbackUrl: "https://data.gov.au"
     useLocalStyleSheet: true
