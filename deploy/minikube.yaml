@@ -56,6 +56,10 @@ tags:
   ## A extra test chart that is maintained outside magda project
   test-chart: true
 
+  ## KN ingress should be disabled by default for local deployment
+  kn-ingress: false
+  kn-es-ingress: false
+
 magda:
   gateway:
     image:

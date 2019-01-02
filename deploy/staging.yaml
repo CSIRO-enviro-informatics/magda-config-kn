@@ -1,43 +1,19 @@
 global:
-  externalUrlkn: staging.knowledgenet.co
-  externalUrl: http://staging.knowledgenet.co
-  externalUrlEs: staging-es.knowledgenet.co
-  tlssecret: knco-tls-secret
-
-## Whether to expose the node ports of the pods in the cluster - useful for
-  ## development, because it allows you to connect directly to pods without using
-  ## kubectl port-forwad
-  exposeNodePorts: false
-  ## How to handle rolling updates during a deployment. If set to 0, kubernetes
-  ## will happily take down pods while it replaces them (useful for dev setups).
-  ## If set to 1, kubernetes will make sure one pod is available to take requests
-  ## during upgrades. 0 by default.
+  externalUrlkn: staging-test.knowledgenet.co
+  externalUrl: http://staging-test.knowledgenet.co
+  # tlssecret: knco-tls-secret
   rollingUpdate:
-    maxUnavailable: 0
-
+    maxUnavailable: 1
+  exposeNodePorts: false
  # All modules except web-server & gateway should use magda offical image
  # Here, if unspecified, the following default value will be used:
   image:
     repository: data61 # magda docker hub repo
     tag: 0.0.50-RC2  # This version will be increased when magda releases a new version
     pullPolicy: IfNotPresent
-
-## Whether to used the combined db - if this is true all the databases used
-  ## by magda will be consolidated into a single pod. If it's false, they'll
-  ## all run in separate pods unless some managed postgres solution (e.g.
-  ## useCloudSql) is specified elsewhere.
-  ## Running in separate pods scales better, but requires more resources
-  useCombinedDb: false
-
-## Whether to use the Google Cloud SQL managed postgres solution. Only set
-  ## this to true if you already have cloud sql set up and be sure to look at
-  ## settings for the cloud-sql-proxy service below.
-  useCloudSql: true
-
-## Whether to enable kubernetes liveness probes - these continually hit pods in
-  ## order to see whether they're still alive and restart them upon too many failures.
-  ## This is essential for prod, but tends to create a lot of overhead in development
-  enableLivenessProbes: true
+  noDbAuth: true
+  useCloudSql: false
+  useCombinedDb: true
 
 ## Tags allow for services to be turned on and off on the fly... e.g. if you don't need
 ## to send emails, turn the correspondence-api off
@@ -82,29 +58,131 @@ tags:
   ## A extra test chart that is maintained outside magda project
   test-chart: true
 
+  ## KN ingress should be disabled by default for local deployment
+  kn-ingress: false
+  kn-es-ingress: false
+
 magda:
   gateway:
     image:
-      repository: "localhost:5000/data61"
+      repository: "gcr.io/knowledge-network-192205/data61"
       tag: "latest"
     enableAuthEndpoint: true
+    service:
+      type: LoadBalancer
     cors:
       credentials: true
       origin: true
     auth:
       facebookClientId: ""
-      googleClientId: "667942079301-49aomsf5l1i8tc5amdot6ck96e1d84c6.apps.googleusercontent.com"
-      aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/IeiWdzrJ47-eSowf3rfLTQ"
+      googleClientId: "1049152486192-egoid2mcksouu0cofe326hdb2asuvrc9.apps.googleusercontent.com"
+      aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/7xVQiC5TJXrzzkljNmFeeg"
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 200m
+        memory: 250Mi
+
+  elasticsearch:
+    client:
+        replicas: 2
+        heapSize: 900m
+        resources:
+            requests:
+                cpu: 200m
+                memory: 1500Mi
+    data:
+        heapSize: 3000m
+        resources:
+            requests:
+                cpu: 800m
+                memory: 5000Mi
+  
+  indexer:
+    logLevel: INFO
+    replicas: 1
+    resources:
+        requests:
+            cpu: 200m
+            memory: 5000Mi
+
+  preview-map:
+    resources:
+      requests:
+        cpu: 0
+        memory: 0
+      limits:
+        cpu: 200m
+        memory: 150Mi
+
 
   registry-api:
-    skipAuthorization: true
+    #skipAuthorization: true
+    logLevel: INFO
+    requests:
+        cpu: 500m
+        memory: 3000Mi
+
+  search-api:
+    replicas: 2
+    requests:
+        cpu: 250m
+        memory: 200Mi
+    limits:
+        cpu: 1000m
+        memory: 1000m
     
   web-server:
     image:
-      repository: "localhost:5000/data61"
+      repository: "gcr.io/knowledge-network-192205/data61"
       tag: "latest"
     fallbackUrl: "https://data.gov.au"
     useLocalStyleSheet: true
+    resources:
+      requests:
+        cpu: 0
+        memory: 0
+      limits:
+        cpu: 200m
+        memory: 150Mi
+
+  authorization-api:
+    resources:
+      requests:
+        cpu: 0
+        memory: 0
+      limits:
+        cpu: 200m
+        memory: 150Mi
+
+  minion-linked-data-rating:
+    resources:
+      requests:
+        cpu: 0
+        memory: 0
+      limits:
+        cpu: 200m
+        memory: 150Mi
+
+  minion-broken-link:
+    resources:
+      requests:
+        cpu: 0
+        memory: 0
+      limits:
+        cpu: 200m
+        memory: 150Mi
+
+  minion-visualization:
+    resources:
+      requests:
+        cpu: 0
+        memory: 0
+      limits:
+        cpu: 200m
+        memory: 300Mi
 
   connectors:
     includeCronJobs: false
@@ -118,17 +196,4 @@ magda:
         schedule: 30 3 */3 * *
         ignoreHarvestSources: []
 
-test-chart:
-  service:
-    type: NodePort
-    nodePorts:
-      http: 30888
-  vhost: |-
-    server {
-      listen 0.0.0.0:8080;
-      default_type text/plain;
-      location / {
-        return 200 "This is a KN test-chart!";
-      }
-    }
   

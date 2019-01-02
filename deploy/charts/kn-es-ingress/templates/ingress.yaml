@@ -28,7 +28,9 @@ spec:
           backend:
             serviceName: elasticsearch
             servicePort: 9200
+  {{- if .Values.global.tlssecret }}
   tls:
    - secretName: {{ .Values.global.tlssecret }}
      hosts:
      - {{ .Values.global.externalUrlEs }}
+  {{- end }}

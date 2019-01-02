@@ -15,7 +15,9 @@ spec:
           serviceName: gateway
           servicePort: 80
         path: /
+  {{- if .Values.global.tlssecret }}
   tls:
   - secretName: {{ .Values.global.tlssecret }}
     hosts:
     - {{ .Values.global.externalUrlkn }}
+  {{- end }}
