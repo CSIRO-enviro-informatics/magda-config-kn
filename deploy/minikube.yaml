@@ -92,9 +92,4 @@ magda:
         schedule: 30 3 */3 * *
         ignoreHarvestSources: []
 
-test-chart:
-  service:
-    type: NodePort
-    nodePorts:
-      http: 30888
   
