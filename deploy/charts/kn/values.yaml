@@ -52,6 +52,8 @@ magda:
         to: http://test-chart
 
 test-chart:
+  service:
+    type: ClusterIP
   vhost: |-
     server {
       listen 0.0.0.0:8080;
