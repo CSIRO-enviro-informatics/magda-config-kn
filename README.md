@@ -74,7 +74,26 @@ helm repo add magda-io https://charts.magda.io
 helm repo update
 ```
 
-4.  For `minikube` or any local dev cluster only
+4.  Update KN chart dependencies
+
+```bash
+helm dep up deploy/charts/kn
+```
+
+This commandline will download (if it's a remote chart) / copy (if it's a local file system chart) all dependencies required for KN chart and make them available for `kn` chart deployment at directory `deploy/charts/kn/charts/`.
+
+You will need to re-run this commmand after modified the content of `test-chart` chart (deploy/charts/test-chart).
+
+Don't worry if you see something like:
+
+```
+...Unable to get an update from the "local" chart repository (http://localhost:8879/charts):
+        Get http://localhost:8879/charts/index.yaml: dial tcp [::1]:8879: connect: connection refused
+```
+
+The `localhost` charts repo is a default local test repo server comes with your helm installation. It's for testing your local chart repo. More details see [here](https://docs.helm.sh/helm/#helm-serve).
+
+5.  For `minikube` or any local dev cluster only
 
 Install local docker registry & registry proxy:
 
@@ -122,25 +141,110 @@ If you want to turn on / off a component, just edit the `tags` section in [deplo
 
 3.  Access Knowledge Network instance
 
--   Access Knowledge Network instance:
-
 By default, the gateway service is exposed via `NodePort` for local deployed instance. You can access via:
 
 `http://192.168.99.100:30100`
 
 You should see `Knowledge Network` web UI once access the URL above.
 
--   Access `test-chart` demo `nginx` service:
+4.  Access `test-chart` demo `nginx` service:
 
-By default, the `test-chart` demo `nginx` service is exposed via `NodePort` for local deployed instance. You can access via:
+The `test-chart` is exposed via `gateway`.
 
-`http://192.168.99.100:30888`
+-   Endpoint `/` can be accessed via:
+    -   `http://192.168.99.100:30100/api/v0/test-chart`
 
 You should see the followings on the page:
 
 ```html
 This is a KN test-chart!
 ```
+
+-   Endpoint `/test-api` can be accessed via:
+    -   `http://192.168.99.100:30100/api/v0/test-chart/test-api`
+
+You should see the followings on the page:
+
+```html
+test api2 : This is a KN test-chart test api!
+```
+
+5.  If you want to attach `test-chart` service to a different url path...
+
+You can attach `test-chart` service to a different url path throught gateway config.
+
+To do so, you can edit `deploy/charts/kn/values.yaml` (you can also overwrite it from `deploy/minikube.yaml` as well):
+
+Change the followings:
+
+```yaml
+magda:
+  gateway:
+    routes:
+      search:
+        to: http://search-api/v0
+      registry:
+        to: http://registry-api-read-only/v0
+      registry-auth:
+        to: http://registry-api/v0
+        auth: true
+      auth:
+        to: http://authorization-api/v0/public
+        auth: true
+      admin:
+        to: http://admin-api/v0
+        auth: true
+      content:
+        to: http://content-api/v0
+      correspondence:
+        to: http://correspondence-api/v0/public
+      apidocs:
+        to: http://apidocs-server/
+        redirectTrailingSlash: true
+      test-chart:
+        to: http://test-chart
+```
+
+to :
+
+```yaml
+magda:
+  gateway:
+    routes:
+      search:
+        to: http://search-api/v0
+      registry:
+        to: http://registry-api-read-only/v0
+      registry-auth:
+        to: http://registry-api/v0
+        auth: true
+      auth:
+        to: http://authorization-api/v0/public
+        auth: true
+      admin:
+        to: http://admin-api/v0
+        auth: true
+      content:
+        to: http://content-api/v0
+      correspondence:
+        to: http://correspondence-api/v0/public
+      apidocs:
+        to: http://apidocs-server/
+        redirectTrailingSlash: true
+      test-chart-access:
+        to: http://test-chart
+```
+
+Once saved this file, just re-deploy via:
+
+```bash
+helm upgrade magda-kn deploy/charts/kn --wait --namespace kn --timeout 30000 --install -f deploy/minikube.yaml --devel
+```
+
+Then, the `test-chart` service will be available from the following new urls:
+
+-   `http://192.168.99.100:30100/api/v0/test-chart-access`
+-   `http://192.168.99.100:30100/api/v0/test-chart-access/test-api`
 
 ## Deploy to Staging Site / Google Cloud
 
