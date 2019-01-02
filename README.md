@@ -57,15 +57,17 @@ magda-create-secrets tool
 ? Do you want to create facebook-client-secret for oAuth SSO? NO
 ? Do you want to manually input the password used for databases? Generated password: up3Saeshusoequoo
 ? Specify a namespace or leave blank and override by env variable later? YES (Specify a namespace)
-? What's the namespace you want to create secrets into (input `default` if you want to use the `default` namespace)? default
+? What's the namespace you want to create secrets into (input `default` if you want to use the `default` namespace)? kn
 ? Do you want to allow environment variables (see --help for full list) to override current settings at runtime? YES (Any environment variable can ove
 ride my settings)
 ? Do you want to connect to kubernetes cluster to create secrets now? YES (Create Secrets in Cluster now)
-Successfully created secret `smtp-secret` in namespace `default`.
-Successfully created secret `db-passwords` in namespace `default`.
-Successfully created secret `auth-secrets` in namespace `default`.
+Successfully created secret `smtp-secret` in namespace `kn`.
+Successfully created secret `db-passwords` in namespace `kn`.
+Successfully created secret `auth-secrets` in namespace `kn`.
 All required secrets have been successfully created!
 ```
+
+**Please note: you can choose any namespace (rather than `kn`) here. But if you use a different namespace. You need to adjust `helm update` command used in step 2 below with correct namespace.**
 
 3.  Add the magda chart repo to helm
 
@@ -134,6 +136,8 @@ yarn docker-build-local
 ```bash
 helm upgrade magda-kn deploy/charts/kn --wait --namespace kn --timeout 30000 --install -f deploy/minikube.yaml --devel
 ```
+
+**Please note: --namespace paremeter need to be same as the one you supplied to `create-secrets` tool. If you picked a different namespace rather than `kn`, you need to adjust the command above accordingly.**
 
 This will take a while for it to get everything set up. If you want to watch progress, run `kubectl get pods -w` in another terminal.
 
@@ -240,6 +244,8 @@ Once saved this file, just re-deploy via:
 ```bash
 helm upgrade magda-kn deploy/charts/kn --wait --namespace kn --timeout 30000 --install -f deploy/minikube.yaml --devel
 ```
+
+**Please note: --namespace paremeter need to be same as the one you supplied to `create-secrets` tool. If you picked a different namespace rather than `kn`, you need to adjust the command above accordingly.**
 
 Then, the `test-chart` service will be available from the following new urls:
 
