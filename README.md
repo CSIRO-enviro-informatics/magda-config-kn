@@ -1,13 +1,14 @@
 # Magda Knowledge Network Config
 
-This is a simple guide that allows you to quickly set up a Knowledge Network instance. 
+This is a simple guide that allows you to quickly set up a Knowledge Network instance.
 
 # Overview
 
 Knowledge Network application has been packaged as [Helm Charts](https://docs.helm.sh/developing_charts/) and its structure is:
-- `kn` Chart ([deploy/charts/kn](deploy/charts/kn)): Knowledge Network Application top level helm chart. You can deploy a Knowledge Network instance using this chart and config it via a `values` file. (e.g. [deploy/minikube.yaml](deploy/minikube.yaml))
-  - [magda](https://github.com/magda-io/magda): `kn` chart's dependency. We use `magda`'s published version helm chart at: https://charts.magda.io
-  - `test-chart` Chart ([deploy/charts/test-chart](deploy/charts/test-chart)): `kn` chart's dependency. A demo nginx to show-case how you include extra component / chart with `magda`.
+
+-   `kn` Chart ([deploy/charts/kn](deploy/charts/kn)): Knowledge Network Application top level helm chart. You can deploy a Knowledge Network instance using this chart and config it via a `values` file. (e.g. [deploy/minikube.yaml](deploy/minikube.yaml))
+    -   [magda](https://github.com/magda-io/magda): `kn` chart's dependency. We use `magda`'s published version helm chart at: https://charts.magda.io
+    -   `test-chart` Chart ([deploy/charts/test-chart](deploy/charts/test-chart)): `kn` chart's dependency. A demo nginx to show-case how you include extra component / chart with `magda`.
 
 For details, please check `kn` chart's dependency declaration file: [deploy/charts/kn/requirements.yaml](deploy/charts/kn/requirements.yaml)
 
@@ -36,11 +37,11 @@ helm init --service-account tiller
 2.  Run the create secrets script in a command line and follow the prompts
 
 ```bash
-    ./create-secrets/index-linux
+    ./deploy/create-secrets/index-linux
     # OR
-    ./create-secrets/index-macos
+    ./deploy/create-secrets/index-macos
     # OR
-    create-secrets\index.win.exe
+    deploy/create-secrets\index.win.exe
 ```
 
 Output should look something like so:
@@ -104,7 +105,7 @@ yarn install
 yarn build
 # Set docker ENV variables for your current terminal
 eval $(minikube docker-env)
-# build docker images (using minikube docker daemon) 
+# build docker images (using minikube docker daemon)
 # & push into the local docker registry in minikube cluster
 yarn docker-build-local
 ```
@@ -119,10 +120,9 @@ This will take a while for it to get everything set up. If you want to watch pro
 
 If you want to turn on / off a component, just edit the `tags` section in [deploy/minikube.yaml](deploy/minikube.yaml) and re-deploy using the `helm upgrade` command above again.
 
+3.  Access Knowledge Network instance
 
-3. Access Knowledge Network instance
-
-- Access Knowledge Network instance:
+-   Access Knowledge Network instance:
 
 By default, the gateway service is exposed via `NodePort` for local deployed instance. You can access via:
 
@@ -130,7 +130,7 @@ By default, the gateway service is exposed via `NodePort` for local deployed ins
 
 You should see `Knowledge Network` web UI once access the URL above.
 
-- Access `test-chart` demo `nginx` service:
+-   Access `test-chart` demo `nginx` service:
 
 By default, the `test-chart` demo `nginx` service is exposed via `NodePort` for local deployed instance. You can access via:
 
