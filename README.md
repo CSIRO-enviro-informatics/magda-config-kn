@@ -276,7 +276,7 @@ In order to push images to GKE registry, you need to authenticate to the Contain
 
 #### Use Docker credential helper
 
-1.  Make sure your `docker` client is newer than 18.03 or above.
+##### 1. Make sure your `docker` client is newer than 18.03 or above.
 
 A bug in earlier versions of the Docker client slows down docker builds dramatically when credential helpers are configured.
 
@@ -286,7 +286,7 @@ You can check your docker client version by:
 docker --version
 ```
 
-2.  Upgrade your `gcloud` toolkit to the latest version.
+##### 2. Upgrade your `gcloud` toolkit to the latest version.
 
 ```bash
 gcloud components update
@@ -294,7 +294,7 @@ gcloud components update
 
 You may need admin privilege to run this command.
 
-3.  Make sure `docker-credential-gcr` is installed with your `gcloud` toolkit by list all components with version:
+##### 3. Make sure `docker-credential-gcr` is installed with your `gcloud` toolkit by list all components with version:
 
 ```bash
 gcloud components list
@@ -308,7 +308,7 @@ gcloud components install docker-credential-gcr
 
 You may need admin privilege to run this command.
 
-4.  Configure docker to authenticate using credential helpers
+##### 4. Configure docker to authenticate using credential helpers
 
 **You will only need to run this once:**
 
@@ -325,7 +325,7 @@ This command will make docker authenticate using credential helpers for hosts:
 -   staging-k8s.gcr.io
 -   marketplace.gcr.io
 
-5.  Build & Push images
+##### 5. Build & Push images
 
 Go to the project root, and run:
 
@@ -403,13 +403,13 @@ Where [secret value] is the `base64 encoded` `aaf-client-secret`.
 
 Go to project root and run:
 
-1.  Update KN chart dependencies:
+#### 1. Update KN chart dependencies:
 
 ```bash
 helm dep up deploy/charts/kn
 ```
 
-2.
+##### 2. Deploy
 
 ```bash
 helm upgrade magda-kn-test-deployment deploy/charts/kn --wait --namespace test-kn-chart --timeout 30000 --install -f deploy/staging.yaml --devel
@@ -433,7 +433,7 @@ Where:
 
 As the test staging site was deployed without the domain certificate ( and assume you can't add a domain DNS record for your sub domain), you need extra steps to access your `test` staging site locally.
 
-1.  Add domain to your local `hosts` file
+#### 1. Add domain to your local `hosts` file
 
 You need to add domains `staging-test.knowledgenet.co` & `staging-test-es.knowledgenet.co` to your local `hosts` file (so that those domains can be resolved properly on your local computer):
 
@@ -452,7 +452,7 @@ The `hosts` file is located at:
     -   Edit the copy on your desktop
     -   Copy it back to `c:\Windows\System32\Drivers\etc\hosts`
 
-2.  Access using google chrome
+#### 2. Access using google chrome
 
 If use google chrome, please use incognito window /tab to access the URL to avoid being redirected to HTTPS url (which is not available)
 
