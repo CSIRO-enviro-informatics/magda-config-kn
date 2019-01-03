@@ -262,4 +262,7 @@ http://staging-test-es.knowledgenet.co/datasets38/_search
 KN test access URL:
 http://staging-test.knowledgenet.co/datasets38/_search
 
+KN demo test chart URL:
+http://staging-test.knowledgenet.co/api/v0/test-chart/test-api
+
 To be continue...
