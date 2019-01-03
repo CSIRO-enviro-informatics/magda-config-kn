@@ -25,13 +25,13 @@ tags:
   ## combined-db and the databases that you are using (e.g. authorization-db) to true.
   ## You can find explanations of what each of these are below
   admin-api: false
-  apidocs-server: true
+  apidocs-server: false
   authorization-api: true
   authorization-db: true
-  # cloud-sql-proxy: true
+  cloud-sql-proxy: false
   combined-db: true
-  content-db: true
-  content-api: true
+  content-db: false
+  content-api: false
   correspondence-api: false
   elasticsearch: true
   gateway: true
@@ -87,26 +87,28 @@ magda:
 
   elasticsearch:
     client:
-        replicas: 2
-        heapSize: 900m
-        resources:
-            requests:
-                cpu: 200m
-                memory: 1500Mi
+      replicas: 2
+      heapSize: 900m
+      resources:
+        requests:
+          cpu: 200m
+          memory: 1500Mi
     data:
-        heapSize: 3000m
-        resources:
-            requests:
-                cpu: 800m
-                memory: 5000Mi
+      heapSize: 3000m
+      resources:
+        limits:
+          cpu: 800m
+        requests:
+          cpu: 800m
+          memory: 5000Mi
   
   indexer:
     logLevel: INFO
     replicas: 1
     resources:
-        requests:
-            cpu: 200m
-            memory: 5000Mi
+      requests:
+        cpu: 200m
+        memory: 5000Mi
 
   preview-map:
     resources:
@@ -122,17 +124,17 @@ magda:
     #skipAuthorization: true
     logLevel: INFO
     requests:
-        cpu: 500m
-        memory: 3000Mi
+      cpu: 500m
+      memory: 3000Mi
 
   search-api:
     replicas: 2
     requests:
-        cpu: 250m
-        memory: 200Mi
+      cpu: 250m
+      memory: 200Mi
     limits:
-        cpu: 1000m
-        memory: 1000m
+      cpu: 1000m
+      memory: 1000m
     
   web-server:
     image:
@@ -185,7 +187,7 @@ magda:
         memory: 300Mi
 
   connectors:
-    includeCronJobs: false
+    includeCronJobs: true
     config:
       - image:
           name: magda-dap-connector
