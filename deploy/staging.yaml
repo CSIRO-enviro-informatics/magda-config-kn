@@ -1,5 +1,6 @@
 global:
   externalUrlkn: staging-test.knowledgenet.co
+  externalUrlEs: staging-test-es.knowledgenet.co
   externalUrl: http://staging-test.knowledgenet.co
   # tlssecret: knco-tls-secret
   rollingUpdate:
@@ -59,8 +60,8 @@ tags:
   test-chart: true
 
   ## KN ingress should be disabled by default for local deployment
-  kn-ingress: false
-  kn-es-ingress: false
+  kn-ingress: true
+  kn-es-ingress: true
 
 magda:
   gateway:
