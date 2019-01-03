@@ -254,4 +254,10 @@ Then, the `test-chart` service will be available from the following new urls:
 
 ## Deploy to Staging Site / Google Cloud
 
+Es search test access URL:
+http://staging-test-es.knowledgenet.co/datasets38/_search
+
+KN test access URL:
+http://staging-test.knowledgenet.co/datasets38/_search
+
 To be continue...
