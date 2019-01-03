@@ -254,6 +254,8 @@ Then, the `test-chart` service will be available from the following new urls:
 
 ## Deploy to Staging Site / Google Cloud
 
+If use google chrome, please use incognito window /tab to access the URL to avoid being redirected to HTTPS url (which is not available)
+
 Es search test access URL:
 http://staging-test-es.knowledgenet.co/datasets38/_search
 
