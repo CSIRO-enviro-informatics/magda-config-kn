@@ -252,7 +252,207 @@ Then, the `test-chart` service will be available from the following new urls:
 -   `http://192.168.99.100:30100/api/v0/test-chart-access`
 -   `http://192.168.99.100:30100/api/v0/test-chart-access/test-api`
 
-## Deploy to Staging Site / Google Cloud
+## Deploy to Google Cloud: Test Staging Site
+
+This section provides the instruction for deploying a `test` staging site.
+
+The `test` staging site will operate over HTTP (rather than HTTPS) and behind the domains `staging-test.knowledgenet.co` & `staging-test-es.knowledgenet.co` (you need to modify your local `hosts` file to access the domain).
+
+This type of deployment is for testing a KN vevsion when you:
+
+-   Can't add a domain DNS record for your test sub-domain
+-   Can't generate a certificate for your test sub-domain
+
+If the two points above are not a problem for you, you can simply setup a `HTTPS` instance by providing correct `global.tlssecret` value (name of the certifcate secret) when you deploy via `helm`.
+
+### Build & Push Docker Image to GKE registry
+
+In order to push images to GKE registry, you need to authenticate to the Container Registry. Here, we will provide two options:
+
+-   Use Docker credential helper
+    -   This method is more for pushing image from your local computer. You only need to setup once.
+-   Using a JSON key file
+    -   This method is more appropriate for a CI environment.
+
+#### Use Docker credential helper
+
+1.  Make sure your `docker` client is newer than 18.03 or above.
+
+A bug in earlier versions of the Docker client slows down docker builds dramatically when credential helpers are configured.
+
+You can check your docker client version by:
+
+```bash
+docker --version
+```
+
+2.  Upgrade your `gcloud` toolkit to the latest version.
+
+```bash
+gcloud components update
+```
+
+You may need admin privilege to run this command.
+
+3.  Make sure `docker-credential-gcr` is installed with your `gcloud` toolkit by list all components with version:
+
+```bash
+gcloud components list
+```
+
+If it's not installed, install it via:
+
+```bash
+gcloud components install docker-credential-gcr
+```
+
+You may need admin privilege to run this command.
+
+4.  Configure docker to authenticate using credential helpers
+
+**You will only need to run this once:**
+
+```bash
+gcloud auth configure-docker
+```
+
+This command will make docker authenticate using credential helpers for hosts:
+
+-   gcr.io
+-   us.gcr.io
+-   eu.gcr.io
+-   asia.gcr.io
+-   staging-k8s.gcr.io
+-   marketplace.gcr.io
+
+5.  Build & Push images
+
+Go to the project root, and run:
+
+```bash
+yarn build
+```
+
+to build all modules if you haven't done so.
+
+And then:
+
+```bash
+yarn docker-build-staging
+```
+
+This will push images to staging repository `gcr.io/knowledge-network-192205/staging/magda/[module name]:[Vesion Tag]`.
+
+You also can run:
+
+```bash
+yarn docker-build-prod
+```
+
+to push images to prod repository `gcr.io/knowledge-network-192205/prod/magda/[module name]:[Vesion Tag]`.
+
+#### Using a JSON key file
+
+Create a service account that has access to the GKE registry and download the service account JSON key file.
+
+You can login to the registry in your CI via:
+
+```bash
+cat keyfile.json | docker login -u _json_key --password-stdin https://[HOSTNAME]
+```
+
+where [HOSTNAME] is `gcr.io`, `us.gcr.io`, `eu.gcr.io`, or `asia.gcr.io`.
+
+### Deploy to GKE
+
+#### Create your namespace for deployment (for new deployment)
+
+You can create a new namespace (e.g. test-kn-chart) for your deployment:
+
+```bash
+kubectl create namespace test-kn-chart
+```
+
+#### Create Secrets
+
+Run the create secrets script in a command line and follow the prompts
+
+```bash
+    ./deploy/create-secrets/index-linux
+    # OR
+    ./deploy/create-secrets/index-macos
+    # OR
+    deploy/create-secrets\index.win.exe
+```
+
+Currently, the create secrets tool will not create secret for `aaf-client`.
+
+You can edit the `oauth-secrets` secret in your namespace to add this secret:
+
+```bash
+kubectl --namespace test-kn-chart edit secret oauth-secrets
+```
+
+where `test-kn-chart` is the namespace name.
+
+You add a line `aaf-client-secret: [secret value]` under `data` section.
+
+Where [secret value] is the `base64 encoded` `aaf-client-secret`.
+
+#### Deploy using helm
+
+Go to project root and run:
+
+1.  Update KN chart dependencies:
+
+```bash
+helm dep up deploy/charts/kn
+```
+
+2.
+
+```bash
+helm upgrade magda-kn-test-deployment deploy/charts/kn --wait --namespace test-kn-chart --timeout 30000 --install -f deploy/staging.yaml --devel
+```
+
+Where `magda-kn-test-deployment` is the helm release name and `test-kn-chart` is the namespace name.
+
+This will setup a HTTP instance. If you want to deploy a proper HTTPS instance, you need to supply the domain certificate secret name (and desired domains) to helm:
+
+```bash
+elm upgrade magda-kn-test-deployment deploy/charts/kn --wait --namespace test-kn-chart --timeout 30000 --install -f deploy/staging.yaml --devel --set global.tlssecret=[certificate secret name] --set global.externalUrlkn=[kn domain name] --set global.externalUrlEs=[kn es domain name]
+```
+
+Where:
+
+-   [certificate secret name] is the domain certificate secret name. Default value is empty (If it's empty, instance will be operated over HTTP).
+-   [kn domain name] is the kn instance access domain name. Default value is `staging-test.knowledgenet.co`
+-   [kn es domain name] is the kn instance elasticsearch access domain name. Default value is `staging-test-es.knowledgenet.co`
+
+### Access the test Staging site
+
+As the test staging site was deployed without the domain certificate ( and assume you can't add a domain DNS record for your sub domain), you need extra steps to access your `test` staging site locally.
+
+1.  Add domain to your local `hosts` file
+
+You need to add domains `staging-test.knowledgenet.co` & `staging-test-es.knowledgenet.co` to your local `hosts` file (so that those domains can be resolved properly on your local computer):
+
+```
+35.201.0.106 staging-test.knowledgenet.co
+35.201.0.106 staging-test-es.knowledgenet.co
+```
+
+Where, `35.201.0.106` is the Nginx ingress controller IP.
+
+The `hosts` file is located at:
+
+-   On Macos / linux: `/etc/hosts`
+-   On Windows:
+    -   Copy `c:\Windows\System32\Drivers\etc\hosts` to Your Desktop (To avoid the access trouble when you try direct access it)
+    -   Edit the copy on your desktop
+    -   Copy it back to `c:\Windows\System32\Drivers\etc\hosts`
+
+2.  Access using google chrome
 
 If use google chrome, please use incognito window /tab to access the URL to avoid being redirected to HTTPS url (which is not available)
 
@@ -260,9 +460,7 @@ Es search test access URL:
 http://staging-test-es.knowledgenet.co/datasets38/_search
 
 KN test access URL:
-http://staging-test.knowledgenet.co/datasets38/_search
+http://staging-test.knowledgenet.co
 
 KN demo test chart URL:
 http://staging-test.knowledgenet.co/api/v0/test-chart/test-api
-
-To be continue...
