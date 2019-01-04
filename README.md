@@ -420,7 +420,7 @@ Where `magda-kn-test-deployment` is the helm release name and `test-kn-chart` is
 This will setup a HTTP instance. If you want to deploy a proper HTTPS instance, you need to supply the domain certificate secret name (and desired domains) to helm:
 
 ```bash
-elm upgrade magda-kn-test-deployment deploy/charts/kn --wait --namespace test-kn-chart --timeout 30000 --install -f deploy/staging.yaml --devel --set global.tlssecret=[certificate secret name] --set global.externalUrlkn=[kn domain name] --set global.externalUrlEs=[kn es domain name]
+helm upgrade magda-kn-test-deployment deploy/charts/kn --wait --namespace test-kn-chart --timeout 30000 --install -f deploy/staging.yaml --devel --set global.tlssecret=[certificate secret name] --set global.externalUrlkn=[kn domain name] --set global.externalUrlEs=[kn es domain name]
 ```
 
 Where:
