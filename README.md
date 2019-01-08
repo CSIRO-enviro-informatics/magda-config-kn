@@ -108,9 +108,16 @@ helm repo update
 
 -   Install
 
+Install local docker registry:
+
 ```bash
-helm install --name docker-registry -f deploy/docker-registry/docker-registry.yml stable/docker-registry
-helm install --name kube-registry-proxy -f deploy/docker-registry/kube-registry-proxy.yml incubator/kube-registry-proxy
+helm install --name docker-registry stable/docker-registry --set persistence.enabled=true --set persistence.storageClass=standard
+```
+
+Install local docker registry proxy:
+
+```bash
+helm install --name kube-registry-proxy incubator/kube-registry-proxy --set registry.host=docker-registry --set registry.port=5000 --set hostPort=5000
 ```
 
 ## Deploy to Minikube
