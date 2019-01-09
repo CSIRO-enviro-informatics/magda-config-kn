@@ -18,17 +18,32 @@ export default function aaf(options: aafOptions) {
     const authorizationApi = options.authorizationApi;
     const passport = options.passport;
     const aafClientUri = options.aafClientUri;
-    const aafClientSecret = options.aafClientSecret;
+
+    /**
+     * Many base64 ultiliy will add a trailing \n to encoded content
+     * Just in case the secret has a trailing \n
+     * Using trim to remove it.
+     * Make sure aafClientSecret is a string to avoid `no toString method`
+     * error from jwt.decode
+     */
+    const aafClientSecret = (options.aafClientSecret
+        ? "" + options.aafClientSecret
+        : ""
+    ).trim();
+
     const aafSuccessRedirect = `${
         options.externalUrl
     }/sign-in-redirect?redirectTo=/`;
     const aafFailRedirect = `${
         options.externalUrl
     }/sign-in-redirect?redirectTo=/signin`;
-    // const loginBaseUrl = `${externalAuthHome}/login`;
 
     if (!aafClientUri) {
         return undefined;
+    }
+
+    if (!aafClientSecret) {
+        console.log("aafClientSecret is empty!");
     }
 
     passport.use(
