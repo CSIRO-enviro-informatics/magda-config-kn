@@ -203,6 +203,10 @@ const argv = addJwtSecretFromEnvVar(
         }).argv
 );
 
+const routes = _.isEmpty(argv.proxyRoutesJson)
+    ? defaultConfig.proxyRoutes
+    : argv.proxyRoutesJson;
+
 const authenticator = new Authenticator({
     sessionSecret: argv.sessionSecret,
     dbHost: argv.dbHost,
@@ -270,8 +274,6 @@ if (argv.enableAuthEndpoint) {
         })
     );
 }
-
-const routes = _.merge({}, defaultConfig.proxyRoutes, argv.proxyRoutesJson);
 
 app.use(
     "/api/v0",
