@@ -98,6 +98,9 @@ function doK8sExecution(config, shouldNotAsk = false) {
                 "credentials.json",
                 configData["cloudsql-instance-credentials"]["data"]
             );
+            createSecret(env, namespace, "cloudsql-db-credentials", {
+                password: configData["cloudsql-db-credentials"]
+            });
         }
 
         if (configData["use-storage-account-credentials"] === true) {
@@ -139,7 +142,8 @@ function doK8sExecution(config, shouldNotAsk = false) {
 
         if (
             configData["use-oauth-secrets-google"] === true ||
-            configData["use-oauth-secrets-facebook"] === true
+            configData["use-oauth-secrets-facebook"] === true ||
+            configData["use-oauth-secrets-aaf"] === true
         ) {
             const data = {};
 
@@ -151,6 +155,10 @@ function doK8sExecution(config, shouldNotAsk = false) {
             if (configData["use-oauth-secrets-facebook"]) {
                 data["facebook-client-secret"] =
                     configData["oauth-secrets-facebook"];
+            }
+
+            if (configData["use-oauth-secrets-aaf"]) {
+                data["aaf-client-secret"] = configData["oauth-secrets-aaf"];
             }
 
             createSecret(env, namespace, "oauth-secrets", data);

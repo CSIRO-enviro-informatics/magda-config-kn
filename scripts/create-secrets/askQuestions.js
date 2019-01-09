@@ -52,6 +52,14 @@ const questions = [
         when: onlyAvailableForGoogleCloud
     },
     {
+        type: "input",
+        name: "cloudsql-db-credentials",
+        message: "Please provide default google cloud SQL service DB password:",
+        when: onlyWhenQuestion("use-cloudsql-instance-credentials", true),
+        validate: input =>
+            trim(input).length ? true : "Default password cannot be empty!"
+    },
+    {
         type: "list",
         dataType: "boolean",
         name: "reselect-cloudsql-instance-credentials",
@@ -335,6 +343,31 @@ const questions = [
         name: "oauth-secrets-facebook",
         message: "Please provide facebook api access key for oAuth SSO:",
         when: onlyWhenQuestion("use-oauth-secrets-facebook", true),
+        validate: input =>
+            trim(input).length ? true : "secret cannot be empty!"
+    },
+    {
+        type: "list",
+        dataType: "boolean",
+        name: "use-oauth-secrets-aaf",
+        message:
+            "Do you want to create aaf-client-secret for AAF Rapid Connect SSO?",
+        choices: [
+            {
+                name: "YES",
+                value: true
+            },
+            {
+                name: "NO",
+                value: false
+            }
+        ]
+    },
+    {
+        type: "input",
+        name: "oauth-secrets-aaf",
+        message: "Please provide AAF secret for AAF Rapid Connect SSO:",
+        when: onlyWhenQuestion("use-oauth-secrets-aaf", true),
         validate: input =>
             trim(input).length ? true : "secret cannot be empty!"
     },
