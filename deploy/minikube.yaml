@@ -73,7 +73,7 @@ magda:
     auth:
       facebookClientId: ""
       googleClientId: "667942079301-49aomsf5l1i8tc5amdot6ck96e1d84c6.apps.googleusercontent.com"
-      aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/pjJie6uG3YHVSHuTAXtsWg"
+      aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/wvGohZoeeN2SiYKBQ4T_kw"
 
   registry-api:
     skipAuthorization: true
