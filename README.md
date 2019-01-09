@@ -67,7 +67,7 @@ Successfully created secret `auth-secrets` in namespace `kn`.
 All required secrets have been successfully created!
 ```
 
-**Please note: you can choose any namespace (rather than `kn`) here. But if you use a different namespace. You need to adjust `helm update` command used in step 2 below with correct namespace.**
+**Please note: you can choose any namespace (rather than `kn`) here. But if you use a different namespace. You need to adjust `helm update` command below with correct namespace.**
 
 3.  Add the magda chart repo to helm
 
@@ -155,6 +155,10 @@ If you want to turn on / off a component, just edit the `tags` section in [deplo
 By default, the gateway service is exposed via `NodePort` for local deployed instance. You can access via:
 
 `http://192.168.99.100:30100`
+
+or `http://minikube.data.gov.au:30100`
+
+If you added an entry for `minikube.data.gov.au` in your `hosts`.
 
 You should see `Knowledge Network` web UI once access the URL above.
 
@@ -391,20 +395,6 @@ Run the create secrets script in a command line and follow the prompts
     # OR
     deploy/create-secrets\index.win.exe
 ```
-
-Currently, the create secrets tool will not create secret for `aaf-client`.
-
-You can edit the `oauth-secrets` secret in your namespace to add this secret:
-
-```bash
-kubectl --namespace test-kn-chart edit secret oauth-secrets
-```
-
-where `test-kn-chart` is the namespace name.
-
-You add a line `aaf-client-secret: [secret value]` under `data` section.
-
-Where [secret value] is the `base64 encoded` `aaf-client-secret`.
 
 #### Deploy using helm
 
