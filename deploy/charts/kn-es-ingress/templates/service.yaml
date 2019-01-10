@@ -1,0 +1,16 @@
+{{- if .Values.global.exposeNodePorts}} 
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-external-access
+spec:
+  selector:
+    component: elasticsearch
+  ports:
+  - name: http
+    port: 9200
+    targetPort: 9200
+    protocol: TCP
+    nodePort: 30920
+  type: "NodePort"
+{{- end }}

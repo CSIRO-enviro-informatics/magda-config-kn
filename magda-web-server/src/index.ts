@@ -35,6 +35,11 @@ const argv = yargs
         type: "string",
         required: true
     })
+    .option("externalAccessUrlEs", {
+        describe:
+            "The absolute base URL of the KN Elasticsearch, when accessed externally. Used for building sitemap URLs which must be absolute.",
+        type: "string"
+    })
     .option("registryApiBaseUrlInternal", {
         describe: "The url of the registry api for use within the cluster",
         type: "string",
@@ -120,6 +125,9 @@ const apiBaseUrl = addTrailingSlash(
 const webServerConfig = {
     disableAuthenticationFeatures: argv.disableAuthenticationFeatures,
     baseUrl: addTrailingSlash(argv.baseUrl),
+    externalAccessUrlEs: argv.externalAccessUrlEs
+        ? addTrailingSlash(argv.externalAccessUrlEs)
+        : "",
     apiBaseUrl: apiBaseUrl,
     contentApiBaseUrl: addTrailingSlash(
         argv.contentApiBaseUrl ||

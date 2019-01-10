@@ -1,5 +1,8 @@
 global:
+  externalUrlkn: minikube.knowledgenet.co
+  externalUrlEs: es.minikube.knowledgenet.co
   externalUrl: http://minikube.knowledgenet.co:30100
+  externalAccessUrlEs: http://es.minikube.knowledgenet.co:39200
   rollingUpdate:
     maxUnavailable: 1
   exposeNodePorts: true
@@ -39,7 +42,7 @@ tags:
   registry-db: true
   search-api: true
   session-db: true
-  web-server: true
+  web-server: false
   connectors: true
 
   ## Whether to use an ingress, which is necessary for HTTPS and using the Google CDN with
@@ -58,7 +61,17 @@ tags:
 
   ## KN ingress should be disabled by default for local deployment
   kn-ingress: false
-  kn-es-ingress: false
+  kn-es-ingress: true
+
+  ## KN web server
+  kn-web-server: true
+
+kn-web-server:
+  image:
+    repository: "localhost:5000/magda"
+    tag: "latest"
+    pullPolicy: Always
+  useLocalStyleSheet: true
 
 magda:
   gateway:
@@ -77,14 +90,6 @@ magda:
 
   registry-api:
     skipAuthorization: true
-    
-  web-server:
-    image:
-      repository: "localhost:5000/magda"
-      tag: "latest"
-      pullPolicy: Always
-    fallbackUrl: "https://data.gov.au"
-    useLocalStyleSheet: true
 
   connectors:
     includeCronJobs: false

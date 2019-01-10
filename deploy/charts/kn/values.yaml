@@ -4,6 +4,7 @@ tags:
   admin-api: false
   authorization-api: true
   authorization-db: true
+  cloud-sql-proxy: false
   combined-db: true
   content-api: true
   content-db: true
@@ -20,12 +21,13 @@ tags:
   minion-linked-data-rating: false
   minion-visualization: false
   minion-format: true
-  web-server: true
+  web-server: false
   ingress: false
   connectors: true
   test-chart: true
-  kn-es-ingress: false
+  kn-es-ingress: true
   kn-ingress: false
+  kn-web-server: true
 
 magda:
   gateway:

@@ -2,15 +2,17 @@
 // const fallbackApiHost = 'http://adb009eba34b.k8s-dev.oznome.csiro.au/'
 // const fallbackApiHost = "http://kn-v2-staging.k8s-dev.oznome.csiro.au/"
 // const fallbackApiHost = "http://staging.knowledgenet.co/"
-const fallbackApiHost = "http://knowledgenet.co/";
+const fallbackApiHost = "https://knowledgenet.co/";
+const fallbackEsHost = "https://es.knowledgenet.co/";
 const serverConfig = window.magda_server_config || "";
 const registryApiUrl =
     serverConfig.registryApiBaseUrl || fallbackApiHost + "api/v0/registry/";
-const authApiUrl =
-    serverConfig.authApiBaseUrl || fallbackApiHost + "api/v0/auth/";
+const externalAccessUrlEs = serverConfig.externalAccessUrlEs || fallbackEsHost;
+
 const API = {
     baseUri: serverConfig || fallbackApiHost,
     authApiUrl: serverConfig.authApiBaseUrl || fallbackApiHost + "api/v0/auth/",
+    externalAccessUrlEs,
     datasetCount:
         registryApiUrl + "records?limit=0&aspect=dcat-dataset-strings",
     organisationsCount:
@@ -29,7 +31,7 @@ const API = {
     dataSource:
         registryApiUrl +
         "records?aspect=organization-details&optionalAspect=source&limit=20000",
-    elasticSearch: "https://es.knowledgenet.co/datasets32/_search"
+    elasticSearch: `${externalAccessUrlEs}datasets38/_search`
 };
 
 export default API;

@@ -2,6 +2,7 @@ global:
   externalUrlkn: staging-test.knowledgenet.co
   externalUrlEs: staging-test-es.knowledgenet.co
   externalUrl: http://staging-test.knowledgenet.co
+  externalAccessUrlEs: http://staging-test-es.knowledgenet.co
   # tlssecret: knco-tls-secret
   rollingUpdate:
     maxUnavailable: 1
@@ -42,7 +43,7 @@ tags:
   registry-db: true
   search-api: true
   session-db: true
-  web-server: true
+  web-server: false
   connectors: true
 
   ## Whether to use an ingress, which is necessary for HTTPS and using the Google CDN with
@@ -62,6 +63,23 @@ tags:
   ## KN ingress should be disabled by default for local deployment
   kn-ingress: true
   kn-es-ingress: true
+
+  ## KN web server
+  kn-web-server: true
+
+
+kn-web-server:
+  image:
+    repository: "gcr.io/knowledge-network-192205/staging/magda"
+    tag: "0.0.50-RC2"
+  useLocalStyleSheet: true
+  resources:
+    requests:
+      cpu: 0
+      memory: 0
+    limits:
+      cpu: 200m
+      memory: 150Mi
 
 magda:
   gateway:
@@ -136,20 +154,6 @@ magda:
     limits:
       cpu: 1000m
       memory: 1000m
-    
-  web-server:
-    image:
-      repository: "gcr.io/knowledge-network-192205/staging/magda"
-      tag: "0.0.50-RC2"
-    fallbackUrl: "https://data.gov.au"
-    useLocalStyleSheet: true
-    resources:
-      requests:
-        cpu: 0
-        memory: 0
-      limits:
-        cpu: 200m
-        memory: 150Mi
 
   authorization-api:
     resources:

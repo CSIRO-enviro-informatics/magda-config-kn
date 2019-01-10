@@ -1,3 +1,4 @@
+{{- if eq .Values.global.exposeNodePorts false }}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -39,3 +40,4 @@ spec:
      hosts:
      - {{ .Values.global.externalUrlEs }}
   {{- end }}
+{{- end }}
