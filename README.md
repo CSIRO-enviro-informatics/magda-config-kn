@@ -462,6 +462,9 @@ If use google chrome, please use incognito window /tab to access the URL to avoi
 
 Es search test access URL:
 http://staging-test-es.knowledgenet.co/datasets38/_search
+https://staging-test-es.knowledgenet.co/regions21/_search
+https://staging-test-es.knowledgenet.co/formats1/_search
+https://staging-test-es.knowledgenet.co/publishers3/_search
 
 KN test access URL:
 http://staging-test.knowledgenet.co
