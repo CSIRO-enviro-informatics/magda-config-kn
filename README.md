@@ -76,6 +76,13 @@ helm repo add magda-io https://charts.magda.io
 helm repo update
 ```
 
+If you want to turn on the [test-chart](deploy/charts/test-chart) (it's a helm chart to demo extending KN deployment with extra backend APIs), you will need to add `bitnami` helm charts repo as well:
+
+```bash
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+```
+
 4.  Update KN chart dependencies
 
 ```bash
