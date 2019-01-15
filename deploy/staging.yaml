@@ -71,6 +71,7 @@ kn-web-server:
   image:
     repository: "gcr.io/knowledge-network-192205/staging/magda"
     tag: "0.0.50-RC2"
+    pullPolicy: Always
   useLocalStyleSheet: true
   resources:
     requests:
@@ -85,6 +86,7 @@ magda:
     image:
       repository: "gcr.io/knowledge-network-192205/staging/magda"
       tag: "0.0.50-RC2"
+      pullPolicy: Always
     enableAuthEndpoint: true
     service:
       type: LoadBalancer
@@ -191,7 +193,7 @@ magda:
         memory: 300Mi
 
   connectors:
-    includeCronJobs: true
+    includeCronJobs: false
     config:
       - image:
           name: magda-dap-connector
@@ -201,5 +203,13 @@ magda:
         pageSize: 100
         schedule: 30 3 */3 * *
         ignoreHarvestSources: []
+      - image:
+          name: magda-ckan-connector
+        id: dga
+        name: data.gov.au
+        sourceUrl: https://data.gov.au/
+        pageSize: 1000
+        ignoreHarvestSources:
+          - "*"
 
   
