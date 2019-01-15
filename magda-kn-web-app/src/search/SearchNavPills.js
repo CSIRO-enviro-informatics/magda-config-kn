@@ -149,7 +149,7 @@ export default class SearchNavPills extends Component {
             ? API.elasticSearch + "?q=" + this.state.searchText
             : API.elasticSearch;
         fetch(queryUrl, {
-            headers: { contentType: "application/json" },
+            headers: { "Content-Type": "application/json" },
             method: "POST",
             body: JSON.stringify(query)
         })

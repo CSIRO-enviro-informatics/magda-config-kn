@@ -5,7 +5,7 @@
 const fallbackApiHost = "https://knowledgenet.co/";
 const fallbackEsHost = "https://es.knowledgenet.co/";
 const serverConfig = window.magda_server_config || {};
-const baseUri = serverConfig.baseUri || fallbackApiHost;
+const baseUri = serverConfig.baseUrl || fallbackApiHost;
 const registryApiUrl =
     serverConfig.registryApiBaseUrl || fallbackApiHost + "api/v0/registry/";
 const externalAccessUrlEs = serverConfig.externalAccessUrlEs || fallbackEsHost;

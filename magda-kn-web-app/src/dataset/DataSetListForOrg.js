@@ -124,7 +124,7 @@ export default class DataSetListForOrg extends Component {
             }
         };
         fetch(API.elasticSearch, {
-            headers: { contentType: "application/json" },
+            headers: { "Content-Type": "application/json" },
             method: "POST",
             body: JSON.stringify(query)
         })
