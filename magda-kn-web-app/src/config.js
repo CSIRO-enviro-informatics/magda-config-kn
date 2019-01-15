@@ -2,7 +2,7 @@
 // const fallbackApiHost = 'http://adb009eba34b.k8s-dev.oznome.csiro.au/'
 // const fallbackApiHost = "http://kn-v2-staging.k8s-dev.oznome.csiro.au/"
 // const fallbackApiHost = "http://staging.knowledgenet.co/"
-const fallbackApiHost = "http://knowledgenet.co/";
+const fallbackApiHost = "http://192.168.99.100:30100/";
 const serverConfig = window.magda_server_config || "";
 const registryApiUrl =
     serverConfig.registryApiBaseUrl || fallbackApiHost + "api/v0/registry/";
@@ -11,10 +11,9 @@ const authApiUrl =
 const API = {
     baseUri: serverConfig || fallbackApiHost,
     authApiUrl: serverConfig.authApiBaseUrl || fallbackApiHost + "api/v0/auth/",
-    datasetCount:
-        registryApiUrl + "records?limit=0&aspect=dcat-dataset-strings",
+    datasetCount: registryApiUrl + "records/count?aspect=dcat-dataset-strings",
     organisationsCount:
-        registryApiUrl + "records?limit=0&aspect=organization-details",
+        registryApiUrl + "records/count?aspect=organization-details",
     search: serverConfig.searchApiBaseUrl || fallbackApiHost + "api/v0/search/",
     dataSetDetail: registryApiUrl + "records/",
     dataSetDetail_allAspects:
@@ -25,7 +24,7 @@ const API = {
     dataSetOrgInfo: registryApiUrl + "records/",
     dataSourceCount:
         registryApiUrl +
-        "records?limit=0&aspect=organization-details&optionalAspect=source",
+        "records/count?aspect=organization-details&optionalAspect=source",
     dataSource:
         registryApiUrl +
         "records?aspect=organization-details&optionalAspect=source&limit=20000",
