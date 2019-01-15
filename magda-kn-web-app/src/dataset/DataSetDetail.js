@@ -15,6 +15,9 @@ import Pagination from "./Pagination";
 import "./DataSet.css";
 import API from "../config";
 
+import DataPreviewMap from "./previewMap/DataPreviewMap";
+import { parseDataset } from "../helpers/record";
+
 const tooltip = <Tooltip id="tooltip">Search with this label</Tooltip>;
 
 export default class DataSetDetail extends Component {
@@ -63,6 +66,7 @@ export default class DataSetDetail extends Component {
 
     render() {
         if (this.state.dataset === "") return <p />;
+        const dataset = parseDataset(this.state.dataset);
         return (
             <Grid bsClass="searchResultContainer">
                 <Row>
@@ -207,6 +211,9 @@ export default class DataSetDetail extends Component {
                                 </tr>
                             </tbody>
                         </Table>
+
+                        <DataPreviewMap distributions={dataset.distributions} />
+
                         <h4>RESOURCES</h4>
                         <ul>
                             {this.state.dataset.aspects["dataset-distributions"]

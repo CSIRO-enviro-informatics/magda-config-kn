@@ -8,6 +8,9 @@ const registryApiUrl =
     serverConfig.registryApiBaseUrl || fallbackApiHost + "api/v0/registry/";
 const authApiUrl =
     serverConfig.authApiBaseUrl || fallbackApiHost + "api/v0/auth/";
+const previewMapUrl =
+    serverConfig.previewMapBaseUrl || fallbackApiHost + "preview-map/";
+const proxyUrl = previewMapUrl + "proxy/";
 const API = {
     baseUri: serverConfig || fallbackApiHost,
     authApiUrl: serverConfig.authApiBaseUrl || fallbackApiHost + "api/v0/auth/",
@@ -29,7 +32,14 @@ const API = {
     dataSource:
         registryApiUrl +
         "records?aspect=organization-details&optionalAspect=source&limit=20000",
-    elasticSearch: "https://es.knowledgenet.co/datasets32/_search"
+    elasticSearch: "https://es.knowledgenet.co/datasets32/_search",
+    previewMapUrl,
+    proxyUrl,
+    breakpoints: {
+        small: 768,
+        medium: 992,
+        large: 1200
+    }
 };
 
 export default API;
