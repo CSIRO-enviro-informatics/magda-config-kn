@@ -2,7 +2,6 @@ global:
   externalUrlkn: minikube.knowledgenet.co
   externalUrlEs: es.minikube.knowledgenet.co
   externalUrl: http://minikube.knowledgenet.co:30100
-  externalAccessUrlEs: http://es.minikube.knowledgenet.co:39200
   rollingUpdate:
     maxUnavailable: 1
   exposeNodePorts: true

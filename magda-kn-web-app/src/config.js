@@ -4,13 +4,14 @@
 // const fallbackApiHost = "http://staging.knowledgenet.co/"
 const fallbackApiHost = "https://knowledgenet.co/";
 const fallbackEsHost = "https://es.knowledgenet.co/";
-const serverConfig = window.magda_server_config || "";
+const serverConfig = window.magda_server_config || {};
+const baseUri = serverConfig.baseUri || fallbackApiHost;
 const registryApiUrl =
     serverConfig.registryApiBaseUrl || fallbackApiHost + "api/v0/registry/";
 const externalAccessUrlEs = serverConfig.externalAccessUrlEs || fallbackEsHost;
 
 const API = {
-    baseUri: serverConfig || fallbackApiHost,
+    baseUri,
     authApiUrl: serverConfig.authApiBaseUrl || fallbackApiHost + "api/v0/auth/",
     externalAccessUrlEs,
     datasetCount:
@@ -31,7 +32,7 @@ const API = {
     dataSource:
         registryApiUrl +
         "records?aspect=organization-details&optionalAspect=source&limit=20000",
-    elasticSearch: `${externalAccessUrlEs}datasets38/_search`
+    elasticSearch: `${baseUri}api/v0/es-query/datasets`
 };
 
 export default API;

@@ -20,9 +20,6 @@ spec:
             "--config", "/etc/config/config.json",
             "--listenPort", "80",
             "--baseExternalUrl", {{ .Values.global.externalUrl | quote }},
-            {{- if .Values.global.externalUrlEs }}
-            "--externalAccessUrlEs", {{ .Values.global.externalAccessUrlEs | quote }},
-            {{- end }}
             "--useLocalStyleSheet", {{ .Values.global.useLocalStyleSheet | default .Values.useLocalStyleSheet | quote }},
             "--registryApiBaseUrlInternal", "http://registry-api/v0",
             {{- range .Values.gapiIds }}

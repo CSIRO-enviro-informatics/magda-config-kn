@@ -2,7 +2,6 @@ global:
   externalUrlkn: staging-test.knowledgenet.co
   externalUrlEs: staging-test-es.knowledgenet.co
   externalUrl: http://staging-test.knowledgenet.co
-  externalAccessUrlEs: http://staging-test-es.knowledgenet.co
   # tlssecret: knco-tls-secret
   rollingUpdate:
     maxUnavailable: 1

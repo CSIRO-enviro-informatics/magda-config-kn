@@ -52,6 +52,8 @@ magda:
       apidocs:
         to: http://apidocs-server/
         redirectTrailingSlash: true
+      es-query/datasets:
+        to: http://elasticsearch:9200/datasets38/_search
       test-chart:
         to: http://test-chart
 
