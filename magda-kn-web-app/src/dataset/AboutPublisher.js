@@ -61,10 +61,9 @@ export default class AboutPublisher extends Component {
             }
         };
         fetch(API.elasticSearch, {
-            contentType: "application/json",
+            headers: { contentType: "application/json" },
             method: "POST",
-            body: JSON.stringify(query),
-            dataType: "json"
+            body: JSON.stringify(query)
         })
             .then(res => res.json())
             .then(json => {

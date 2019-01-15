@@ -117,10 +117,9 @@ export default class PublisherViews extends Component {
             };
         }
         fetch(API.elasticSearch, {
-            contentType: "application/json",
+            headers: { contentType: "application/json" },
             method: "POST",
-            body: JSON.stringify(query),
-            dataType: "json"
+            body: JSON.stringify(query)
         })
             .then(res => res.json())
             .then(json => {
