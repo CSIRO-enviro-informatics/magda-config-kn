@@ -117,7 +117,7 @@ export default class DataSetListForOrg extends Component {
             aggs: {
                 keywords_agg: {
                     terms: {
-                        field: "keywords.raw",
+                        field: "keywords.keyword",
                         size: 50
                     }
                 }

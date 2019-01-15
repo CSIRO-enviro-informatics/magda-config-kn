@@ -139,7 +139,7 @@ export default class SearchNavPills extends Component {
             aggs: {
                 formats: {
                     terms: {
-                        field: "keywords.raw",
+                        field: "keywords.keyword",
                         size: 100
                     }
                 }

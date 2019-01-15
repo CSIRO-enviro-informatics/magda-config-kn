@@ -92,7 +92,7 @@ export default class PublisherViews extends Component {
                 aggs: {
                     formats: {
                         terms: {
-                            field: "keywords.raw",
+                            field: "keywords.keyword",
                             size: 50
                         }
                     }
@@ -109,7 +109,7 @@ export default class PublisherViews extends Component {
                 aggs: {
                     formats: {
                         terms: {
-                            field: "keywords.raw",
+                            field: "keywords.keyword",
                             size: 50
                         }
                     }

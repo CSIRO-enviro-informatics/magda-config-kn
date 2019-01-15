@@ -54,7 +54,7 @@ export default class AboutPublisher extends Component {
             aggs: {
                 keywords_agg: {
                     terms: {
-                        field: "keywords.raw",
+                        field: "keywords.keyword",
                         size: 50
                     }
                 }
