@@ -117,17 +117,16 @@ export default class DataSetListForOrg extends Component {
             aggs: {
                 keywords_agg: {
                     terms: {
-                        field: "keywords.raw",
+                        field: "keywords.keyword",
                         size: 50
                     }
                 }
             }
         };
         fetch(API.elasticSearch, {
-            contentType: "application/json",
+            headers: { "Content-Type": "application/json" },
             method: "POST",
-            body: JSON.stringify(query),
-            dataType: "json"
+            body: JSON.stringify(query)
         })
             .then(res => res.json())
             .then(json => {

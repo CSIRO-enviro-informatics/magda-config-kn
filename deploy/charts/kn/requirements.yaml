@@ -27,3 +27,10 @@ dependencies:
     condition: kn-ingress.enabled,global.kn-ingress.enabled
     tags:
       - kn-ingress
+
+  - name: kn-web-server
+    version: 0.1.0
+    repository: file://../kn-web-server
+    condition: kn-web-server.enabled,global.kn-web-server.enabled
+    tags:
+      - kn-web-server

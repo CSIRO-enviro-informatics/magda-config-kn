@@ -92,7 +92,7 @@ export default class PublisherViews extends Component {
                 aggs: {
                     formats: {
                         terms: {
-                            field: "keywords.raw",
+                            field: "keywords.keyword",
                             size: 50
                         }
                     }
@@ -109,7 +109,7 @@ export default class PublisherViews extends Component {
                 aggs: {
                     formats: {
                         terms: {
-                            field: "keywords.raw",
+                            field: "keywords.keyword",
                             size: 50
                         }
                     }
@@ -117,10 +117,9 @@ export default class PublisherViews extends Component {
             };
         }
         fetch(API.elasticSearch, {
-            contentType: "application/json",
+            headers: { "Content-Type": "application/json" },
             method: "POST",
-            body: JSON.stringify(query),
-            dataType: "json"
+            body: JSON.stringify(query)
         })
             .then(res => res.json())
             .then(json => {
