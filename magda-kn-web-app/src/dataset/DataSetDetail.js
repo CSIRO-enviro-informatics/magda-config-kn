@@ -140,9 +140,7 @@ export default class DataSetDetail extends Component {
                                             </Label>{" "}
                                         </td>
                                     </tr>
-                                ) : (
-                                    ""
-                                )}
+                                ) : null}
                                 {this.state.dataset.aspects[
                                     "dataset-quality-rating"
                                 ] ? (
@@ -174,9 +172,7 @@ export default class DataSetDetail extends Component {
                                             </Label>
                                         </td>
                                     </tr>
-                                ) : (
-                                    ""
-                                )}
+                                ) : null}
 
                                 <tr>
                                     <td>Tags/Keywords:</td>
@@ -206,7 +202,7 @@ export default class DataSetDetail extends Component {
                                                       </OverlayTrigger>
                                                   );
                                               })
-                                            : ""}
+                                            : null}
                                     </td>
                                 </tr>
                             </tbody>
