@@ -24,7 +24,7 @@ const API = {
     dataSetOrgInfo: registryApiUrl + "records/",
     dataSourceCount:
         registryApiUrl +
-        "records/count?aspect=organization-details&optionalAspect=source",
+        "records?aspect=organization-details&optionalAspect=source&limit=20000",
     dataSource:
         registryApiUrl +
         "records?aspect=organization-details&optionalAspect=source&limit=20000",

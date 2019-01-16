@@ -11,8 +11,7 @@ export default class GraphStats extends Component {
             dataSet: 0,
             organisations: 0,
             thematicAreas: 0,
-            //datasource: new Map()
-            datasources: 0
+            datasource: new Map()
         };
     }
 
@@ -61,8 +60,7 @@ export default class GraphStats extends Component {
                 } else console.log("Get data error ");
             })
             .then(json => {
-                //this.organizeDataSource(json);
-                this.setState({ datasources: json.count });
+                this.organizeDataSource(json);
             })
             .catch(error => {
                 console.log("error on .catch", error);
@@ -100,7 +98,7 @@ export default class GraphStats extends Component {
                     <Well>
                         <span className="graph-stats-number">
                             <Link to="/datasource">
-                                {this.state.datasources}
+                                {this.state.datasource.size}
                             </Link>
                         </span>
                         <br />
