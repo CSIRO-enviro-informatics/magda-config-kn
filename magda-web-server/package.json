@@ -57,7 +57,7 @@
   },
   "config": {
     "docker": {
-      "name": "magda/magda-web-server",
+      "name": "magda/magda-kn-web-server",
       "include": "node_modules dist Dockerfile package.json"
     }
   },

@@ -32,7 +32,7 @@ export default class GraphStats extends Component {
                 } else console.log("Get data error ");
             })
             .then(json => {
-                this.setState({ dataSet: json.totalCount });
+                this.setState({ dataSet: json.count });
             })
             .catch(error => {
                 console.log("error on .catch", error);
@@ -45,14 +45,14 @@ export default class GraphStats extends Component {
                 } else console.log("Get data error ");
             })
             .then(json => {
-                this.setState({ organisations: json.totalCount });
+                this.setState({ organisations: json.count });
             })
             .catch(error => {
                 console.log("error on .catch", error);
             });
     }
     getDataSource() {
-        fetch(API.dataSource)
+        fetch(API.dataSourceCount)
             .then(response => {
                 // console.log(response)
                 if (response.status === 200) {
@@ -68,7 +68,8 @@ export default class GraphStats extends Component {
     }
 
     organizeDataSource(data) {
-        //Source map id as key, souce object as value
+        //Source map id as key, source object as value
+
         let sourceMap = new Map();
         data.records.map(record => {
             if (!sourceMap.has(record.aspects.source.name))

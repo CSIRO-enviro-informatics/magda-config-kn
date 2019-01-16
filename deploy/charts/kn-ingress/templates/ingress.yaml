@@ -8,7 +8,6 @@ metadata:
     {{- else }}
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     {{- end }}
-    nginx.ingress.kubernetes.io/enable-cors: "true"
   generation: 2
   name: kn-ingress
 spec:

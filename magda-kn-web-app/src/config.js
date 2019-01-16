@@ -2,22 +2,20 @@
 // const fallbackApiHost = 'http://adb009eba34b.k8s-dev.oznome.csiro.au/'
 // const fallbackApiHost = "http://kn-v2-staging.k8s-dev.oznome.csiro.au/"
 // const fallbackApiHost = "http://staging.knowledgenet.co/"
-const fallbackApiHost = "http://knowledgenet.co/";
-const serverConfig = window.magda_server_config || "";
+const fallbackApiHost = "https://knowledgenet.co/";
+const serverConfig = window.magda_server_config || {};
+const baseUri = serverConfig.baseUrl || fallbackApiHost;
 const registryApiUrl =
     serverConfig.registryApiBaseUrl || fallbackApiHost + "api/v0/registry/";
-const authApiUrl =
-    serverConfig.authApiBaseUrl || fallbackApiHost + "api/v0/auth/";
 const previewMapUrl =
     serverConfig.previewMapBaseUrl || fallbackApiHost + "preview-map/";
 const proxyUrl = previewMapUrl + "proxy/";
 const API = {
-    baseUri: serverConfig || fallbackApiHost,
+    baseUri,
     authApiUrl: serverConfig.authApiBaseUrl || fallbackApiHost + "api/v0/auth/",
-    datasetCount:
-        registryApiUrl + "records?limit=0&aspect=dcat-dataset-strings",
+    datasetCount: registryApiUrl + "records/count?aspect=dcat-dataset-strings",
     organisationsCount:
-        registryApiUrl + "records?limit=0&aspect=organization-details",
+        registryApiUrl + "records/count?aspect=organization-details",
     search: serverConfig.searchApiBaseUrl || fallbackApiHost + "api/v0/search/",
     dataSetDetail: registryApiUrl + "records/",
     dataSetDetail_allAspects:
@@ -28,11 +26,11 @@ const API = {
     dataSetOrgInfo: registryApiUrl + "records/",
     dataSourceCount:
         registryApiUrl +
-        "records?limit=0&aspect=organization-details&optionalAspect=source",
+        "records?aspect=organization-details&optionalAspect=source&limit=20000",
     dataSource:
         registryApiUrl +
         "records?aspect=organization-details&optionalAspect=source&limit=20000",
-    elasticSearch: "https://es.knowledgenet.co/datasets32/_search",
+    elasticSearch: `${baseUri}api/v0/es-query/datasets`,
     previewMapUrl,
     proxyUrl,
     breakpoints: {
