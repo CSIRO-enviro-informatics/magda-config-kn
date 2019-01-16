@@ -2,7 +2,7 @@
 // const fallbackApiHost = 'http://adb009eba34b.k8s-dev.oznome.csiro.au/'
 // const fallbackApiHost = "http://kn-v2-staging.k8s-dev.oznome.csiro.au/"
 // const fallbackApiHost = "http://staging.knowledgenet.co/"
-const fallbackApiHost = "https://knowledgnet.co/";
+const fallbackApiHost = "https://knowledgenet.co/";
 const serverConfig = window.magda_server_config || "";
 const registryApiUrl =
     serverConfig.registryApiBaseUrl || fallbackApiHost + "api/v0/registry/";
@@ -24,7 +24,7 @@ const API = {
     dataSetOrgInfo: registryApiUrl + "records/",
     dataSourceCount:
         registryApiUrl +
-        "records/count?aspect=organization-details&optionalAspect=source",
+        "records?aspect=organization-details&optionalAspect=source&limit=20000",
     dataSource:
         registryApiUrl +
         "records?aspect=organization-details&optionalAspect=source&limit=20000",
