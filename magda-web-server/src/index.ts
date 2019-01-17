@@ -120,6 +120,7 @@ const apiBaseUrl = addTrailingSlash(
 const webServerConfig = {
     disableAuthenticationFeatures: argv.disableAuthenticationFeatures,
     baseUrl: addTrailingSlash(argv.baseUrl),
+    baseExternalUrl: addTrailingSlash(argv.baseExternalUrl),
     apiBaseUrl: apiBaseUrl,
     contentApiBaseUrl: addTrailingSlash(
         argv.contentApiBaseUrl ||
