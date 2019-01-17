@@ -15,7 +15,7 @@ import Pagination from "./Pagination";
 import "./DataSet.css";
 import API from "../config";
 
-import DataPreviewMap from "./previewMap/DataPreviewMap";
+import DatasetPreview from "./DatasetPreview";
 import { parseDataset } from "../helpers/record";
 
 const tooltip = <Tooltip id="tooltip">Search with this label</Tooltip>;
@@ -208,7 +208,9 @@ export default class DataSetDetail extends Component {
                             </tbody>
                         </Table>
 
-                        <DataPreviewMap distributions={dataset.distributions} />
+                        <div className="dataset-preview">
+                            <DatasetPreview dataset={dataset} />
+                        </div>
 
                         <h4>RESOURCES</h4>
                         <ul>
