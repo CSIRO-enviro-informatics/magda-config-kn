@@ -162,42 +162,6 @@ magda:
       cpu: 1000m
       memory: 1000m
 
-  authorization-api:
-    resources:
-      requests:
-        cpu: 0
-        memory: 0
-      limits:
-        cpu: 200m
-        memory: 150Mi
-
-  minion-linked-data-rating:
-    resources:
-      requests:
-        cpu: 0
-        memory: 0
-      limits:
-        cpu: 200m
-        memory: 150Mi
-
-  minion-broken-link:
-    resources:
-      requests:
-        cpu: 0
-        memory: 0
-      limits:
-        cpu: 200m
-        memory: 150Mi
-
-  minion-visualization:
-    resources:
-      requests:
-        cpu: 0
-        memory: 0
-      limits:
-        cpu: 200m
-        memory: 300Mi
-
   connectors:
     includeCronJobs: false
     config:
