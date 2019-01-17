@@ -146,16 +146,6 @@ magda:
         cpu: 200m
         memory: 5000Mi
 
-  preview-map:
-    resources:
-      requests:
-        cpu: 0
-        memory: 0
-      limits:
-        cpu: 200m
-        memory: 150Mi
-
-
   registry-api:
     #skipAuthorization: true
     logLevel: INFO
