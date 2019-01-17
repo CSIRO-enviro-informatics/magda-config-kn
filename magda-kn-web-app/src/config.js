@@ -2,9 +2,14 @@
 // const fallbackApiHost = 'http://adb009eba34b.k8s-dev.oznome.csiro.au/'
 // const fallbackApiHost = "http://kn-v2-staging.k8s-dev.oznome.csiro.au/"
 // const fallbackApiHost = "http://staging.knowledgenet.co/"
-const fallbackApiHost = "https://knowledgenet.co/";
+const fallbackApiHost = "http://192.168.99.101:30100/";
 const serverConfig = window.magda_server_config || {};
 const baseUrl = serverConfig.baseUrl || fallbackApiHost;
+const fallbackBaseExternalUrl =
+    baseUrl === "/"
+        ? window.location.protocol + "//" + window.location.host + "/"
+        : baseUrl;
+const baseExternalUrl = serverConfig.baseExternalUrl || fallbackBaseExternalUrl;
 const registryApiUrl =
     serverConfig.registryApiBaseUrl || fallbackApiHost + "api/v0/registry/";
 const previewMapUrl =
@@ -12,6 +17,7 @@ const previewMapUrl =
 const proxyUrl = previewMapUrl + "proxy/";
 const API = {
     baseUrl,
+    baseExternalUrl,
     authApiUrl: serverConfig.authApiBaseUrl || fallbackApiHost + "api/v0/auth/",
     datasetCount: registryApiUrl + "records/count?aspect=dcat-dataset-strings",
     organisationsCount:
