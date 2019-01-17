@@ -169,7 +169,18 @@ class DataPreviewMap extends Component {
             this.props.dataSourcePreference
         );
 
-        if (!selectedDistribution) return null; // hide the section if no data available
+        if (!selectedDistribution) {
+            //return null; // hide the section if no data available
+            return (
+                <div>
+                    <h3 className="section-heading">Map Preview</h3>
+                    <div>
+                        <p>Map Preview is not available for this dataset.</p>
+                    </div>
+                    <p>&nbsp;</p>
+                </div>
+            );
+        }
 
         return (
             <div>

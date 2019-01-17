@@ -82,6 +82,22 @@ magda:
     cors:
       credentials: true
       origin: true
+    helmet:
+      frameguard: false
+    csp:
+      directives:
+        scriptSrc:
+        - "''self''"
+        - "''unsafe-inline''" # For previewMap. Newer terriaJS version probably not require this
+        - www.google-analytics.com
+        objectSrc:
+        - "''none''"
+        sandbox: # We run the sandbox because we have to have unsafe-inline, when we remove unsafe inline we should remove this
+        - allow-scripts
+        - allow-same-origin
+        - allow-popups
+        - allow-forms
+        - allow-popups-to-escape-sandbox
     auth:
       facebookClientId: ""
       googleClientId: "667942079301-49aomsf5l1i8tc5amdot6ck96e1d84c6.apps.googleusercontent.com"
