@@ -138,6 +138,8 @@ Go to project root, and then:
 yarn install
 # build all modules
 yarn build
+# initialise minikube
+minikube start --vm-driver virtualbox --disk-size 40g --memory 4098
 # Set docker ENV variables for your current terminal
 eval $(minikube docker-env)
 # build docker images (using minikube docker daemon)
