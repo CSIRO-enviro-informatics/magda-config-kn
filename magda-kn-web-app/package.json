@@ -33,7 +33,7 @@
   "scripts": {
     "start-js": "react-scripts start",
     "dev": "yarn run start",
-    "start": "npm-run-all -p watch-css start-js",
+    "start": "yarn run build-css && npm-run-all -p watch-css start-js",
     "watch-css": "node-sass src/ -o src/ --watch",
     "build-css": "node-sass src/ -o src/",
     "build": "yarn run build-css && react-scripts build",

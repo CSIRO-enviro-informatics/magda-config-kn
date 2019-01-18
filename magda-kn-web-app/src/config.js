@@ -2,7 +2,7 @@
 // const fallbackApiHost = 'http://adb009eba34b.k8s-dev.oznome.csiro.au/'
 // const fallbackApiHost = "http://kn-v2-staging.k8s-dev.oznome.csiro.au/"
 // const fallbackApiHost = "http://staging.knowledgenet.co/"
-const fallbackApiHost = "http://192.168.99.101:30100/";
+const fallbackApiHost = "https://staging-test.knowledgenet.co/";
 const serverConfig = window.magda_server_config || {};
 const baseUrl = serverConfig.baseUrl || fallbackApiHost;
 const fallbackBaseExternalUrl =
