@@ -53,7 +53,7 @@ tags:
   ## Minions, which listen to changes in the registry and add extra metadata
   minion-broken-link: false
   minion-linked-data-rating: false
-  minion-visualization: false
+  minion-visualization: true
   minion-format: true
 
   ## A extra test chart that is maintained outside magda project
