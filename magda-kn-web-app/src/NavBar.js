@@ -23,13 +23,24 @@ export default class NavBar extends Component {
             .then(res => {
                 if (res.status === 200) {
                     return res.json();
-                } else if (res.status === 401) {
-                    console.log("User is unauthorized");
-                    return "";
+                } else {
+                    throw new Error(
+                        `Failed to request whoami API, status code: ${
+                            res.status
+                        }`
+                    );
                 }
             })
             .then(json => {
-                if (json) this.setState({ user: json });
+                if (json) {
+                    if (json.isError) {
+                        console.log("User is unauthorized");
+                        console.log(json);
+                        return;
+                    } else {
+                        this.setState({ user: json });
+                    }
+                }
             })
             .catch(error => console.log(error));
     }
