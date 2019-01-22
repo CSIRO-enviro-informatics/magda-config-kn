@@ -202,7 +202,11 @@ const rollupResult2Rows = function(
 const aggrLabelRegex = /^(count|sum)(_0\.+\d+)$/i;
 
 function unknownIfBlank(input) {
-    return !input || input.trim() === "" ? UNKNOWN_AXIS_LABEL : input;
+    if (typeof input === "undefined" || input === null) {
+        return UNKNOWN_AXIS_LABEL;
+    }
+    const inputText = String(input);
+    return inputText.trim() === "" ? UNKNOWN_AXIS_LABEL : inputText;
 }
 
 const defaultChartOption = {
