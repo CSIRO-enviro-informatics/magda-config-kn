@@ -16,11 +16,38 @@ For details, please check `kn` chart's dependency declaration file: [deploy/char
 
 Before you start you need to get a Kubernetes cluster. If you just want to give this a try locally, you can use [Docker for Desktop](https://www.docker.com/products/docker-desktop) on MacOS or Windows, or [Minikube](https://kubernetes.io/docs/setup/minikube/) on Linux. Either way make sure the VM has at least 2 CPUs and 4gb of RAM. Alternatively you can run this in the cloud - we use [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 
-1.  Install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/), [helm](https://docs.helm.sh/using_helm/).
+1.  Configure your minikube
 
-2.  Fork this repository - this means you can make your own customisations, but still pull in updates.
+Use the following command to set the default setting of the `minikube` virtual machine:
 
-3.  `git clone` it to your local machine open a terminal in the directory
+```bash
+# Set minikube use virtual box
+minikube config set vm-driver virtualbox
+# Set minikube use 6GB memory
+minikube config set memory 6144
+# Set minikube use 4 CPUs
+minikube config set cpus 4
+# Set minikube use 40 GB storage
+minikube config set disk-size 40g
+```
+
+Those values are recommended for running the whole cluster in the `minikube` cluster.
+
+If you only want to a few modules, you may want to lower those resource settings.
+
+You will need to re-create the `minikube` virtual machine to make those changes take effect:
+
+```bash
+minikube stop
+minikube delete
+minikube start
+```
+
+2.  Install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/), [helm](https://docs.helm.sh/using_helm/).
+
+3.  Fork this repository - this means you can make your own customisations, but still pull in updates.
+
+4.  `git clone` it to your local machine open a terminal in the directory
 
 ## For New Cluster (Applied to both Google Cloud & Minikube)
 
@@ -139,7 +166,9 @@ yarn install
 # build all modules
 yarn build
 # initialise minikube
-minikube start --vm-driver virtualbox --disk-size 40g --memory 4098
+minikube start
+# wait & make sure minikube cluster is ready
+minikube status
 # Set docker ENV variables for your current terminal
 eval $(minikube docker-env)
 # build docker images (using minikube docker daemon)
@@ -370,6 +399,10 @@ yarn docker-build-prod
 ```
 
 to push images to prod repository `gcr.io/knowledge-network-192205/prod/magda/[module name]:[Vesion Tag]`.
+
+If you see an error like `Failed to dial gRPC: cannot connect to the Docker daemon.` when run `yarn docker-build-staging` or `yarn docker-build-prod`, please make sure you have `Docker daemon` running because these two scripts don't use `Docker daemon` comes with `minikube`.
+
+You can download & install the [Docker Desktop](https://www.docker.com/products/docker-desktop) to have a `Docker daemon` running locally.
 
 #### Using a JSON key file
 

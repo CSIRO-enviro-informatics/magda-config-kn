@@ -26,7 +26,7 @@ tags:
   ## combined-db and the databases that you are using (e.g. authorization-db) to true.
   ## You can find explanations of what each of these are below
   admin-api: false
-  apidocs-server: false
+  apidocs-server: true
   authorization-api: true
   authorization-db: true
   cloud-sql-proxy: false
@@ -51,9 +51,9 @@ tags:
   # ingress: false
 
   ## Minions, which listen to changes in the registry and add extra metadata
-  minion-broken-link: false
-  minion-linked-data-rating: false
-  minion-visualization: false
+  minion-broken-link: true
+  minion-linked-data-rating: true
+  minion-visualization: true
   minion-format: true
 
   ## A extra test chart that is maintained outside magda project
@@ -73,13 +73,6 @@ kn-web-server:
     tag: "0.0.50-RC2"
     pullPolicy: Always
   useLocalStyleSheet: true
-  resources:
-    requests:
-      cpu: 0
-      memory: 0
-    limits:
-      cpu: 200m
-      memory: 150Mi
 
 magda:
   gateway:
@@ -93,13 +86,29 @@ magda:
     cors:
       credentials: true
       origin: true
+    helmet:
+      frameguard: false
+    csp:
+      directives:
+        scriptSrc:
+        - "''self''"
+        - "''unsafe-inline''" # For previewMap. Newer terriaJS version probably not require this
+        - www.google-analytics.com
+        objectSrc:
+        - "''none''"
+        sandbox: # We run the sandbox because we have to have unsafe-inline, when we remove unsafe inline we should remove this
+        - allow-scripts
+        - allow-same-origin
+        - allow-popups
+        - allow-forms
+        - allow-popups-to-escape-sandbox
     auth:
       facebookClientId: ""
       googleClientId: "1049152486192-egoid2mcksouu0cofe326hdb2asuvrc9.apps.googleusercontent.com"
       aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/7xVQiC5TJXrzzkljNmFeeg"
     resources:
       requests:
-        cpu: 50m
+        cpu: 100m
         memory: 100Mi
       limits:
         cpu: 200m
@@ -130,16 +139,6 @@ magda:
         cpu: 200m
         memory: 5000Mi
 
-  preview-map:
-    resources:
-      requests:
-        cpu: 0
-        memory: 0
-      limits:
-        cpu: 200m
-        memory: 150Mi
-
-
   registry-api:
     #skipAuthorization: true
     logLevel: INFO
@@ -156,60 +155,24 @@ magda:
       cpu: 1000m
       memory: 1000m
 
-  authorization-api:
-    resources:
-      requests:
-        cpu: 0
-        memory: 0
-      limits:
-        cpu: 200m
-        memory: 150Mi
-
-  minion-linked-data-rating:
-    resources:
-      requests:
-        cpu: 0
-        memory: 0
-      limits:
-        cpu: 200m
-        memory: 150Mi
-
-  minion-broken-link:
-    resources:
-      requests:
-        cpu: 0
-        memory: 0
-      limits:
-        cpu: 200m
-        memory: 150Mi
-
-  minion-visualization:
-    resources:
-      requests:
-        cpu: 0
-        memory: 0
-      limits:
-        cpu: 200m
-        memory: 300Mi
-
-  connectors:
-    includeCronJobs: false
-    config:
-      - image:
-          name: magda-dap-connector
-        id: dap
-        name: CSIRO
-        sourceUrl: https://data.csiro.au/dap/ws/v2/
-        pageSize: 100
-        schedule: 30 3 */3 * *
-        ignoreHarvestSources: []
-      - image:
-          name: magda-ckan-connector
-        id: dga
-        name: data.gov.au
-        sourceUrl: https://data.gov.au/
-        pageSize: 1000
-        ignoreHarvestSources:
-          - "*"
+  # connectors:
+  #   includeCronJobs: false
+  #   config:
+  #     - image:
+  #         name: magda-dap-connector
+  #       id: dap
+  #       name: CSIRO
+  #       sourceUrl: https://data.csiro.au/dap/ws/v2/
+  #       pageSize: 100
+  #       schedule: 30 3 */3 * *
+  #       ignoreHarvestSources: []
+  #     - image:
+  #         name: magda-ckan-connector
+  #       id: dga
+  #       name: data.gov.au
+  #       sourceUrl: https://data.gov.au/
+  #       pageSize: 1000
+  #       ignoreHarvestSources:
+  #         - "*"
 
   

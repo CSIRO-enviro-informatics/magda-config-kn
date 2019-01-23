@@ -15,6 +15,9 @@ import Pagination from "./Pagination";
 import "./DataSet.css";
 import API from "../config";
 
+import DatasetPreview from "./DatasetPreview";
+import { parseDataset } from "../helpers/record";
+
 const tooltip = <Tooltip id="tooltip">Search with this label</Tooltip>;
 
 export default class DataSetDetail extends Component {
@@ -63,6 +66,7 @@ export default class DataSetDetail extends Component {
 
     render() {
         if (this.state.dataset === "") return <p />;
+        const dataset = parseDataset(this.state.dataset);
         return (
             <Grid bsClass="searchResultContainer">
                 <Row>
@@ -136,9 +140,7 @@ export default class DataSetDetail extends Component {
                                             </Label>{" "}
                                         </td>
                                     </tr>
-                                ) : (
-                                    ""
-                                )}
+                                ) : null}
                                 {this.state.dataset.aspects[
                                     "dataset-quality-rating"
                                 ] ? (
@@ -170,9 +172,7 @@ export default class DataSetDetail extends Component {
                                             </Label>
                                         </td>
                                     </tr>
-                                ) : (
-                                    ""
-                                )}
+                                ) : null}
 
                                 <tr>
                                     <td>Tags/Keywords:</td>
@@ -202,11 +202,16 @@ export default class DataSetDetail extends Component {
                                                       </OverlayTrigger>
                                                   );
                                               })
-                                            : ""}
+                                            : null}
                                     </td>
                                 </tr>
                             </tbody>
                         </Table>
+
+                        <div className="dataset-preview">
+                            <DatasetPreview dataset={dataset} />
+                        </div>
+
                         <h4>RESOURCES</h4>
                         <ul>
                             {this.state.dataset.aspects["dataset-distributions"]

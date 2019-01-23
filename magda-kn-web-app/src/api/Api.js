@@ -1,5 +1,5 @@
 const API = {
-    baseUri: "http://kn-v2-dev.oznome.csiro.au",
+    baseUrl: "http://kn-v2-dev.oznome.csiro.au",
     datasetCount: "/api/v0/registry/records/count?aspect=dcat-dataset-strings",
     organisationsCount:
         "/api/v0/registry/records/count?aspect=organization-details",

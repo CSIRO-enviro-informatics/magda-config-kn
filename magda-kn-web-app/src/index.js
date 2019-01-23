@@ -3,6 +3,7 @@ import ReactDom from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import NavBar from "./NavBar";
+import "./index.css";
 
 // Internet Explorer 6-11
 let isIE = /*@cc_on!@*/ false || !!document.documentMode;
