@@ -473,3 +473,19 @@ http://staging-test.knowledgenet.co
 
 KN demo test chart URL:
 http://staging-test.knowledgenet.co/api/v0/test-chart/test-api
+
+# Create adhoc Connector Job in cluster
+
+You can create adhoc connector job with the following:
+
+## 1. Edit deploy/charts/connector-job/values.yaml
+
+You can edit `deploy/charts/connector-job/values.yaml` to add / delete connectors to be created.
+
+## 2. Run the following command:
+
+```bash
+helm upgrade connector-job deploy/charts/connector-job --install --namespace kn
+```
+
+This command won't re-create a new job if a job with same name exist. Therefore, you may want to delete the previously complete jobs in order to re-run the connector.

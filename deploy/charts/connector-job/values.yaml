@@ -1,0 +1,32 @@
+global:
+  image: {}
+image: 
+  tag: 0.0.50-RC2
+  repository: "data61"
+  pullPolicy: IfNotPresent
+resources:
+  requests:
+    cpu: 50m
+    memory: 30Mi
+  limits:
+    cpu: 100m
+includeInitialJobs: true
+includeCronJobs: false
+config: 
+  - image:
+      name: magda-ckan-connector
+    id: dga
+    name: data.gov.au
+    sourceUrl: https://data.gov.au/
+    pageSize: 1000
+    ignoreHarvestSources:
+      - "*"
+  # You can keep adding more if you not only want to create one adhoc job at once
+  # - image:
+  #     name: magda-dap-connector
+  #   id: dap
+  #   name: CSIRO
+  #   sourceUrl: https://data.csiro.au/dap/ws/v2/
+  #   pageSize: 100
+  #   schedule: 30 3 */3 * *
+  #   ignoreHarvestSources: []
