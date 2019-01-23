@@ -26,7 +26,7 @@ tags:
   ## combined-db and the databases that you are using (e.g. authorization-db) to true.
   ## You can find explanations of what each of these are below
   admin-api: false
-  apidocs-server: false
+  apidocs-server: true
   authorization-api: true
   authorization-db: true
   cloud-sql-proxy: false
@@ -52,7 +52,7 @@ tags:
 
   ## Minions, which listen to changes in the registry and add extra metadata
   minion-broken-link: true
-  minion-linked-data-rating: false
+  minion-linked-data-rating: true
   minion-visualization: true
   minion-format: true
 
@@ -155,24 +155,24 @@ magda:
       cpu: 1000m
       memory: 1000m
 
-  connectors:
-    includeCronJobs: false
-    config:
-      - image:
-          name: magda-dap-connector
-        id: dap
-        name: CSIRO
-        sourceUrl: https://data.csiro.au/dap/ws/v2/
-        pageSize: 100
-        schedule: 30 3 */3 * *
-        ignoreHarvestSources: []
-      - image:
-          name: magda-ckan-connector
-        id: dga
-        name: data.gov.au
-        sourceUrl: https://data.gov.au/
-        pageSize: 1000
-        ignoreHarvestSources:
-          - "*"
+  # connectors:
+  #   includeCronJobs: false
+  #   config:
+  #     - image:
+  #         name: magda-dap-connector
+  #       id: dap
+  #       name: CSIRO
+  #       sourceUrl: https://data.csiro.au/dap/ws/v2/
+  #       pageSize: 100
+  #       schedule: 30 3 */3 * *
+  #       ignoreHarvestSources: []
+  #     - image:
+  #         name: magda-ckan-connector
+  #       id: dga
+  #       name: data.gov.au
+  #       sourceUrl: https://data.gov.au/
+  #       pageSize: 1000
+  #       ignoreHarvestSources:
+  #         - "*"
 
   
