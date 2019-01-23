@@ -51,7 +51,7 @@ tags:
   # ingress: false
 
   ## Minions, which listen to changes in the registry and add extra metadata
-  minion-broken-link: false
+  minion-broken-link: true
   minion-linked-data-rating: false
   minion-visualization: true
   minion-format: true

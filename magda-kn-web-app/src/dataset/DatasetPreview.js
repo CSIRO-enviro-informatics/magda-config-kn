@@ -11,8 +11,8 @@ export default class DatasetPreview extends Component {
         }
         return distributions.find(
             d =>
-                ((d.linkStatusAvailable && d.linkActive) ||
-                    !d.linkStatusAvailable) &&
+                d.linkStatusAvailable &&
+                d.linkActive &&
                 /(^|\W+)csv(\W+|$)/i.test(d.format)
         );
     }
