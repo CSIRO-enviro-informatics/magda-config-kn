@@ -101,7 +101,17 @@ export default class DataSetDetail extends Component {
                                 <tr>
                                     <td>Source:</td>
                                     <td>
-                                        {this.state.dataset.aspects.source.name}
+                                        <a
+                                            href={
+                                                this.state.dataset.aspects
+                                                    .source.name
+                                            }
+                                        >
+                                            {
+                                                this.state.dataset.aspects
+                                                    .source.name
+                                            }
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -203,6 +213,16 @@ export default class DataSetDetail extends Component {
                                                   );
                                               })
                                             : null}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Tags/Keywords:</td>
+                                    <td>
+                                        {
+                                            this.state.dataset.aspects[
+                                                "dcat-dataset-strings"
+                                            ].description
+                                        }
                                     </td>
                                 </tr>
                             </tbody>
