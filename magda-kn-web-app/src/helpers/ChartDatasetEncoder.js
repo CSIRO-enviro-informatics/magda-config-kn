@@ -238,7 +238,7 @@ const defaultChartOption = {
         right: 10
     },
     //http://colorbrewer2.org/#type=sequential&scheme=BuPu&n=3
-    color: ["#8856a7", "#9ebcda", "#e0ecf4"]
+    color: ["#5bc0de", "#9ebcda", "#e0ecf4"]
 };
 
 function testKeywords(str, keywords) {

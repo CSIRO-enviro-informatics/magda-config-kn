@@ -17,7 +17,7 @@ class DataPreviewVis extends Component<{
             xAxis: null,
             xScale: "temporal",
             yScale: "quantitative",
-            visType: "chart"
+            visType: "table"
         };
         this.onChangeTab = this.onChangeTab.bind(this);
     }
@@ -83,10 +83,10 @@ class DataPreviewVis extends Component<{
         if (distribution && distribution.identifier) {
             // Render chart if there's chart fields, table if fields, both if both
             const tabs = [
-                distribution.compatiblePreviews.chart &&
-                    TabItem("chart", "Chart", this.renderChart()),
                 distribution.compatiblePreviews.table &&
-                    TabItem("table", "Table", this.renderTable())
+                    TabItem("table", "Table", this.renderTable()),
+                distribution.compatiblePreviews.chart &&
+                    TabItem("chart", "Chart(experimental)", this.renderChart())
             ].filter(x => !!x);
 
             return tabs.length ? this.renderTabs(tabs) : null;

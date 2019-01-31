@@ -1,0 +1,200 @@
+.disable {
+    pointer-events: none;
+}
+
+.padding-top {
+    padding-top: 65px;
+}
+.profile {
+    align-content: center;
+    padding: 15px;
+    float: left;
+}
+.profile img {
+    border-radius: 5px;
+    width: 90px;
+}
+.detail {
+    padding: 15px;
+    float: left;
+}
+a,
+a:active,
+a:hover {
+    text-decoration: none;
+}
+.at-form {
+    float: none;
+    margin: auto;
+    overflow: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 15px;
+}
+.at-formp {
+    font-size: 15px;
+    line-height: 20px;
+}
+.at-titleh3 {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 800;
+    text-align: center;
+}
+.at-link.disabled {
+    color: #444;
+}
+.at-signin-link {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.at-error,
+.at-result {
+    text-align: center;
+}
+.at-oauth {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+button.at-social-btn {
+    display: block;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 10px;
+    padding: 8px10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+button.at-social-btn i {
+    float: left;
+    width: 40px;
+    font-size: 20px;
+    margin-top: 1px;
+    padding-right: 15px;
+    padding-left: 5px;
+    border-right: 1pxsolidrgba (0, 0, 0, 0.2);
+}
+#at-aaf {
+    background: #b88d55;
+    color: #fff;
+}
+.fa-aaf:before {
+    content: "";
+    background: url("http://aero.edu.au/wp-content/uploads/2015/05/AAFlogos.png");
+    background-size: 30px 20px;
+    width: 30px;
+    height: 20px;
+    display: inline-block;
+}
+#at-aaf:hover {
+    background: #c0863b;
+}
+#at-facebook {
+    background: #3b5998;
+    color: #fff;
+}
+#at-facebook.disabled {
+    color: #ddd;
+    background: #666666;
+}
+#at-facebook:hover {
+    background: #2c4780;
+}
+#at-linkedin {
+    background: #338ab0;
+    color: #fff;
+}
+#at-linkedin.disabled {
+    color: #ddd;
+    background: #666666;
+}
+#at-linkedin:hover {
+    background: #0571a6;
+}
+#at-twitter {
+    background: #4099ff;
+    color: #fff;
+}
+b #at-twitter.disabled {
+    color: #ddd;
+    background: #666666;
+}
+#at-twitter:hover {
+    background: #3288eb;
+}
+#at-google {
+    background: #db5a3c;
+    color: #fff;
+}
+b #at-google.disabled {
+    color: #ddd;
+    background: #666666;
+}
+#at-google:hover {
+    background: #ca4c2e;
+}
+#at-github {
+    background: #666;
+    color: #fff;
+}
+#at-github.disabled {
+    color: #ddd;
+    background: #666666;
+}
+#at-github:hover {
+    background: #555;
+}
+.at-sep {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.at-sep:before,
+.at-sep:after {
+    display: block;
+    content: " ";
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+    position: absolute;
+    top: 48%;
+}
+.at-sep:before {
+    left: -60%;
+}
+.at-sep:after {
+    right: -60%;
+}
+.at-input.validating* {
+    cursor: progress;
+}
+.at-pwd-form > form {
+    margin-top: 20px;
+}
+.at-pwd-form > formlabel {
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 14px;
+}
+#at-btn {
+    font-size: 16px;
+    padding: 10px12px;
+    margin-top: 30px;
+}
+.at-signup-link {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+button.at-social-btn i {
+    float: left;
+    width: 40px;
+    font-size: 20px;
+    margin-top: 1px;
+    padding-right: 15px;
+    padding-left: 5px;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
