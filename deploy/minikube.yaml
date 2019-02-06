@@ -9,7 +9,7 @@ global:
  # Here, if unspecified, the following default value will be used:
   image:
     repository: data61 # magda docker hub repo
-    tag: 0.0.50-RC2  # This version will be increased when magda releases a new version
+    tag: 0.0.52-RC1  # This version will be increased when magda releases a new version
     pullPolicy: IfNotPresent
   noDbAuth: true
   useCloudSql: false
@@ -74,10 +74,6 @@ kn-web-server:
 
 magda:
   gateway:
-    image:
-      repository: "localhost:5000/magda"
-      tag: "latest"
-      pullPolicy: Always
     enableAuthEndpoint: true
     cors:
       credentials: true
@@ -101,7 +97,7 @@ magda:
     auth:
       facebookClientId: ""
       googleClientId: "667942079301-49aomsf5l1i8tc5amdot6ck96e1d84c6.apps.googleusercontent.com"
-      aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/wvGohZoeeN2SiYKBQ4T_kw"
+      aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/pjJie6uG3YHVSHuTAXtsWg"
 
   registry-api:
     skipAuthorization: true

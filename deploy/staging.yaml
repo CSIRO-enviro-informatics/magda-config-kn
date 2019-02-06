@@ -10,7 +10,7 @@ global:
  # Here, if unspecified, the following default value will be used:
   image:
     repository: data61 # magda docker hub repo
-    tag: 0.0.50-RC2  # This version will be increased when magda releases a new version
+    tag: 0.0.52-RC1  # This version will be increased when magda releases a new version
     pullPolicy: IfNotPresent
   noDbAuth: true
   useCloudSql: false
@@ -76,10 +76,6 @@ kn-web-server:
 
 magda:
   gateway:
-    image:
-      repository: "gcr.io/knowledge-network-192205/staging/magda"
-      tag: "0.0.50-RC2"
-      pullPolicy: Always
     enableAuthEndpoint: true
     service:
       type: LoadBalancer
