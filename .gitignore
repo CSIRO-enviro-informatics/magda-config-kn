@@ -6,6 +6,7 @@
 .metadata
 docker-context*
 */package-lock.json
+*.lock
 
 # sbt specific
 .cache

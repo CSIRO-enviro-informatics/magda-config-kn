@@ -49,5 +49,10 @@
     "docker": {
       "include": "node_modules build"
     }
+  },
+  "dependencies": {
+    "leaflet": "^1.4.0",
+    "react-leaflet": "^2.2.0",
+    "wellknown": "^0.5.0"
   }
 }
