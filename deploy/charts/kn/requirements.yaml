@@ -1,6 +1,6 @@
 dependencies:
   - name: magda
-    version: 0.0.50-RC2
+    version: 0.0.52-RC1
     repository: https://charts.magda.io/
   # Magda chart is always enabled.
   # Thus, no tags or condition are reuqired.

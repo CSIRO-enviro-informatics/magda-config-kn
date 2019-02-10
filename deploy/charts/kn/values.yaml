@@ -1,3 +1,6 @@
+global:
+  enablePriorityClass: false
+  
 tags:
   all: false
   apidocs-server: true
