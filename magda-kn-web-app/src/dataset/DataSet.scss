@@ -99,3 +99,30 @@ h3.org-name {
 g g:hover {
     cursor: pointer;
 }
+
+.active_status {
+    height: 10px;
+    width: 10px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 3px;
+}
+
+.broken_status {
+    height: 10px;
+    width: 10px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 3px;
+}
+
+.unknown_status {
+    height: 10px;
+    width: 10px;
+    background-color: orange;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 3px;
+}

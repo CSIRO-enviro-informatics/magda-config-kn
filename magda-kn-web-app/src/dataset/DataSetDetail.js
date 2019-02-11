@@ -355,6 +355,18 @@ export default class DataSetDetail extends Component {
                                                   "dcat-distribution-strings"
                                               ].accessURL === undefined ? (
                                               <li key={key}>
+                                                  <span
+                                                      className={
+                                                          ele.aspects[
+                                                              "source-link-status"
+                                                          ]
+                                                              ? ele.aspects[
+                                                                    "source-link-status"
+                                                                ].status +
+                                                                "_status"
+                                                              : "unknown_status"
+                                                      }
+                                                  />
                                                   <span className="glyphicon glyphicon-link" />
                                                   Both download URL and access
                                                   URL unavilable, try using{" "}
@@ -371,6 +383,18 @@ export default class DataSetDetail extends Component {
                                               "dcat-distribution-strings"
                                           ].downloadURL ? (
                                               <li key={key}>
+                                                  <span
+                                                      className={
+                                                          ele.aspects[
+                                                              "source-link-status"
+                                                          ]
+                                                              ? ele.aspects[
+                                                                    "source-link-status"
+                                                                ].status +
+                                                                "_status"
+                                                              : "unknown_status"
+                                                      }
+                                                  />
                                                   <span className="glyphicon glyphicon-link" />
                                                   <a
                                                       href={
@@ -407,6 +431,18 @@ export default class DataSetDetail extends Component {
                                               </li>
                                           ) : (
                                               <li key={key}>
+                                                  <span
+                                                      className={
+                                                          ele.aspects[
+                                                              "source-link-status"
+                                                          ]
+                                                              ? ele.aspects[
+                                                                    "source-link-status"
+                                                                ].status +
+                                                                "_status"
+                                                              : "unknown_status"
+                                                      }
+                                                  />
                                                   <span className="glyphicon glyphicon-link" />
                                                   {ele.name}{" "}
                                                   <i>
@@ -476,6 +512,18 @@ export default class DataSetDetail extends Component {
                             ) : (
                                 ""
                             )}
+                            <div>
+                                Resource link status: &nbsp;
+                                <i>
+                                    <span className="active_status" />Active
+                                </i>&nbsp;
+                                <i>
+                                    <span className="broken_status" />Broken
+                                </i>&nbsp;
+                                <i>
+                                    <span className="unknown_status" />Unknown
+                                </i>
+                            </div>
                         </ul>
 
                         <Pagination
