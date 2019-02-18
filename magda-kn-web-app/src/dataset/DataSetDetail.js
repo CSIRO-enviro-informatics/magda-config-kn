@@ -303,7 +303,7 @@ export default class DataSetDetail extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>description:</td>
+                                    <td>Description:</td>
                                     <td>
                                         {
                                             this.state.dataset.aspects[
@@ -576,6 +576,9 @@ export default class DataSetDetail extends Component {
                             </Panel.Collapse>
                         </Panel>
                     </Col>
+                </Row>
+                <Row>
+                    <br />
                 </Row>
             </Grid>
         );
