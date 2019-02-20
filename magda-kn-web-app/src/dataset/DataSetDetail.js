@@ -76,17 +76,32 @@ export default class DataSetDetail extends Component {
 {
     "@context":"https://schema.org/",
     "@type":"Dataset",
-    "name":"Test schema.org",
-    "description":"schema.org goes here",
-    "url":"https://knowledgenet.co",
-    "sameAs":"https://www.csiro.au",
+    "name":"${this.state.dataset.name}",
+    "description":"${
+        this.state.dataset.aspects["dcat-dataset-strings"].description
+    }",
+    "url":"https://knowledgenet.co/dataset/${this.state.dataset.id}",
+    "sameAs":"${
+        this.state.dataset.aspects["dcat-dataset-strings"].landingPage
+    }",
     "keywords":[
-       "insert keywords" 
-       ],
+        ${
+            this.state.dataset.aspects["dcat-dataset-strings"].keywords
+                ? this.state.dataset.aspects[
+                      "dcat-dataset-strings"
+                  ].keywords.map((ele, key) => {
+                      return '"' + ele + '"';
+                  })
+                : null
+        }
+        ],
     "creator":{
        "@type":"Organization",
-       "url": "https://www.csiro.au",
-       "name":"CSIRO",
+       "name":"${
+           this.state.dataset.aspects["dataset-publisher"]
+               ? this.state.dataset.aspects["dataset-publisher"].publisher.name
+               : ""
+       }",
        "contactPoint":{
           "@type":"ContactPoint",
           "contactType": "CSIRO Enquiries",
@@ -252,7 +267,7 @@ export default class DataSetDetail extends Component {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Tags/Keywords:</td>
+                                        <td>Description:</td>
                                         <td>
                                             {
                                                 this.state.dataset.aspects[
