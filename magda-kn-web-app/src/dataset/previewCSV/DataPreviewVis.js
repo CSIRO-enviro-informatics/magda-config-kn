@@ -86,7 +86,7 @@ class DataPreviewVis extends Component<{
                 distribution.compatiblePreviews.table &&
                     TabItem("table", "Table", this.renderTable()),
                 distribution.compatiblePreviews.chart &&
-                    TabItem("chart", "Chart(experimental)", this.renderChart())
+                    TabItem("chart", "Chart (experimental)", this.renderChart())
             ].filter(x => !!x);
 
             return tabs.length ? this.renderTabs(tabs) : null;
