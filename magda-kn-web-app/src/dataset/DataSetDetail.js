@@ -101,12 +101,7 @@ export default class DataSetDetail extends Component {
            this.state.dataset.aspects["dataset-publisher"]
                ? this.state.dataset.aspects["dataset-publisher"].publisher.name
                : ""
-       }",
-       "contactPoint":{
-          "@type":"ContactPoint",
-          "contactType": "CSIRO Enquiries",
-          "email":"contact@csiro.au"
-       }
+       }"
     },
    
   }
