@@ -1,7 +1,7 @@
 global:
-  externalUrlkn: staging.knowledgenet.co
-  externalUrlEs: staging-es.knowledgenet.co
-  externalUrl: http://staging.knowledgenet.co
+  externalUrlkn: staging-test.knowledgenet.co
+  externalUrlEs: staging-test-es.knowledgenet.co
+  externalUrl: http://staging-test.knowledgenet.co
   # tlssecret: knco-tls-secret
   rollingUpdate:
     maxUnavailable: 1
@@ -12,9 +12,9 @@ global:
     repository: data61 # magda docker hub repo
     tag: 0.0.52-RC1  # This version will be increased when magda releases a new version
     pullPolicy: IfNotPresent
-  noDbAuth: false
-  useCloudSql: true
-  useCombinedDb: false
+  noDbAuth: true
+  useCloudSql: false
+  useCombinedDb: true
 
 ## Tags allow for services to be turned on and off on the fly... e.g. if you don't need
 ## to send emails, turn the correspondence-api off
@@ -29,9 +29,9 @@ tags:
   apidocs-server: true
   authorization-api: true
   authorization-db: true
-  cloud-sql-proxy: true
+  cloud-sql-proxy: false
   combined-db: true
-  content-db: true
+  content-db: false
   content-api: false
   correspondence-api: false
   elasticsearch: true
@@ -100,7 +100,7 @@ magda:
         - allow-popups-to-escape-sandbox
     auth:
       facebookClientId: ""
-      googleClientId: "667942079301-j60mms88dadjrmht4fv7qin96up56cpl.apps.googleusercontent.com"
+      googleClientId: "1049152486192-egoid2mcksouu0cofe326hdb2asuvrc9.apps.googleusercontent.com"
       aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/7xVQiC5TJXrzzkljNmFeeg"
     resources:
       requests:
@@ -151,15 +151,24 @@ magda:
       cpu: 1000m
       memory: 1000m
 
-  ## A pod for proxying to Google Cloud SQL, the GCE managed database service.
-  cloud-sql-proxy:
-    replicas: 2
-    resources:
-      requests:
-        cpu: 150m
-        memory: 20Mi
-      limits:
-        cpu: 300m
+  # connectors:
+  #   includeCronJobs: false
+  #   config:
+  #     - image:
+  #         name: magda-dap-connector
+  #       id: dap
+  #       name: CSIRO
+  #       sourceUrl: https://data.csiro.au/dap/ws/v2/
+  #       pageSize: 100
+  #       schedule: 30 3 */3 * *
+  #       ignoreHarvestSources: []
+  #     - image:
+  #         name: magda-ckan-connector
+  #       id: dga
+  #       name: data.gov.au
+  #       sourceUrl: https://data.gov.au/
+  #       pageSize: 1000
+  #       ignoreHarvestSources:
+  #         - "*"
 
-    ## The cloud sql instance to connect to
-    instanceConnectionName: knowledge-network-192205:asia-south1:kn-v2-staging
+  

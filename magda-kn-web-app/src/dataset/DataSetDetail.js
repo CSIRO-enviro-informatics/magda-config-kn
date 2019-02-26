@@ -11,7 +11,8 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Pagination from "./Pagination";
-
+import { Map, TileLayer, GeoJSON } from "react-leaflet";
+import { parse } from "wellknown";
 import "./DataSet.css";
 import API from "../config";
 
@@ -20,6 +21,7 @@ import { parseDataset } from "../helpers/record";
 
 import { Helmet } from "react-helmet";
 
+import "leaflet/dist/leaflet.css";
 const tooltip = <Tooltip id="tooltip">Search with this label</Tooltip>;
 
 export default class DataSetDetail extends Component {
@@ -65,10 +67,54 @@ export default class DataSetDetail extends Component {
                 console.log("error on .catch", error);
             });
     }
-
+    isJson(str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
     render() {
         if (this.state.dataset === "") return <p />;
         const dataset = parseDataset(this.state.dataset);
+        const spatial =
+            this.state.dataset.aspects["dcat-dataset-strings"].spatial || "";
+        // console.log(spatial, parse(spatial), JSON.parse(spatial))
+        const spatialMap = parse(spatial) ? (
+            <Map
+                center={[
+                    parse(spatial)["coordinates"][0][0][1],
+                    parse(spatial)["coordinates"][0][0][0]
+                ]}
+                zoom={6}
+                style={{ width: "100%", height: "300px" }}
+            >
+                <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                />
+                <GeoJSON data={parse(spatial)} />
+            </Map>
+        ) : this.isJson(spatial) ? (
+            <Map
+                center={[
+                    JSON.parse(spatial)["coordinates"][0][0][1],
+                    JSON.parse(spatial)["coordinates"][0][0][0]
+                ]}
+                zoom={6}
+                style={{ width: "100%", height: "300px" }}
+            >
+                <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                />
+                <GeoJSON data={JSON.parse(spatial)} />
+            </Map>
+        ) : (
+            spatial
+        );
+
         return (
             <div>
                 <Helmet>
@@ -147,7 +193,7 @@ export default class DataSetDetail extends Component {
                                             <a
                                                 href={
                                                     this.state.dataset.aspects
-                                                        .source.name
+                                                        .source.url
                                                 }
                                             >
                                                 {
@@ -176,6 +222,48 @@ export default class DataSetDetail extends Component {
                                             </a>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>Issued:</td>
+                                        <td>
+                                            {
+                                                this.state.dataset.aspects[
+                                                    "dcat-dataset-strings"
+                                                ].issued
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Modified:</td>
+                                        <td>
+                                            {
+                                                this.state.dataset.aspects[
+                                                    "dcat-dataset-strings"
+                                                ].modified
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Temporal Coverage:</td>
+                                        <td>
+                                            {this.state.dataset.aspects[
+                                                "dcat-dataset-strings"
+                                            ].temporal.start
+                                                ? "Start:" +
+                                                  this.state.dataset.aspects[
+                                                      "dcat-dataset-strings"
+                                                  ].temporal.start
+                                                : ""}
+                                            {this.state.dataset.aspects[
+                                                "dcat-dataset-strings"
+                                            ].temporal.end
+                                                ? ", End:" +
+                                                  this.state.dataset.aspects[
+                                                      "dcat-dataset-strings"
+                                                  ].temporal.end
+                                                : ""}
+                                        </td>
+                                    </tr>
+
                                     {this.state.dataset.aspects[
                                         "dataset-linked-data-rating"
                                     ] ? (
@@ -271,6 +359,10 @@ export default class DataSetDetail extends Component {
                                             }
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>Spatial:</td>
+                                        <td className="map">{spatialMap}</td>
+                                    </tr>
                                 </tbody>
                             </Table>
 
@@ -312,6 +404,18 @@ export default class DataSetDetail extends Component {
                                                       "dcat-distribution-strings"
                                                   ].accessURL === undefined ? (
                                                   <li key={key}>
+                                                      <span
+                                                          className={
+                                                              ele.aspects[
+                                                                  "source-link-status"
+                                                              ]
+                                                                  ? ele.aspects[
+                                                                        "source-link-status"
+                                                                    ].status +
+                                                                    "_status"
+                                                                  : "unknown_status"
+                                                          }
+                                                      />
                                                       <span className="glyphicon glyphicon-link" />
                                                       Both download URL and
                                                       access URL unavilable, try
@@ -330,6 +434,18 @@ export default class DataSetDetail extends Component {
                                                   "dcat-distribution-strings"
                                               ].downloadURL ? (
                                                   <li key={key}>
+                                                      <span
+                                                          className={
+                                                              ele.aspects[
+                                                                  "source-link-status"
+                                                              ]
+                                                                  ? ele.aspects[
+                                                                        "source-link-status"
+                                                                    ].status +
+                                                                    "_status"
+                                                                  : "unknown_status"
+                                                          }
+                                                      />
                                                       <span className="glyphicon glyphicon-link" />
                                                       <a
                                                           href={
@@ -366,6 +482,18 @@ export default class DataSetDetail extends Component {
                                                   </li>
                                               ) : (
                                                   <li key={key}>
+                                                      <span
+                                                          className={
+                                                              ele.aspects[
+                                                                  "source-link-status"
+                                                              ]
+                                                                  ? ele.aspects[
+                                                                        "source-link-status"
+                                                                    ].status +
+                                                                    "_status"
+                                                                  : "unknown_status"
+                                                          }
+                                                      />
                                                       <span className="glyphicon glyphicon-link" />
                                                       {ele.name}{" "}
                                                       <i>
@@ -436,6 +564,18 @@ export default class DataSetDetail extends Component {
                                 ) : (
                                     ""
                                 )}
+                                <div>
+                                    Resource link status: &nbsp;
+                                    <i>
+                                        <span className="active_status" />Active
+                                    </i>&nbsp;
+                                    <i>
+                                        <span className="broken_status" />Broken
+                                    </i>&nbsp;
+                                    <i>
+                                        <span className="unknown_status" />Unknown
+                                    </i>
+                                </div>
                             </ul>
 
                             <Pagination
@@ -488,6 +628,9 @@ export default class DataSetDetail extends Component {
                                 </Panel.Collapse>
                             </Panel>
                         </Col>
+                    </Row>
+                    <Row>
+                        <br />
                     </Row>
                 </Grid>
             </div>

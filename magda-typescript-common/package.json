@@ -1,7 +1,7 @@
 {
   "name": "@magda/typescript-common",
   "description": "Common TypeScript code shared between components.",
-  "version": "0.0.50-RC2",
+  "version": "0.0.52-RC1",
   "license": "Apache-2.0",
   "scripts": {
     "build": "yarn run compile",
@@ -28,6 +28,9 @@
     "@types/uuid": "^3.4.0",
     "@types/yargs": "^8.0.2",
     "@types/read-pkg-up": "^3.0.1",
+    "@types/passport": "^0.4.5",
+    "@types/passport-facebook": "^2.1.8",
+    "@types/passport-local": "^1.0.31",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "djv": "^2.1.1",

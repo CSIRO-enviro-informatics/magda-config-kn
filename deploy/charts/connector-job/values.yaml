@@ -14,19 +14,299 @@ includeInitialJobs: true
 includeCronJobs: false
 config: 
   - image:
+      name: magda-project-open-data-connector
+    id: act
+    name: ACT Government data.act.gov.au
+    sourceUrl: http://www.data.act.gov.au/data.json
+    pageSize: 100
+    schedule: 0 0 1 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-ckan-connector
+    id: aurin
+    name: Australian Urban Research Infrastructure Network
+    sourceUrl: http://data.aurin.org.au/
+    pageSize: 1000
+    schedule: 30 0 1 * *
+    ignoreHarvestSources: []
+    
+  - image:
+      name: magda-csw-connector
+    id: auscope
+    name: AuScope
+    sourceUrl: http://portal.auscope.org.au/geonetwork/srv/eng/csw
+    pageSize: 50
+    schedule: 0 1 1 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: bom
+    name: Australian Bureau of Meteorology
+    sourceUrl: http://www.bom.gov.au/geonetwork/srv/eng/csw
+    pageSize: 100
+    schedule: 30 1 1 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: aims
+    name: Australian Institute of Marine Science
+    sourceUrl: http://data.aims.gov.au/geonetwork/srv/eng/csw
+    pageSize: 100
+    schedule: 0 2 1 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: aodn
+    name: Australian Oceans Data Network
+    sourceUrl: http://catalogue.aodn.org.au/geonetwork/srv/eng/csw
+    pageSize: 100
+    schedule: 10 2 1 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-ckan-connector
+    id: brisbane
+    name: Brisbane City Council
+    sourceUrl: https://www.data.brisbane.qld.gov.au/data/
+    pageSize: 100
+    schedule: 30 2 1 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-ckan-connector
+    id: cerdi
+    name: Federation University Research Data Catalogue
+    sourceUrl: http://data2.cerdi.edu.au/
+    pageSize: 1000
+    schedule: 10 3 1 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-project-open-data-connector
+    id: hobart
+    name: City of Hobart Open Data Portal
+    sourceUrl: http://data-1-hobartcc.opendata.arcgis.com/data.json
+    pageSize: 100
+    schedule: 30 3 1 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-project-open-data-connector
+    id: launceston
+    name: City of Launceston Open Data
+    sourceUrl: http://opendata.launceston.tas.gov.au/data.json
+    pageSize: 100
+    schedule: 40 3 1 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-dap-connector
+    id: dap
+    name: CSIRO
+    sourceUrl: https://data.csiro.au/dap/ws/v2/
+    pageSize: 100
+    schedule: 0 4 1 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: marlin
+    name: CSIRO Marlin
+    sourceUrl: http://www.marlin.csiro.au/geonetwork/srv/eng/csw
+    pageSize: 50
+    schedule: 30 4 1 * *
+    ignoreHarvestSources: []
+
+  - image:
       name: magda-ckan-connector
     id: dga
     name: data.gov.au
     sourceUrl: https://data.gov.au/
     pageSize: 1000
-    ignoreHarvestSources:
-      - "*"
-  # You can keep adding more if you not only want to create one adhoc job at once
-  # - image:
-  #     name: magda-dap-connector
-  #   id: dap
-  #   name: CSIRO
-  #   sourceUrl: https://data.csiro.au/dap/ws/v2/
-  #   pageSize: 100
-  #   schedule: 30 3 */3 * *
-  #   ignoreHarvestSources: []
+    schedule: 0 5 1 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: environment
+    name: Department of the Environment and Energy
+    sourceUrl: http://www.environment.gov.au/fed/csw
+    pageSize: 100
+    schedule: 30 5 1 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-project-open-data-connector
+    id: esta
+    name: ESTA Open Data
+    sourceUrl: http://data-esta000.opendata.arcgis.com/data.json
+    pageSize: 100
+    schedule: 0 0 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: ga
+    name: Geoscience Australia
+    sourceUrl: http://www.ga.gov.au/geonetwork/srv/en/csw
+    pageSize: 100
+    schedule: 30 0 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-project-open-data-connector
+    id: logan
+    name: Logan City Council
+    sourceUrl: http://data-logancity.opendata.arcgis.com/data.json
+    pageSize: 100
+    schedule: 50 0 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-project-open-data-connector
+    id: melbourne
+    name: Melbourne Data
+    sourceUrl: https://data.melbourne.vic.gov.au/data.json
+    pageSize: 100
+    schedule: 0 1 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: mrt
+    name: Mineral Resources Tasmania
+    sourceUrl: http://www.mrt.tas.gov.au/web-catalogue/srv/eng/csw
+    pageSize: 100
+    schedule: 30 1 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-project-open-data-connector
+    id: moretonbay
+    name: Moreton Bay Regional Council Data Portal
+    sourceUrl: http://data.moretonbay.qld.gov.au/data.json
+    pageSize: 100
+    schedule: 0 2 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: metoc
+    name: Navy Meteorology and Oceanography (METOC)
+    sourceUrl: http://www.metoc.gov.au/geonetwork/srv/en/csw
+    pageSize: 100
+    schedule: 30 2 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: neii
+    name: National Environmental Information Infrastructure
+    sourceUrl: http://neii.bom.gov.au/services/catalogue/csw
+    pageSize: 100
+    schedule: 0 3 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-ckan-connector
+    id: nsw
+    name: New South Wales Government
+    sourceUrl: https://data.nsw.gov.au/data/
+    pageSize: 100
+    schedule: 10 3 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: sdinsw
+    name: NSW Land and Property
+    sourceUrl: https://sdi.nsw.gov.au/csw
+    pageSize: 100
+    schedule: 30 3 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: qspatial
+    name: Queensland Spatial Catalogue - QSpatial
+    sourceUrl: http://qldspatial.information.qld.gov.au/catalogueadmin/csw
+    pageSize: 100
+    schedule: 50 3 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-ckan-connector
+    id: qld
+    name: Queensland Government
+    sourceUrl: https://data.qld.gov.au/
+    pageSize: 100
+    schedule: 0 4 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-ckan-connector
+    id: seed
+    name: NSW SEED
+    sourceUrl: https://www.seed.nsw.gov.au/
+    pageSize: 100
+    schedule: 10 4 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-ckan-connector
+    id: sa
+    name: South Australia Government
+    sourceUrl: https://data.sa.gov.au/data/
+    pageSize: 100
+    schedule: 30 4 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: listtas
+    name: Tasmania TheList
+    sourceUrl: https://data.thelist.tas.gov.au:443/datagn/srv/eng/csw
+    pageSize: 100
+    schedule: 50 4 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-csw-connector
+    id: tern
+    name: Terrestrial Ecosystem Research Network
+    sourceUrl: https://geonetwork.tern.org.au/geonetwork/srv/eng/csw
+    pageSize: 100
+    schedule: 0 5 2 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-ckan-connector
+    id: vic
+    name: Victoria Government
+    sourceUrl: https://www.data.vic.gov.au/data/
+    pageSize: 100
+    schedule: 0 0 3 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-ckan-connector
+    id: visballarat
+    name: Visualising Ballarat
+    sourceUrl: http://data.visualisingballarat.org.au/
+    pageSize: 100
+    schedule: 30 0 3 * *
+    ignoreHarvestSources: []
+
+  - image:
+      name: magda-ckan-connector
+    id: wa
+    name: Western Australia Government
+    sourceUrl: http://catalogue.beta.data.wa.gov.au/
+    pageSize: 100
+    schedule: 0 1 3 * *
+    ignoreHarvestSources: []
+
