@@ -114,7 +114,9 @@ export default class DataSetDetail extends Component {
         ) : (
             spatial
         );
-
+        console.log(
+            this.state.dataset.aspects["dcat-dataset-strings"].description
+        );
         return (
             <div>
                 <Helmet>
@@ -125,6 +127,10 @@ export default class DataSetDetail extends Component {
     "name":"${this.state.dataset.name}",
     "description":"${
         this.state.dataset.aspects["dcat-dataset-strings"].description
+            ? this.state.dataset.aspects["dcat-dataset-strings"].description
+                  .replace(/[\r\n]/g, " ")
+                  .replace(/\"/g, '\\"')
+            : ""
     }",
     "url":"https://knowledgenet.co/dataset/${this.state.dataset.id}",
     "sameAs":"${
@@ -148,7 +154,7 @@ export default class DataSetDetail extends Component {
                ? this.state.dataset.aspects["dataset-publisher"].publisher.name
                : ""
        }"
-    },
+    }
    
   }
       `}</script>

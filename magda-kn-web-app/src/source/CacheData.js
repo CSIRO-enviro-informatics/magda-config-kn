@@ -4,7 +4,7 @@ export default class CacheData {
     }
     getDataSource() {
         console.log("load data ... ");
-        fetch(API.baseUrl + API.dataSource)
+        fetch(API.baseUrl + API.dataSetOrg)
             .then(response => {
                 // console.log(response)
                 if (response.status === 200) {

@@ -51,27 +51,26 @@ export default class GraphStats extends Component {
                 console.log("error on .catch", error);
             });
     }
-    getDataSource() {
-        fetch(API.dataSourceCount)
-            .then(response => {
-                // console.log(response)
-                if (response.status === 200) {
-                    return response.json();
-                } else console.log("Get data error ");
-            })
-            .then(json => {
-                this.organizeDataSource(json);
-            })
-            .catch(error => {
-                console.log("error on .catch", error);
-            });
+
+    async getDataSource() {
+        let allDataSources = [];
+        let pageToken = 0;
+        while (pageToken >= 0) {
+            const response = await fetch(
+                API.dataSetOrg + "&pageToken=" + pageToken
+            );
+            let responseJson = await response.json();
+            pageToken = responseJson.nextPageToken
+                ? responseJson.nextPageToken
+                : -1;
+            allDataSources = allDataSources.concat(responseJson.records);
+        }
+        this.organizeDataSource(allDataSources);
     }
 
     organizeDataSource(data) {
-        //Source map id as key, source object as value
-
         let sourceMap = new Map();
-        data.records.map(record => {
+        data.map(record => {
             if (!sourceMap.has(record.aspects.source.name))
                 sourceMap.set(
                     record.aspects.source.name,

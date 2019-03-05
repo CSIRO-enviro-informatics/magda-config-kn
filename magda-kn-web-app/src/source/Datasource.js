@@ -14,28 +14,27 @@ export default class Datasource extends Component {
         if (this.state.datasource.size === 0) this.getDataSource();
     }
 
-    getDataSource() {
-        // console.log('load data ... ')
-        fetch(API.dataSource)
-            .then(response => {
-                // console.log(response)
-                if (response.status === 200) {
-                    return response.json();
-                } else console.log("Get data error ");
-            })
-            .then(json => {
-                this.organizeDataSource(json);
-            })
-            .catch(error => {
-                console.log("error on .catch", error);
-            });
+    async getDataSource() {
+        let allDataSources = [];
+        let pageToken = 0;
+        while (pageToken >= 0) {
+            const response = await fetch(
+                API.dataSetOrg + "&pageToken=" + pageToken
+            );
+            let responseJson = await response.json();
+            pageToken = responseJson.nextPageToken
+                ? responseJson.nextPageToken
+                : -1;
+            allDataSources = allDataSources.concat(responseJson.records);
+        }
+        this.organizeDataSource(allDataSources);
     }
 
     organizeDataSource(data) {
         //Source map id as key, souce object as value
         let sourceMap = new Map();
         let sourcePublisherMap = new Map();
-        data.records.map(record => {
+        data.map(record => {
             if (!sourceMap.has(record.aspects.source.id))
                 sourceMap.set(record.aspects.source.id, record.aspects.source);
             let publisherArray =
