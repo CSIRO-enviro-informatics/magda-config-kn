@@ -28,7 +28,11 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
     "react-table": "^6.8.6",
-    "weighted-mean": "^1.0.2"
+    "weighted-mean": "^1.0.2",
+    "react-helmet": "^5.2.0",
+    "leaflet": "^1.4.0",
+    "react-leaflet": "^2.2.0",
+    "wellknown": "^0.5.0"
   },
   "scripts": {
     "start-js": "react-scripts start",
@@ -49,11 +53,5 @@
     "docker": {
       "include": "node_modules build"
     }
-  },
-  "dependencies": {
-    "react-helmet": "^5.2.0",
-    "leaflet": "^1.4.0",
-    "react-leaflet": "^2.2.0",
-    "wellknown": "^0.5.0"
   }
 }

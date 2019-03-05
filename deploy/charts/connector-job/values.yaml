@@ -13,6 +13,51 @@ resources:
 includeInitialJobs: true
 includeCronJobs: false
 config: 
+  # - image:
+  #     name: magda-dap-connector
+  #   id: dap
+  #   name: CSIRO
+  #   sourceUrl: https://data.csiro.au/dap/ws/v2/
+  #   pageSize: 100
+  #   schedule: 0 4 1 * *
+  #   ignoreHarvestSources: []
+
+  # - image:
+  #     name: magda-project-open-data-connector
+  #   id: esta
+  #   name: ESTA Open Data
+  #   sourceUrl: http://data-esta000.opendata.arcgis.com/data.json
+  #   pageSize: 100
+  #   schedule: 0 0 2 * *
+  #   ignoreHarvestSources: []
+  
+  # - image:
+  #     name: magda-csw-connector
+  #   id: mrt
+  #   name: Mineral Resources Tasmania
+  #   sourceUrl: http://www.mrt.tas.gov.au/web-catalogue/srv/eng/csw
+  #   pageSize: 100
+  #   schedule: 30 1 2 * *
+  #   ignoreHarvestSources: []
+
+  # - image:
+  #     name: magda-csw-connector
+  #   id: sdinsw
+  #   name: NSW Land and Property
+  #   sourceUrl: https://sdi.nsw.gov.au/csw
+  #   pageSize: 100
+  #   schedule: 30 3 2 * *
+  #   ignoreHarvestSources: []
+
+  # - image:
+  #     name: magda-ckan-connector
+  #   id: seed
+  #   name: NSW SEED
+  #   sourceUrl: https://www.seed.nsw.gov.au/
+  #   pageSize: 100
+  #   schedule: 10 4 2 * *
+  #   ignoreHarvestSources: []
+
   - image:
       name: magda-project-open-data-connector
     id: act
