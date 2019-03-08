@@ -1,6 +1,6 @@
 {
   "name": "@magda/scripts",
-  "version": "0.0.50-RC2",
+  "version": "0.0.52",
   "description": "Scripts for building, running, and deploying MAGDA",
   "license": "Apache-2.0",
   "bin": {
@@ -12,7 +12,9 @@
     "retag-and-push": "retag-and-push.js",
     "generate-api-documentation": "generate-api-documentation.js",
     "create-secrets": "create-secrets/index.js",
-    "set-scss-vars": "set-scss-vars.js"
+    "set-scss-vars": "set-scss-vars.js",
+    "pkg-create-secrets-script": "pkg create-secrets/index.js --out-path create-secrets/build",
+    "create-region-synonym-file": "create-region-synonym-file.js"
   },
   "devDependencies": {
     "@types/request": "^2.48.1"

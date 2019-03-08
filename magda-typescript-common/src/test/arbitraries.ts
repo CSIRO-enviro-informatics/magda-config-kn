@@ -391,15 +391,13 @@ export function fuzzStringArb(
         }
     ).smap(
         ({ string, cases }) =>
-            _
-                .map(string, (char, index) => {
-                    if (cases[index]) {
-                        return char.toUpperCase();
-                    } else {
-                        return char.toLowerCase();
-                    }
-                })
-                .join(""),
+            _.map(string, (char, index) => {
+                if (cases[index]) {
+                    return char.toUpperCase();
+                } else {
+                    return char.toLowerCase();
+                }
+            }).join(""),
         string => ({
             cases: _.map(string, (char, index) => char === char.toUpperCase()),
             string

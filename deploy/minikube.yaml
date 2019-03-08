@@ -65,7 +65,17 @@ tags:
   ## KN web server
   kn-web-server: true
 
+  kn-api: true
+  kn-db: true
+
 kn-web-server:
+  image:
+    repository: "localhost:5000/magda"
+    tag: "latest"
+    pullPolicy: Always
+  useLocalStyleSheet: true
+
+kn-api:
   image:
     repository: "localhost:5000/magda"
     tag: "latest"

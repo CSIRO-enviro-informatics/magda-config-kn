@@ -1,0 +1,26 @@
+{
+  "name": "@magda/migrator-kn-db",
+  "version": "0.0.52",
+  "description": "The MAGDA database for storing users and other kn data.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "dev": "echo \"No dev mode available, use helm instead.\"",
+    "docker-build-local": "create-docker-context-for-node-component --build --push --tag auto --local",
+    "docker-build-prod": "create-docker-context-for-node-component --build --push --tag auto",
+    "retag-and-push": "retag-and-push"
+  },
+  "config": {
+    "docker": {
+      "name": "data61/magda-migrator-kn-db",
+      "include": "Dockerfile sql"
+    }
+  },
+  "devDependencies": {
+    "@magda/scripts": "^0.0.52"
+  },
+  "magda": {
+    "categories": {
+      "migrator": true
+    }
+  }
+}
