@@ -92,7 +92,7 @@ export default class DataSetDetail extends Component {
             >
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
                 <GeoJSON data={parse(spatial)} />
             </Map>
@@ -107,7 +107,7 @@ export default class DataSetDetail extends Component {
             >
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
                 <GeoJSON data={JSON.parse(spatial)} />
             </Map>
@@ -253,19 +253,29 @@ export default class DataSetDetail extends Component {
                                         <td>
                                             {this.state.dataset.aspects[
                                                 "dcat-dataset-strings"
-                                            ].temporal.start
-                                                ? "Start:" +
-                                                  this.state.dataset.aspects[
+                                            ].temporal
+                                                ? this.state.dataset.aspects[
                                                       "dcat-dataset-strings"
                                                   ].temporal.start
+                                                    ? "Start:" +
+                                                      this.state.dataset
+                                                          .aspects[
+                                                          "dcat-dataset-strings"
+                                                      ].temporal.start
+                                                    : ""
                                                 : ""}
                                             {this.state.dataset.aspects[
                                                 "dcat-dataset-strings"
-                                            ].temporal.end
-                                                ? ", End:" +
-                                                  this.state.dataset.aspects[
+                                            ].temporal
+                                                ? this.state.dataset.aspects[
                                                       "dcat-dataset-strings"
                                                   ].temporal.end
+                                                    ? ", End:" +
+                                                      this.state.dataset
+                                                          .aspects[
+                                                          "dcat-dataset-strings"
+                                                      ].temporal.end
+                                                    : ""
                                                 : ""}
                                         </td>
                                     </tr>
@@ -437,8 +447,8 @@ export default class DataSetDetail extends Component {
                                                       </a>
                                                   </li>
                                               ) : ele.aspects[
-                                                  "dcat-distribution-strings"
-                                              ].downloadURL ? (
+                                                    "dcat-distribution-strings"
+                                                ].downloadURL ? (
                                                   <li key={key}>
                                                       <span
                                                           className={
@@ -514,7 +524,8 @@ export default class DataSetDetail extends Component {
                                                           >
                                                               {" "}
                                                               this URL{" "}
-                                                          </a>for access)
+                                                          </a>
+                                                          for access)
                                                       </i>
                                                       {ele.aspects[
                                                           "dcat-distribution-strings"
@@ -573,13 +584,18 @@ export default class DataSetDetail extends Component {
                                 <div>
                                     Resource link status: &nbsp;
                                     <i>
-                                        <span className="active_status" />Active
-                                    </i>&nbsp;
+                                        <span className="active_status" />
+                                        Active
+                                    </i>
+                                    &nbsp;
                                     <i>
-                                        <span className="broken_status" />Broken
-                                    </i>&nbsp;
+                                        <span className="broken_status" />
+                                        Broken
+                                    </i>
+                                    &nbsp;
                                     <i>
-                                        <span className="unknown_status" />Unknown
+                                        <span className="unknown_status" />
+                                        Unknown
                                     </i>
                                 </div>
                             </ul>
