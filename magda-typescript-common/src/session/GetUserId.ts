@@ -24,7 +24,7 @@ export function getUserIdHandling(
     cb: (userId: string) => void
 ) {
     const userId = getUserId(req, jwtSecret);
-console.log(userId)
+
     userId.caseOf({
         just: userId => {
             cb(userId);

@@ -31,6 +31,8 @@ tags:
   kn-es-ingress: true
   kn-ingress: false
   kn-web-server: true
+  kn-api: true
+  kn-db: true
 
 magda:
   gateway:
@@ -59,6 +61,8 @@ magda:
         to: http://elasticsearch:9200/datasets38/_search
       test-chart:
         to: http://test-chart
+      kn-api:
+        to: http://kn-api
 
 test-chart:
   service:
