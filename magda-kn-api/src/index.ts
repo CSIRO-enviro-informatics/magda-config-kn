@@ -31,13 +31,20 @@ const argv = addJwtSecretFromEnvVar(
         }).argv
 );
 
+//CORS middleware
+var allowCrossDomain = function(req:any, res:any, next:any) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
+
 // Create a new Express application.
 var app = express();
 app.use(require("body-parser").json());
-
-app.use(
-    "/v0",
-    createApiRouter({
+app.use(allowCrossDomain)
+app.use(createApiRouter({
         jwtSecret: argv.jwtSecret,
         database: new Database({
             dbHost: argv.dbHost,

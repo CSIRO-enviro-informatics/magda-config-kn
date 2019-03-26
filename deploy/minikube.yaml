@@ -81,6 +81,12 @@ kn-api:
     tag: "latest"
     pullPolicy: Always
   useLocalStyleSheet: true
+kn-db:
+  image:
+    repository: "localhost:5000/magda"
+    tag: "latest"
+    pullPolicy: Always
+  useLocalStyleSheet: true
 
 magda:
   gateway:

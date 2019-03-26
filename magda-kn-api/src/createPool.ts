@@ -8,14 +8,27 @@ export interface PoolCreationOptions {
 export default function createPool(options: PoolCreationOptions) {
     //   conString: "postgres://postgres@192.168.99.100:30544/postgres"
     const config = {
-        database: "auth", //env var: PGDATABASE
+        database: "kn", //env var: PGDATABASE
         host: options.dbHost, // Server hosting the postgres database
         port: options.dbPort, //env var: PGPORT
         max: 10, // max number of clients in the pool
         idleTimeoutMillis: 30000 // how long a client is allowed to remain idle before being closed
     };
 
+    // dev
+    // const local = {
+    //     database: "kn", //env var: PGDATABASE
+    //     host: 'localhost', // Server hosting the postgres database
+    //     port: 5433, //env var: PGPORT
+    //     max: 10, // max number of clients in the pool
+    //     user: 'postgres',
+    //     password: 'postgres',
+    //     idleTimeoutMillis: 30000 // how long a client is allowed to remain idle before being closed
+    // };
+
     const pool = new pg.Pool(config);
+    // dev
+    // const pool = new pg.Pool(local);
 
     pool.on("error", function(err, client) {
         // if an error is encountered by a client while it sits idle in the pool

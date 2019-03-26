@@ -32,7 +32,8 @@ export default class DataSetDetail extends Component {
             dataset: "",
             pub_id: "",
             perPage: 30,
-            currentPage: 0
+            currentPage: 0, 
+            views: 0,
         };
     }
 
@@ -45,6 +46,7 @@ export default class DataSetDetail extends Component {
 
     componentDidMount() {
         this.getData();
+        this.getDatasetStatistic();
     }
 
     updateCurrentPage = page => {
@@ -62,6 +64,23 @@ export default class DataSetDetail extends Component {
             .then(json => {
                 // console.log(json)
                 this.setState({ dataset: json });
+            })
+            .catch(error => {
+                console.log("error on .catch", error);
+            });
+    }
+    getDatasetStatistic() {
+        console.log(API.datasetStatistic + this.state.id)
+        fetch(API.datasetStatistic + this.state.id)
+            .then(response => {
+                console.log(response)
+                if (response.status === 200) {
+                    return response.json();
+                } else console.log("Get data error ");
+            })
+            .then(json => {
+                console.log(json)
+                this.setState({ views: json.count });
             })
             .catch(error => {
                 console.log("error on .catch", error);
@@ -600,14 +619,14 @@ export default class DataSetDetail extends Component {
                         </Col>
                         <Col md={2}>
                             <div className="kn-stats">
-                                {/* <h5>KN STATS</h5>
-                        <ul>
-                            <li><span className="glyphicon glyphicon-search"></span> 0 </li>
-                            <li><span className="glyphicon glyphicon-heart-empty"></span> 0 </li>
-                            <li><span className="glyphicon glyphicon-list"></span> 0 </li>
-                            <li><span className="glyphicon glyphicon-comment"></span> 0 </li>
-                            <li><span className="glyphicon glyphicon-bookmark"></span> 0 </li>
-                        </ul> */}
+                                <h5>KN STATS</h5>
+                                <ul>
+                                    <li><span className="glyphicon glyphicon-search"></span> {this.state.views} </li>
+                                    <li><span className="glyphicon glyphicon-heart-empty"></span> 0 </li>
+                                    <li><span className="glyphicon glyphicon-list"></span> 0 </li>
+                                    <li><span className="glyphicon glyphicon-comment"></span> 0 </li>
+                                    <li><span className="glyphicon glyphicon-bookmark"></span> 0 </li>
+                                </ul>
                             </div>
                         </Col>
                     </Row>

@@ -5,3 +5,7 @@ resources:
     memory: 30Mi
   limits:
     cpu: 50m
+disableAuthenticationFeatures: false
+service: {}
+useLocalStyleSheet: false
+contentApiBaseUrlInternal: "http://content-api/v0/"

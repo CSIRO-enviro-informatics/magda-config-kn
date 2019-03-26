@@ -44,7 +44,7 @@
   },
   "config": {
     "docker": {
-      "name": "data61/magda-kn-api",
+      "name": "magda/magda-kn-api",
       "include": "node_modules dist Dockerfile"
     },
     "jwtSecret": "squirrel",

@@ -11,11 +11,12 @@
   },
   "config": {
     "docker": {
-      "name": "data61/magda-migrator-kn-db",
+      "name": "magda/magda-migrator-kn-db",
       "include": "Dockerfile sql"
     }
   },
-  "devDependencies": {
+  "devDependencies": { 
+    "@magda/db-migrator": "^0.0.52",
     "@magda/scripts": "^0.0.52"
   },
   "magda": {
