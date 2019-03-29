@@ -232,66 +232,69 @@ Change the followings:
 
 ```yaml
 magda:
-  gateway:
-    routes:
-      search:
-        to: http://search-api/v0
-      registry:
-        to: http://registry-api-read-only/v0
-      registry-auth:
-        to: http://registry-api/v0
-        auth: true
-      auth:
-        to: http://authorization-api/v0/public
-        auth: true
-      admin:
-        to: http://admin-api/v0
-        auth: true
-      content:
-        to: http://content-api/v0
-      correspondence:
-        to: http://correspondence-api/v0/public
-      apidocs:
-        to: http://apidocs-server/
-        redirectTrailingSlash: true
-      test-chart:
-        to: http://test-chart
+    gateway:
+        routes:
+            search:
+                to: http://search-api/v0
+            registry:
+                to: http://registry-api-read-only/v0
+            registry-auth:
+                to: http://registry-api/v0
+                auth: true
+            auth:
+                to: http://authorization-api/v0/public
+                auth: true
+            admin:
+                to: http://admin-api/v0
+                auth: true
+            content:
+                to: http://content-api/v0
+            correspondence:
+                to: http://correspondence-api/v0/public
+            apidocs:
+                to: http://apidocs-server/
+                redirectTrailingSlash: true
+            test-chart:
+                to: http://test-chart
 ```
 
 to :
 
 ```yaml
 magda:
-  gateway:
-    routes:
-      search:
-        to: http://search-api/v0
-      registry:
-        to: http://registry-api-read-only/v0
-      registry-auth:
-        to: http://registry-api/v0
-        auth: true
-      auth:
-        to: http://authorization-api/v0/public
-        auth: true
-      admin:
-        to: http://admin-api/v0
-        auth: true
-      content:
-        to: http://content-api/v0
-      correspondence:
-        to: http://correspondence-api/v0/public
-      apidocs:
-        to: http://apidocs-server/
-        redirectTrailingSlash: true
-      test-chart-access:
-        to: http://test-chart
+    gateway:
+        routes:
+            search:
+                to: http://search-api/v0
+            registry:
+                to: http://registry-api-read-only/v0
+            registry-auth:
+                to: http://registry-api/v0
+                auth: true
+            auth:
+                to: http://authorization-api/v0/public
+                auth: true
+            admin:
+                to: http://admin-api/v0
+                auth: true
+            content:
+                to: http://content-api/v0
+            correspondence:
+                to: http://correspondence-api/v0/public
+            apidocs:
+                to: http://apidocs-server/
+                redirectTrailingSlash: true
+            test-chart-access:
+                to: http://test-chart
 ```
 
 Once saved this file, just re-deploy via:
 
 ```bash
 helm upgrade magda-kn deploy/charts/kn --wait --namespace kn --timeout 30000 --install -f deploy/minikube.yaml --devel
+
+#or with --force if need be
+helm upgrade magda-kn deploy/charts/kn --wait --namespace kn --timeout 30000 --install -f deploy/minikube.yaml --devel --force
 ```
 
 **Please note: --namespace paremeter need to be same as the one you supplied to `create-secrets` tool. If you picked a different namespace rather than `kn`, you need to adjust the command above accordingly.**
