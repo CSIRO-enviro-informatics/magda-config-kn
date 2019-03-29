@@ -8,14 +8,14 @@ CREATE TABLE public."eventType"
 )
 WITH (
     OIDS = FALSE
-)
+);
 
 INSERT INTO public."eventType"(
 	id, "eventTYpe")
 	VALUES (1, 'view');
 INSERT INTO public."eventType"(
 	id, "eventTYpe")
-	VALUES (1, 'api');
+	VALUES (2, 'api');
     
 CREATE TABLE public.views
 (
