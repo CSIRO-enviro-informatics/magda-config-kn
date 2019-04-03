@@ -111,7 +111,7 @@ export default class DataSetListForOrg extends Component {
             size: 0,
             query: {
                 bool: {
-                    must: [{ match: { "publisher.name": publisherName } }]
+                    must: [{ match: { "publisher.name.keyword": publisherName } }]
                 }
             },
             aggs: {
