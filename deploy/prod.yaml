@@ -1,8 +1,8 @@
 global:
-  externalUrlkn: staging.knowledgenet.co
-  externalUrlEs: staging-es.knowledgenet.co
-  externalUrl: http://staging.knowledgenet.co
-  # tlssecret: knco-tls-secret
+  externalUrlkn: knowledgenet.co
+  externalUrlEs: es.knowledgenet.co
+  externalUrl: https://knowledgenet.co
+  tlssecret: kn-tls-secret
   rollingUpdate:
     maxUnavailable: 1
   exposeNodePorts: false
@@ -69,7 +69,7 @@ tags:
 
 kn-web-server:
   image:
-    repository: "gcr.io/knowledge-network-192205/staging/magda"
+    repository: "gcr.io/knowledge-network-prod/kn"
     tag: "2.1.0"
     pullPolicy: Always
   useLocalStyleSheet: true
@@ -100,8 +100,8 @@ magda:
         - allow-popups-to-escape-sandbox
     auth:
       facebookClientId: ""
-      googleClientId: "667942079301-j60mms88dadjrmht4fv7qin96up56cpl.apps.googleusercontent.com"
-      aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/7xVQiC5TJXrzzkljNmFeeg"
+      googleClientId: "1049152486192-egoid2mcksouu0cofe326hdb2asuvrc9.apps.googleusercontent.com"
+      aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/jn_kJNxp0DebnxU282EA_A"
     resources:
       requests:
         cpu: 100m
@@ -162,4 +162,4 @@ magda:
         cpu: 300m
 
     ## The cloud sql instance to connect to
-    instanceConnectionName: knowledge-network-192205:asia-south1:kn-v2-staging
+    instanceConnectionName: knowledge-network-prod:australia-southeast1:kn-v2-prod

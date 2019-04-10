@@ -1,5 +1,4 @@
 apiVersion: v1
-appVersion: 0.0.50-RC2
 description: A Test Helm chart for KN
 name: test-chart
-version: 0.0.50-RC2
+version: 2.1.0
