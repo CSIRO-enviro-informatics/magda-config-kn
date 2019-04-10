@@ -1,7 +1,7 @@
 {
   "name": "@magda/web-server",
   "description": "The server that serves the MAGDA web front end.",
-  "version": "0.0.52-RC1",
+  "version": "2.1.0",
   "license": "Apache-2.0",
   "scripts": {
     "build": "yarn run compile",
@@ -10,7 +10,7 @@
     "start": "node dist/index.js",
     "dev": "run-typescript-in-nodemon src/index.ts --baseExternalUrl=http://localhost:6107/ --baseUrl=http://dev.magda.io/",
     "docker-build-local": "create-docker-context-for-node-component --build --push --tag auto --local",
-    "docker-build-prod": "create-docker-context-for-node-component --build --push --tag auto --repository gcr.io/knowledge-network-192205/prod",
+    "docker-build-prod": "create-docker-context-for-node-component --build --push --tag auto --repository gcr.io/knowledge-network-prod/kn",
     "docker-build-staging": "create-docker-context-for-node-component --build --push --tag auto --repository gcr.io/knowledge-network-192205/staging",
     "docker-build": "create-docker-context-for-node-component --build",
     "retag-and-push": "retag-and-push",
@@ -22,7 +22,7 @@
     "@types/config": "0.0.32",
     "@types/express": "^4.0.39",
     "@types/helmet": "0.0.37",
-    "@types/lodash": "^4.14.68",
+    "@types/lodash": "4.14.108",
     "@types/mocha": "^2.2.41",
     "@types/morgan": "^1.7.35",
     "@types/nock": "^8.2.1",
@@ -43,10 +43,10 @@
     "xml2js": "^0.4.19"
   },
   "dependencies": {
-    "@magda/kn-web-app": "^0.0.52-RC1",
+    "@magda/kn-web-app": "^2.1.0",
     "@magda/typescript-common": "^0.0.52-RC1",
     "express": "^4.15.3",
-    "lodash": "^4.17.11",
+    "lodash": "4.17.5",
     "morgan": "^1.9.0",
     "read-pkg-up": "^3.0.0",
     "request": "2.85.0",
@@ -56,7 +56,7 @@
   },
   "config": {
     "docker": {
-      "name": "magda/magda-kn-web-server",
+      "name": "magda-kn-web-server",
       "include": "node_modules dist Dockerfile package.json"
     }
   },
