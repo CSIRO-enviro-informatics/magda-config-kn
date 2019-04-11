@@ -35,20 +35,20 @@ Found previous saved config (April 9th 2019, 2:19:07 pm).
 ? Do you want to connect to kubernetes cluster to create secrets without going through any questions? NO (Going through all questions)
 ? Are you creating k8s secrets for google cloud or local testing cluster? Google Cloud Kubernetes Cluster
 ? Do you use google cloud SQL service as your database? YES
-? Please provide default google cloud SQL service DB password: 8ApyPpqiPu0s8Art
+? Please provide default google cloud SQL service DB password: CloudSqlDefaultPassword
 ? Has located saved Google SQL cloud credentials JSON file. Do you want to re-select? YES
 ? Please provide the path to the credentials JSON file for your Google SQL cloud service access: C:\Users\wan273\projects\magda-config-kn\knowledge-network-prod-27e47b65b3f8.json
 ? Do you use google storage service? NO
 ? Do you need to access SMTP service for sending data request email? NO
 ? Do you use Gitlab as your CI system and need the access to Gitlab docker registry? NO
 ? Do you want to create google-client-secret for oAuth SSO? YES
-? Please provide google api access key for oAuth SSO: Vnw5fxIwXMOEpYpTvWggtzpc
+? Please provide google api access key for oAuth SSO: GoogleApiAccessKey
 ? Do you want to create facebook-client-secret for oAuth SSO? YES
-? Please provide facebook api access key for oAuth SSO: p4ssw0rd
+? Please provide facebook api access key for oAuth SSO: FacebookApiAccessKey
 ? Do you want to create aaf-client-secret for AAF Rapid Connect SSO? YES
-? Please provide AAF secret for AAF Rapid Connect SSO: [([2b&}JLjeq-*4d21"P]s8L^cM4Q-{|
+? Please provide AAF secret for AAF Rapid Connect SSO: AAFApiAccessKey
 ? Do you want to setup HTTP Basic authentication? NO
-? Do you want to manually input the password used for databases? Generated password: Xaboo2ohkiwuapoo
+? Do you want to manually input the password used for databases? Generated password: DBpassword
 ? Specify a namespace or leave blank and override by env variable later? YES (Specify a namespace)
 ? What's the namespace you want to create secrets into (input `default` if you want to use the `default` namespace)? v2-1
 ? Do you want to allow environment variables (see --help for full list) to override current settings at runtime? YES (Any environment variable can overide my settings)
