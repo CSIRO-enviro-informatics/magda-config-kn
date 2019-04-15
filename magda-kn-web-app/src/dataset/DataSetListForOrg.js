@@ -111,7 +111,9 @@ export default class DataSetListForOrg extends Component {
             size: 0,
             query: {
                 bool: {
-                    must: [{ match: { "publisher.name.keyword": publisherName } }]
+                    must: [
+                        { match: { "publisher.name.keyword": publisherName } }
+                    ]
                 }
             },
             aggs: {
@@ -152,7 +154,7 @@ export default class DataSetListForOrg extends Component {
                 start +
                 "&limit=" +
                 limit +
-                "&facetSize=99999"
+                "&facetSize=100"
         )
             .then(response => {
                 // console.log(response)
