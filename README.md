@@ -31,6 +31,12 @@ minikube config set cpus 4
 minikube config set disk-size 40g
 ```
 
+or 
+
+```
+$ minikube start --vm-driver=virtualbox  --cpus 4 --memory 8192 --disk-size=60g
+```
+
 Those values are recommended for running the whole cluster in the `minikube` cluster.
 
 If you only want to a few modules, you may want to lower those resource settings.
