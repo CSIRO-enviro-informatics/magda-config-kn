@@ -88,8 +88,33 @@ yarn docker-build-prod
 helm upgrade v2-1 deploy/charts/kn --wait --namespace v2-1 --timeout 3000 --install -f deploy/prod.yaml  --devel
 ```
 
+## install nginx controller
+
+```bash
+# install nginx-ingress with ingress class specified
+helm install --name v2-1-nginx-controller stable/nginx-ingress --set controller.ingressClass=v2-1 --set rbac.create=true
+```
+
+After install successfully, there will be a service named as `v2-1-nginx-controller-nginx-ingress-controller` with IP like `35.197.*.*:80, 35.197.*.*:443`,
+
+## update kn-ingress and kn-es-ingress
+
+Update kn-ingress or kn-es-ingress through the Google K8S Console:
+Kubernetes Engin -> Services -> kn-ingress (v2-1 namespace) -> YAML -> EDIT -> modify `kubernetes.io/ingress.class: nginx` to `kubernetes.io/ingress.class: v2-1` -> Save
+
+After update the kn-ingress, the new instance can be accessed by:
+
+-   `curl -H host=knowledgenet.co 35.197.*.*`
+-   modify the `hosts` file in your computer to add a record: `35.197.*.*:80 knowledgenet.co`, and access knowledgenet.co using a browser
+
 ## Harvest
 
 ```bash
 helm upgrade connector-job deploy/charts/connector-job --install --namespace v2-1
 ```
+
+## Update kn-web-server
+
+-   `yarn build` new kn-web-server
+-   `yarn docker-build-prod` build docker image and push to GKE regiestry
+-   Login GKE console, find the kn-web-server work node `web` and delete it. GKE will pull a new `web` node from the latest kn-web-server image.
