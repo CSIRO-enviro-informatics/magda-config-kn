@@ -100,29 +100,23 @@ g g:hover {
     cursor: pointer;
 }
 
-.active_status {
-    height: 10px;
-    width: 10px;
-    background-color: green;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 3px;
+.active_status:before {
+    color: green;
+    padding-right: 5px;
+    content: "\f058";
+    font-family: "Font Awesome 5 Free";
 }
 
-.broken_status {
-    height: 10px;
-    width: 10px;
-    background-color: red;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 3px;
+.broken_status:before {
+    padding-right: 5px;
+    color: orangered;
+    content: "\f057";
+    font-family: "Font Awesome 5 Free";
 }
 
-.unknown_status {
-    height: 10px;
-    width: 10px;
-    background-color: yellow;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 3px;
+.unknown_status:before {
+    padding-right: 5px;
+    color: orange;
+    content: "\f059";
+    font-family: "Font Awesome 5 Free";
 }

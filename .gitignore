@@ -8,6 +8,8 @@ docker-context*
 */package-lock.json
 *.lock
 deploy/charts/kn/charts/
+ssl_certs
+knowledge-network-prod-*.json
 
 # sbt specific
 .cache

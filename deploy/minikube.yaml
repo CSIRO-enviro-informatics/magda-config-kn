@@ -9,7 +9,7 @@ global:
  # Here, if unspecified, the following default value will be used:
   image:
     repository: data61 # magda docker hub repo
-    tag: 0.0.52-RC1  # This version will be increased when magda releases a new version
+    tag: 0.0.55-RC1  # This version will be increased when magda releases a new version
     pullPolicy: IfNotPresent
   noDbAuth: true
   useCloudSql: false

@@ -91,7 +91,7 @@ export default class SearchNavPills extends Component {
                 start +
                 "&limit=" +
                 limit +
-                "&facetSize=99999"
+                "&facetSize=100"
         )
             .then(response => {
                 if (response.status === 200) {
