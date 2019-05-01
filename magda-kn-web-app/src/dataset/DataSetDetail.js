@@ -75,19 +75,30 @@ export default class DataSetDetail extends Component {
         }
         return true;
     }
+    generateBounds(coordinates) {
+        let bounds = [];
+        for (let ele of coordinates) {
+            bounds.push([ele[1] - Math.random() * 0.3, ele[0] + Math.random()]);
+        }
+        if (bounds.length === 1) {
+            for (let i of [1, 2, 3, 4]) {
+                bounds.push([
+                    bounds[1] - Math.random(),
+                    bounds[0] + Math.random()
+                ]);
+            }
+        }
+        return bounds;
+    }
     render() {
         if (this.state.dataset === "") return <p />;
         const dataset = parseDataset(this.state.dataset);
         const spatial =
             this.state.dataset.aspects["dcat-dataset-strings"].spatial || "";
-        // console.log(spatial, parse(spatial), JSON.parse(spatial))
+        // console.log(spatial)
         const spatialMap = parse(spatial) ? (
             <Map
-                center={[
-                    parse(spatial)["coordinates"][0][0][1],
-                    parse(spatial)["coordinates"][0][0][0]
-                ]}
-                zoom={6}
+                bounds={this.generateBounds(parse(spatial).coordinates[0])}
                 style={{ width: "100%", height: "300px" }}
             >
                 <TileLayer
@@ -98,18 +109,20 @@ export default class DataSetDetail extends Component {
             </Map>
         ) : this.isJson(spatial) ? (
             <Map
-                center={[
-                    JSON.parse(spatial)["coordinates"][0][0][1],
-                    JSON.parse(spatial)["coordinates"][0][0][0]
-                ]}
-                zoom={6}
+                bounds={this.generateBounds(
+                    JSON.parse(spatial).coordinates[0][0]
+                )}
                 style={{ width: "100%", height: "300px" }}
             >
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
-                <GeoJSON data={JSON.parse(spatial)} />
+                <GeoJSON
+                    ref="geojson"
+                    key={dataset.identifier}
+                    data={JSON.parse(spatial)}
+                />
             </Map>
         ) : (
             spatial
@@ -554,10 +567,10 @@ export default class DataSetDetail extends Component {
                                               );
                                           })
                                     : "None"}
-                                {console.log(
+                                {/* {console.log(
                                     this.state.dataset,
                                     this.state.dataset.catalog
-                                )}
+                                )} */}
                                 <br />
                                 {this.state.dataset.aspects[
                                     "dataset-distributions"
