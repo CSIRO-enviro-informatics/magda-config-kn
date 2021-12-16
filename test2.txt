@@ -1,0 +1,166 @@
+Release "connector-job" has been upgraded. Happy Helming!
+NAME: connector-job
+LAST DEPLOYED: Wed Jul  7 14:54:22 2021
+NAMESPACE: prod
+STATUS: pending-upgrade
+REVISION: 2
+TEST SUITE: None
+USER-SUPPLIED VALUES:
+{}
+
+COMPUTED VALUES:
+connector-ecocommons:
+  config:
+    allowedOrganisationName: testorg
+    id: ecocommons
+    ignoreHarvestSources:
+    - '*'
+    name: Eco Commons Australia
+    pageSize: 100
+    sourceUrl: https://ckan.dev.ecocommons.org.au/
+  createConfigMap: true
+  createFunction: false
+  defaultImage:
+    imagePullSecret: false
+    pullPolicy: IfNotPresent
+    repository: docker.io/data61
+  defaultSettings:
+    includeCronJobs: true
+    includeInitialJobs: false
+  defaultTenantId: 0
+  global:
+    connectors:
+      image: {}
+      includeInitialJobs: true
+    image: {}
+    openfaas: {}
+  image:
+    name: magda-ckan-connector
+  resources:
+    limits:
+      cpu: 100m
+    requests:
+      cpu: 50m
+      memory: 30Mi
+global:
+  connectors:
+    image: {}
+    includeInitialJobs: true
+
+HOOKS:
+MANIFEST:
+---
+# Source: connector-job/charts/connector-ecocommons/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: connector-ecocommons-ecocommons
+data:
+  # When the config map is mounted as a volume, these will be created as files.
+  config.json: '  {"allowedOrganisationName":"testorg","id":"ecocommons","ignoreHarvestSources":["*"],"name":"Eco Commons Australia","pageSize":100,"sourceUrl":"https://ckan.dev.ecocommons.org.au/"}'
+---
+# Source: connector-job/charts/connector-ecocommons/templates/jobs.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: connector-ecocommons
+spec:
+  template:
+    metadata:
+      name: connector-ecocommons
+    spec:
+      containers:
+        - name: connector-ecocommons
+          image: "docker.io/data61/magda-ckan-connector:1.0.1-alpha.2"
+          imagePullPolicy: IfNotPresent
+          command:
+            - "node"
+            - "/usr/src/app/component/dist/index.js"
+            - "--tenantId"
+            - "0"
+            - "--config"
+            - "/etc/config/config.json"
+            - "--registryUrl"
+            - "http://registry-api/v0"
+          resources: 
+            limits:
+              cpu: 100m
+            requests:
+              cpu: 50m
+              memory: 30Mi
+          volumeMounts:
+            - mountPath: /etc/config
+              name: config
+          env:
+            - name: USER_ID
+              value: 00000000-0000-4000-8000-000000000000
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secrets
+                  key: jwt-secret
+      restartPolicy: "OnFailure"
+      volumes:
+        - name: config
+          configMap:
+            name: connector-ecocommons-ecocommons
+            items:
+              - key: config.json
+                path: config.json
+---
+# Source: connector-job/charts/connector-ecocommons/templates/cronjobs.yaml
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: connector-ecocommons
+spec:
+  schedule: 0 14 * * 6 # default = 12am Sydney time on Sunday"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: connector-ecocommons
+        spec:
+          containers:
+            - name: connector-ecocommons
+              image: "docker.io/data61/magda-ckan-connector:1.0.1-alpha.2"
+              imagePullPolicy: IfNotPresent
+              command:
+                - "node"
+                - "/usr/src/app/component/dist/index.js"
+                - "--tenantId"
+                - "0"
+                - "--config"
+                - "/etc/config/config.json"
+                - "--registryUrl"
+                - "http://registry-api/v0"
+              resources: 
+                limits:
+                  cpu: 100m
+                requests:
+                  cpu: 50m
+                  memory: 30Mi
+              volumeMounts:
+                - mountPath: /etc/config
+                  name: config
+              env:
+                - name: USER_ID
+                  value: 00000000-0000-4000-8000-000000000000
+                - name: JWT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: auth-secrets
+                      key: jwt-secret
+          restartPolicy: "OnFailure"
+          volumes:
+            - name: config
+              configMap:
+                name: connector-ecocommons-ecocommons
+                items:
+                  - key: config.json
+                    path: config.json
+---
+# Source: connector-job/charts/connector-ecocommons/templates/functionDataUrlProcessor.yaml
+# More exmaples of openfaas function here: https://github.com/openfaas/openfaas-operator
+

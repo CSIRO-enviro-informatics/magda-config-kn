@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   annotations:
@@ -22,6 +22,6 @@ spec:
   {{- if .Values.global.tlssecret }}
   tls:
   - secretName: {{ .Values.global.tlssecret }}
-    hosts:
-    - {{ .Values.global.externalUrlkn }}
+    # hosts:
+    # - {{ .Values.global.externalUrlkn }}
   {{- end }}

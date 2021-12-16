@@ -1,7 +1,7 @@
 global:
   image: {}
 image: 
-  tag: 0.0.55-RC1
+  tag: 0.0.57-0
   repository: "data61"
   pullPolicy: IfNotPresent
 resources:
@@ -19,7 +19,7 @@ config:
     name: ACT Government data.act.gov.au
     sourceUrl: http://www.data.act.gov.au/data.json
     pageSize: 100
-    schedule: 0 0 1 * *
+    schedule: 0 10 5 * *
 
   - image:
       name: magda-ckan-connector
@@ -27,7 +27,7 @@ config:
     name: Australian Urban Research Infrastructure Network
     sourceUrl: http://data.aurin.org.au/
     pageSize: 1000
-    schedule: 30 0 1 * *
+    schedule: 30 10 5 * *
 
   - image:
       name: magda-csw-connector
@@ -35,7 +35,7 @@ config:
     name: AuScope
     sourceUrl: http://portal.auscope.org.au/geonetwork/srv/eng/csw
     pageSize: 50
-    schedule: 0 1 1 * *
+    schedule: 0 23 4 * *
 
   - image:
       name: magda-csw-connector

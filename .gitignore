@@ -8,6 +8,9 @@ docker-context*
 */package-lock.json
 *.lock
 deploy/charts/kn/charts/
+deploy/charts/connector-v1.0.0-prod/charts/
+deploy/charts/connector-v0.0.57-dev/charts/
+deploy/charts/connector-v0.0.57/charts/
 ssl_certs
 knowledge-network-prod-*.json
 
