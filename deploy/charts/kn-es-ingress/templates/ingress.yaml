@@ -16,10 +16,10 @@ metadata:
         if ( $request_method !~ ^(GET|POST|HEAD|OPTIONS)$ ) {
             return 405;
         }
-        location ~ ^/(?!(datasets42|datasets41|datasets40|datasets38|datasets30|regions22|regions17|datasets32|regions21|formats1|publishers3)) {
+        location ~ ^/(?!(datasets47|datasets46|datasets45|datasets44|datasets43|datasets42|datasets41|datasets40|datasets38|datasets30|regions22|regions17|datasets32|regions21|formats1|publishers3)) {
            return 405;
         }
-        location ~ ^/(datasets42|datasets41|datasets40|datasets38|datasets30|regions22|regions17|datasets32|regions21|formats1|publishers3)/(?!(_search|_mapping)) {
+        location ~ ^/(datasets47|datasets46|datasets45|datasets44|datasets43|datasets42|datasets41|datasets40|datasets38|datasets30|regions22|regions17|datasets32|regions21|formats1|publishers3)/(?!(_search|_mapping)) {
            return 405;
         }
         location ~ ^/_cat/(?!indices) {

@@ -32,34 +32,6 @@ tags:
   kn-ingress: false
   kn-web-server: true
 
-magda:
-  gateway:
-    routes:
-      search:
-        to: http://search-api/v0
-      registry:
-        to: http://registry-api-read-only/v0
-      registry-auth:
-        to: http://registry-api/v0
-        auth: true
-      auth:
-        to: http://authorization-api/v0/public
-        auth: true
-      admin:
-        to: http://admin-api/v0
-        auth: true
-      content:
-        to: http://content-api/v0
-      correspondence:
-        to: http://correspondence-api/v0/public
-      apidocs:
-        to: http://apidocs-server/
-        redirectTrailingSlash: true
-      es-query/datasets:
-        to: http://elasticsearch:9200/datasets40/_search
-      test-chart:
-        to: http://test-chart
-
 test-chart:
   service:
     type: ClusterIP
