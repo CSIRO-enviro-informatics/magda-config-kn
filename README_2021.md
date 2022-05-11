@@ -14,11 +14,44 @@ For details, please check `kn` chart's dependency declaration file: [deploy/char
 
 # Getting Started
 
-Before you start you need to get a Kubernetes cluster.
+Before you start you need to get a Kubernetes cluster. If you just want to give this a try locally, you can use [Docker for Desktop](https://www.docker.com/products/docker-desktop) on MacOS or Windows, or [Minikube](https://kubernetes.io/docs/setup/minikube/) on Linux. Either way make sure the VM has at least 2 CPUs and 4gb of RAM. Alternatively you can run this in the cloud - we use [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
+
+1.  Configure your minikube
+
+Use the following command to set the default setting of the `minikube` virtual machine:
+
+```bash
+# Set minikube use virtual box
+minikube config set vm-driver virtualbox
+# Set minikube use 6GB memory
+minikube config set memory 6144
+# Set minikube use 4 CPUs
+minikube config set cpus 4
+# Set minikube use 40 GB storage
+minikube config set disk-size 40g
+```
+
+Those values are recommended for running the whole cluster in the `minikube` cluster.
+
+If you only want to a few modules, you may want to lower those resource settings.
+
+You will need to re-create the `minikube` virtual machine to make those changes take effect:
+
+```bash
+minikube stop
+minikube delete
+minikube start
+```
+
+2.  Install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/), [helm](https://docs.helm.sh/using_helm/).
+
+3.  Fork this repository - this means you can make your own customisations, but still pull in updates.
+
+4.  `git clone` it to your local machine open a terminal in the directory
 
 ## For New Cluster (Applied to both Google Cloud & Minikube)
 
-1.  Make sure your `kubectl` is connected to your kubernetes cluster and install helm. See document at [Install kubectl and configure cluster access](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl)
+1.  Make sure your `kubectl` is connected to your kubernetes cluster and install helm
 
 This will setup a service account for tiler with correct permission.
 
@@ -29,18 +62,13 @@ helm init --service-account tiller
 ```
 
 2.  Run the create secrets script in a command line and follow the prompts
-    The create-secrets tool binary has been removed from the repo due to upstream package software issue.
-
-Please install the NPM package version [here](https://www.npmjs.com/package/@magda/create-secrets).
 
 ```bash
-npm install --global @magda/create-secrets
-```
-
-After the installation you should be able to run `create-secrets` command anywhere from your commandline:
-
-```
-$ create-secrets
+    ./deploy/create-secrets/index-linux
+    # OR
+    ./deploy/create-secrets/index-macos
+    # OR
+    deploy/create-secrets\index.win.exe
 ```
 
 Output should look something like so:
@@ -68,7 +96,7 @@ All required secrets have been successfully created!
 
 **Please note: you can choose any namespace (rather than `kn`) here. But if you use a different namespace. You need to adjust `helm update` command below with correct namespace.**
 
-1.  Add the magda chart repo to helm
+3.  Add the magda chart repo to helm
 
 ```bash
 helm repo add magda-io https://charts.magda.io
@@ -100,6 +128,178 @@ Don't worry if you see something like:
 ```
 
 The `localhost` charts repo is a default local test repo server comes with your helm installation. It's for testing your local chart repo. More details see [here](https://docs.helm.sh/helm/#helm-serve).
+
+5.  For `minikube` or any local dev cluster only
+
+Install local docker registry & registry proxy:
+
+-   Added Relevant Helm Chart Repo
+
+```bash
+helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
+helm repo update
+```
+
+-   Install
+
+Install local docker registry:
+
+```bash
+helm install --name docker-registry stable/docker-registry --set persistence.enabled=true --set persistence.storageClass=standard
+```
+
+Install local docker registry proxy:
+
+```bash
+helm install --name kube-registry-proxy incubator/kube-registry-proxy --set registry.host=docker-registry --set registry.port=5000 --set hostPort=5000
+```
+
+## Deploy to Minikube
+
+1.  Build KN version Gateway & web-server
+
+Go to project root, and then:
+
+```bash
+# install all dependencies
+yarn install
+# build all modules
+yarn build
+# initialise minikube
+minikube start
+# wait & make sure minikube cluster is ready
+minikube status
+# Set docker ENV variables for your current terminal
+eval $(minikube docker-env)
+# build docker images (using minikube docker daemon)
+# & push into the local docker registry in minikube cluster
+yarn docker-build-local
+```
+
+2.  Install Knowledge Network instance
+
+```bash
+helm upgrade magda-kn deploy/charts/kn --wait --namespace kn --timeout 30000 --install -f deploy/minikube.yaml --devel
+```
+
+**Please note: --namespace paremeter need to be same as the one you supplied to `create-secrets` tool. If you picked a different namespace rather than `kn`, you need to adjust the command above accordingly.**
+
+This will take a while for it to get everything set up. If you want to watch progress, run `kubectl get pods -w` in another terminal.
+
+If you want to turn on / off a component, just edit the `tags` section in [deploy/minikube.yaml](deploy/minikube.yaml) and re-deploy using the `helm upgrade` command above again.
+
+3.  Access Knowledge Network instance
+
+By default, the gateway service is exposed via `NodePort` for local deployed instance. You can access via:
+
+`http://192.168.99.100:30100`
+
+or `http://minikube.data.gov.au:30100`
+
+If you added an entry for `minikube.data.gov.au` in your `hosts`.
+
+You should see `Knowledge Network` web UI once access the URL above.
+
+4.  Access `test-chart` demo `nginx` service:
+
+The `test-chart` is exposed via `gateway`.
+
+-   Endpoint `/` can be accessed via:
+    -   `http://192.168.99.100:30100/api/v0/test-chart`
+
+You should see the followings on the page:
+
+```html
+This is a KN test-chart!
+```
+
+-   Endpoint `/test-api` can be accessed via:
+    -   `http://192.168.99.100:30100/api/v0/test-chart/test-api`
+
+You should see the followings on the page:
+
+```html
+test api2 : This is a KN test-chart test api!
+```
+
+5.  If you want to attach `test-chart` service to a different url path...
+
+You can attach `test-chart` service to a different url path throught gateway config.
+
+To do so, you can edit `deploy/charts/kn/values.yaml` (you can also overwrite it from `deploy/minikube.yaml` as well):
+
+Change the followings:
+
+```yaml
+magda:
+    gateway:
+        routes:
+            search:
+                to: http://search-api/v0
+            registry:
+                to: http://registry-api-read-only/v0
+            registry-auth:
+                to: http://registry-api/v0
+                auth: true
+            auth:
+                to: http://authorization-api/v0/public
+                auth: true
+            admin:
+                to: http://admin-api/v0
+                auth: true
+            content:
+                to: http://content-api/v0
+            correspondence:
+                to: http://correspondence-api/v0/public
+            apidocs:
+                to: http://apidocs-server/
+                redirectTrailingSlash: true
+            test-chart:
+                to: http://test-chart
+```
+
+to :
+
+```yaml
+magda:
+    gateway:
+        routes:
+            search:
+                to: http://search-api/v0
+            registry:
+                to: http://registry-api-read-only/v0
+            registry-auth:
+                to: http://registry-api/v0
+                auth: true
+            auth:
+                to: http://authorization-api/v0/public
+                auth: true
+            admin:
+                to: http://admin-api/v0
+                auth: true
+            content:
+                to: http://content-api/v0
+            correspondence:
+                to: http://correspondence-api/v0/public
+            apidocs:
+                to: http://apidocs-server/
+                redirectTrailingSlash: true
+            test-chart-access:
+                to: http://test-chart
+```
+
+Once saved this file, just re-deploy via:
+
+```bash
+helm upgrade magda-kn deploy/charts/kn --wait --namespace kn --timeout 30000 --install -f deploy/minikube.yaml --devel
+```
+
+**Please note: --namespace paremeter need to be same as the one you supplied to `create-secrets` tool. If you picked a different namespace rather than `kn`, you need to adjust the command above accordingly.**
+
+Then, the `test-chart` service will be available from the following new urls:
+
+-   `http://192.168.99.100:30100/api/v0/test-chart-access`
+-   `http://192.168.99.100:30100/api/v0/test-chart-access/test-api`
 
 ## Deploy to Google Cloud: Test Staging Site
 
@@ -231,7 +431,11 @@ kubectl create namespace test-kn-chart
 Run the create secrets script in a command line and follow the prompts
 
 ```bash
-create-secrets
+    ./deploy/create-secrets/index-linux
+    # OR
+    ./deploy/create-secrets/index-macos
+    # OR
+    deploy/create-secrets\index.win.exe
 ```
 
 #### Deploy using helm
@@ -309,12 +513,12 @@ You can create adhoc connector job with the following:
 
 ## 1. Edit deploy/charts/connector-job/values.yaml
 
-You can edit `deploy/charts/connector-v1.0.0-prod/values.yaml` to add / delete connectors to be created.
+You can edit `deploy/charts/connector-job/values.yaml` to add / delete connectors to be created.
 
 ## 2. Run the following command:
 
 ```bash
-helm upgrade connector-job deploy/charts/connector-v1.0.0-prod --install --namespace kn
+helm upgrade connector-job deploy/charts/connector-job --install --namespace kn
 ```
 
 This command won't re-create a new job if a job with same name exist. Therefore, you may want to delete the previously complete jobs in order to re-run the connector.
