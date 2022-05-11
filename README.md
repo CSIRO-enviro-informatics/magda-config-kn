@@ -65,7 +65,7 @@ Successfully created secret `db-passwords` in namespace `kn`.
 Successfully created secret `auth-secrets` in namespace `kn`.
 All required secrets have been successfully created!
 ```
-
+**Secret used to be found at https://confluence.csiro.au/display/envinformatics/Knowledge+Network+secret+and+note**
 **Please note: you can choose any namespace (rather than `kn`) here. But if you use a different namespace. You need to adjust `helm update` command below with correct namespace.**
 
 1.  Add the magda chart repo to helm
