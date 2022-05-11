@@ -1,0 +1,179 @@
+global:
+  externalUrlkn: dev.knowledgenet.co
+  externalUrlEs: dev-es.knowledgenet.co
+  externalUrl: https://dev.knowledgenet.co
+  tlssecret: kn-tls-secret
+  rollingUpdate:
+    maxUnavailable: 1
+  exposeNodePorts: false
+
+ # All modules except web-server & gateway should use magda offical image
+ # Here, if unspecified, the following default value will be used:
+  image:
+    repository: docker.io/data61 # magda docker hub repo
+    tag: 1.0.1  # This version will be increased when magda releases a new version
+    pullPolicy: IfNotPresent
+
+  useCloudSql: true
+  useCombinedDb: false
+  connectors:
+    # Whether to run an initial job to crawl all these on install
+    includeInitialJobs: false
+    # Whether to run recurring jobs on the schedule.
+    includeCronJobs: true
+  minions:
+    # Set default image setting for all minions. 
+    # You may explicitly set all minions to use images from docker hub while load magda-core images from a private docker registry
+    image:
+      repository: docker.io/data61
+      tag: 1.0.0
+      pullPolicy: IfNotPresent
+      imagePullSecret: false
+## Tags allow for services to be turned on and off on the fly... e.g. if you don't need
+## to send emails, turn the correspondence-api off
+tags:
+  ## "all" is a shortcut which turns on all services except minions.
+  all: false
+
+  ## General services. Note that if you are using combined-db, you need to set both
+  ## combined-db and the databases that you are using (e.g. authorization-db) to true.
+  ## You can find explanations of what each of these are below
+  admin-api: false
+  apidocs-server: true
+  authorization-api: true
+  authorization-db: true
+  cloud-sql-proxy: true
+  combined-db: true
+  content-db: true
+  content-api: false
+  elasticsearch: true
+  gateway: true
+  indexer: true
+  preview-map: true
+  registry-api: true
+  registry-db: true
+  search-api: true
+  session-db: true
+  web-server: false
+  connectors: true
+  
+  opa: true
+  ## Whether to use an ingress, which is necessary for HTTPS and using the Google CDN with
+  ## Google Kubernetes Engine. By default this is off, and access is provided to the cluster
+  ## through a Kubernetes LoadBalancer service
+  # ingress: false
+
+  ## Minions, which listen to changes in the registry and add extra metadata
+  minion-broken-link: true
+  minion-linked-data-rating: true
+  minion-visualization: true
+  minion-format: true
+
+  ## A extra test chart that is maintained outside magda project
+  test-chart: true
+
+  ## KN ingress should be disabled by default for local deployment
+  kn-ingress: true
+  kn-es-ingress: true
+
+  ## KN web server
+  kn-web-server: true
+
+
+kn-web-server:
+  image:
+    repository: "gcr.io/knowledge-network-prod/kn"
+    tag: "2.1.0"
+    pullPolicy: Always
+  useLocalStyleSheet: true
+
+magda:
+  magda-core:
+    gateway:
+      enableAuthEndpoint: false
+      service:
+        type: LoadBalancer
+      cors:
+        credentials: true
+        origin: true
+      helmet:
+        frameguard: false
+      csp:
+        directives:
+          scriptSrc:
+          - "'self'"
+          - "'unsafe-inline'" # For previewMap. Newer terriaJS version probably not require this
+          - www.google-analytics.com
+          objectSrc:
+          - "'none'"
+          sandbox: # We run the sandbox because we have to have unsafe-inline, when we remove unsafe inline we should remove this
+          - allow-scripts
+          - allow-same-origin
+          - allow-popups
+          - allow-forms
+          - allow-popups-to-escape-sandbox
+      auth:
+        facebookClientId: ""
+        googleClientId: "1049152486192-egoid2mcksouu0cofe326hdb2asuvrc9.apps.googleusercontent.com"
+        aafClientUri: "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/jn_kJNxp0DebnxU282EA_A"
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+        limits:
+          cpu: 200m
+          memory: 250Mi
+
+    elasticsearch:
+      client:
+        replicas: 2
+        heapSize: 900m
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1500Mi
+      data:
+        heapSize: 3000m
+        resources:
+          limits:
+            cpu: 800m
+          requests:
+            cpu: 800m
+            memory: 5000Mi
+    
+    indexer:
+      logLevel: INFO
+      replicas: 1
+      resources:
+        requests:
+          cpu: 200m
+          memory: 5000Mi
+
+    registry-api:
+      # skipAuthorization: true
+      validateJsonSchema: false
+      logLevel: INFO
+      requests:
+        cpu: 500m
+        memory: 3000Mi
+
+    search-api:
+      replicas: 2
+      requests:
+        cpu: 250m
+        memory: 200Mi
+      limits:
+        cpu: 1000m
+        memory: 1000m
+
+    ## A pod for proxying to Google Cloud SQL, the GCE managed database service.
+    cloud-sql-proxy:
+      replicas: 2
+      resources:
+        requests:
+          cpu: 150m
+          memory: 20Mi
+        limits:
+          cpu: 300m
+      ## The cloud sql instance to connect to
+      instanceConnectionName: knowledge-network-prod:australia-southeast1:kn-v21-prod

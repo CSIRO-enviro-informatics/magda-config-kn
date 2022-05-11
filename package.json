@@ -84,5 +84,6 @@
     "react": {
       "location": "pancake/react/"
     }
-  }
+  },
+  "dependencies": {}
 }

@@ -1,5 +1,41 @@
-apiVersion: v1
+apiVersion: v2
 description: A Helm chart for Kubernetes
 name: kn
-version: 2.1.0
+version: 2.2.0
 home: "https://knowledgenet.co"
+dependencies:
+  - name: magda
+    version: 1.0.1
+    repository: https://charts.magda.io
+  # Magda chart is always enabled.
+  # Thus, no tags or condition are reuqired.
+  # You should set its sub-chart to enabled or not.
+
+  - name: test-chart
+    version: 2.2.0
+    repository: file://../test-chart
+    condition: test-chart.enabled,global.test-chart.enabled
+    tags:
+      - all
+      - test-chart
+
+  - name: kn-es-ingress
+    version: 2.2.0
+    repository: file://../kn-es-ingress
+    condition: kn-es-ingress.enabled,global.kn-es-ingress.enabled
+    tags:
+      - kn-es-ingress
+
+  - name: kn-ingress
+    version: 2.2.0
+    repository: file://../kn-ingress
+    condition: kn-ingress.enabled,global.kn-ingress.enabled
+    tags:
+      - kn-ingress
+
+  - name: kn-web-server
+    version: 2.2.0
+    repository: file://../kn-web-server
+    condition: kn-web-server.enabled,global.kn-web-server.enabled
+    tags:
+      - kn-web-server

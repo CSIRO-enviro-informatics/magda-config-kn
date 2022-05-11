@@ -15,7 +15,7 @@ import "./NavBar.css";
 export default class NavBar extends Component {
     constructor(props) {
         super(props);
-        this.state = { user: "" };
+        this.state = { user: {} };
     }
 
     componentDidMount() {
@@ -87,7 +87,7 @@ export default class NavBar extends Component {
                                 <MenuItem>Publisher</MenuItem>
                             </LinkContainer>
                         </NavDropdown>
-                        {this.state.user === "" ? (
+                        {this.state.user.id === "" ? (
                             <LinkContainer to="/signin">
                                 <NavItem>Sign In</NavItem>
                             </LinkContainer>

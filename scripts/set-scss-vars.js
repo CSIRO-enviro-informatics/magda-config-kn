@@ -200,7 +200,7 @@ function createConfigMap(env, namespace, configMapName, data) {
 function buildJobTemplateObject(namespace, jobId, image) {
     return {
         kind: "Job",
-        apiVersion: "batch/v1",
+        apiVersion: "batch/v2",
         metadata: {
             name: jobId,
             namespace,

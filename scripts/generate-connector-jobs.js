@@ -153,7 +153,7 @@ files.forEach(function(connectorConfigFile) {
     };
 
     const job = {
-        apiVersion: "batch/v1",
+        apiVersion: "batch/v2",
         kind: "Job",
         metadata: {
             name: "connector-" + basename

@@ -3,6 +3,7 @@
   "description": "The server that serves the MAGDA web front end.",
   "version": "2.1.0",
   "license": "Apache-2.0",
+  "private": true,
   "scripts": {
     "build": "yarn run compile",
     "compile": "tsc -p tsconfig-build.json",
